@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.edupack.edu.service.mapper.EduTransactionMapper">   
+	<resultMap id="transactionSelectMap" type="tranVO" autoMapping="true">
+		<result property="id"          column="ID" />
+		<result property="name"        column="NAME" />
+		<result property="description" column="DESCRIPTION" />
+		<result property="regUser"     column="reg_user" />
+		<result property="useYn"       column="USE_YN" />
+	</resultMap>
+                
+	<select id="selectTransaction" parameterType="map" resultType="map">
+		/* selectTransaction sql */
+		select ID,
+			   NAME,
+			   DESCRIPTION,
+			   USE_YN,
+			   REG_USER
+		  FROM TBL_SAMPLE
+		 WHERE 1 = 1            
+			<if test="ID != null and ID != ''">
+			AND ID LIKE CONCAT(#{ID},'%')
+			</if>
+			
+			<if test="NAME != null and NAME != ''">
+			AND NAME LIKE CONCAT(#{NAME},'%')
+			</if>			
+		ORDER BY ID, NAME, DESCRIPTION, USE_YN, REG_USER	
+	</select>
+
+	<select id="transactionSelectVoList" parameterType="tranVO" resultMap="transactionSelectMap">
+		/* selectTransaction sql */
+		select ID,
+			   NAME,
+			   DESCRIPTION,
+			   USE_YN as use_yn_yn,
+			   REG_USER
+		  FROM TBL_SAMPLE
+		 WHERE 1 = 1            
+			<if test="ID != null and ID != ''">
+			AND ID LIKE CONCAT(#{ID},'%')
+			</if>
+			
+			<if test="NAME != null and NAME != ''">
+			AND NAME LIKE CONCAT(#{NAME},'%')
+			</if>			
+		ORDER BY ID, NAME, DESCRIPTION, USE_YN, REG_USER		
+	</select>
+
+
+	<select id="selectDeptList" parameterType="map" resultType="map">
+		select DEPT_CD AS CODE,
+			   DEPT_NAME AS CODE_NAME
+		  FROM TB_DEPT
+	</select>
+
+
+
+	
+	<insert id="insertSampleTransacation" parameterType="map">
+		/* insertSampleTransacation sql */	
+		INSERT INTO TBL_SAMPLE
+		     ( ID
+		     , NAME
+		     , DESCRIPTION
+		     , USE_YN
+		     , REG_USER
+		     )
+		 VALUES 
+		     ( #{ID}
+			 , #{NAME}
+			 , #{DESCRIPTION}
+			 , #{USE_YN}
+			 , #{REG_USER}
+			  )  
+	</insert>
+	
+	<update id="updateSampleTransacation" parameterType="map">
+		/* updateSampleTransacation sql */	
+		UPDATE TBL_SAMPLE
+		   SET NAME = #{NAME}
+		     , DESCRIPTION = #{DESCRIPTION}
+		     , USE_YN = #{USE_YN}
+		     , REG_USER = #{REG_USER}
+		 WHERE ID = #{ID}
+	</update>
+	
+	<delete id="deleteSampleTransacation" parameterType="map">
+		/* deleteSampleTransacation sql */	
+		DELETE
+		  FROM TBL_SAMPLE
+		 WHERE ID = #{ID}
+	</delete>
+
+	<select id="selectPagingSample" parameterType="map" resultType="map">
+		SELECT *
+		  FROM (
+				 SELECT ID
+				      , NAME
+				      , DESCRIPTION
+				      , USE_YN
+				      , REG_USER
+				      , ROW_NUMBER() OVER (ORDER BY ID DESC) AS ROWNUM
+				  FROM TBL_SAMPLE
+			/* 조건 처리 
+				 WHERE ID LIKE '%000%' 
+			*/
+				) AS sub
+	   ORDER BY ROWNUM
+	   LIMIT #{records} OFFSET #{recordsOffset}	
+	</select>
+	
+	<select id="selectPagingSampleTotalcnt" parameterType="map" resultType="map">
+		select count(*) as totalCount
+		  from TBL_SAMPLE
+	</select>	
+	
+	<select id="selectCommCode" parameterType="map" resultType="map">
+         SELECT MST_CODE
+			  , MST_NAME
+			  , DET_CODE as CODE
+			  , DET_NAME as NAME
+			  , USE_FLAG
+           FROM TBl_COMMON_CODE
+          WHERE MST_CODE IN
+		<foreach collection="codeGroup" item="item" open="(" close=")" separator=",">
+	    	    #{item}
+		</foreach>
+	</select>		
+	
+	
+</mapper>

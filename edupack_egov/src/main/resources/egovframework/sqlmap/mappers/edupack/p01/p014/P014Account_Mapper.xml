@@ -1,0 +1,1151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.edupack.p01.p014.mapper.P014AccountMapper">
+	
+	<insert id="setAccountInfo" parameterType="map">
+		INSERT INTO p014_user
+			(ID, PW, NAME, PHONE_NO, ROLE_TYPE)
+			VALUES (#{ID}, #{PW}, #{NAME}, #{PHONE_NO}, #{ROLE_TYPE})
+	</insert>
+	
+	<select id="checkID" resultType="int"  parameterType="String">
+		SELECT COUNT(*) FROM p014_user WHERE ID = #{strID}
+	</select>
+
+	<select id="login" resultType="map" parameterType="map">
+	    SELECT
+	        u.ID,
+	        u.PW,
+	        u.NAME,
+	        u.PHONE_NO,
+	        u.ROLE_TYPE,
+	        u.GYM_CODE,
+	        u.PROFILE_PATH,
+	        g.STATUS_CODE AS GYM_STATUS,
+	        (
+	            SELECT COUNT(*)
+	            FROM p014_notification
+	            WHERE USER_ID = #{ID} AND IS_READ = 'N'
+	        ) AS NOTI_COUNT
+	    FROM
+	        p014_user u
+	    LEFT JOIN
+	        p014_gym g ON u.GYM_CODE = g.GYM_CODE
+	    WHERE
+	        u.ID = #{ID}
+	    AND
+	        u.PW = #{PW}
+	</select>
+	
+	<select id="findAccount" resultType="map" parameterType="map">
+		SELECT ID, PW
+			FROM p014_user
+		<where>
+			NAME = #{NAME}
+			AND PHONE_NO = #{PHONE_NO}
+				<if test='ID != null and ID != "" and ID != "undefined"'>
+					AND ID = #{ID}
+				</if>
+		</where>
+	</select>
+	
+	<select id="getRecentGyms" resultType="map">
+	    SELECT
+	        GYM_CODE,
+	        GYM_NAME,
+	        ADDRESS,
+	        IMG_PATH
+	    FROM
+	        p014_gym
+	    WHERE
+	        STATUS_CODE = 'ACTIVE'
+	    ORDER BY
+	        REG_DATE DESC
+	    LIMIT 10;
+	</select>
+	
+	<select id="getRecentMarkets" resultType="map">
+		SELECT
+		    m.MARKET_NO,
+		    m.TITLE,
+		    m.PRICE,
+		    DATE_FORMAT(m.START_DATE, '%Y%m%d') AS START_DATE,
+		    DATE_FORMAT(m.END_DATE, '%Y%m%d') AS END_DATE,
+		    g.GYM_NAME,
+		    g.ADDRESS
+		FROM
+		    p014_market m
+		JOIN
+		    p014_gym g ON m.GYM_CODE = g.GYM_CODE
+		WHERE
+		    m.STATUS_CODE = 'SALE'
+		ORDER BY
+		    m.UPLOAD_DATE DESC
+		LIMIT 10;
+	</select>
+	
+	<select id="getRecentGymList" resultType="map"  parameterType="map">
+		SELECT
+			g.GYM_CODE,
+			g.GYM_NAME,
+			g.ADDRESS,
+			g.TEL_NO,
+			g.IMG_PATH,
+			COUNT(f.ID) AS FAVORITES_COUNT,
+			(
+				SELECT COUNT(*)
+				FROM p014_gym_favorites fav
+				WHERE fav.GYM_CODE = g.GYM_CODE
+				  AND fav.ID = #{ID}
+			) AS IS_FAVORITE
+		FROM
+			p014_gym g
+		LEFT JOIN
+			p014_gym_favorites f ON g.GYM_CODE = f.GYM_CODE
+		<where>
+			g.STATUS_CODE = 'ACTIVE'
+			<if test='searchTerm != null and searchTerm != ""'>
+				AND (g.GYM_NAME LIKE CONCAT('%', #{searchTerm}, '%') OR g.ADDRESS LIKE CONCAT('%', #{searchTerm}, '%'))
+			</if>
+		</where>
+		GROUP BY
+			g.GYM_CODE, g.GYM_NAME, g.ADDRESS, g.TEL_NO, g.IMG_PATH, g.REG_DATE
+		ORDER BY
+			g.REG_DATE DESC
+		LIMIT #{cnt} OFFSET #{offset}
+	</select>	
+	<select id="getFavoritesGymList" resultType="map"  parameterType="map">
+		SELECT
+	        g.GYM_CODE,
+	        g.GYM_NAME,
+	        g.ADDRESS,
+	        g.TEL_NO,
+	        g.IMG_PATH,
+	        COUNT(f.ID) AS FAVORITES_COUNT,
+	        (
+           		SELECT COUNT(*)
+	            FROM p014_gym_favorites fav
+	            WHERE fav.GYM_CODE = g.GYM_CODE
+	              AND fav.ID = #{ID}
+	        ) AS IS_FAVORITE
+	    FROM
+	        p014_gym g
+	    LEFT JOIN
+	        p014_gym_favorites f ON g.GYM_CODE = f.GYM_CODE
+	    <where>
+	    	g.STATUS_CODE = 'ACTIVE'
+	        <if test='searchTerm != null and searchTerm != ""'>
+	            (g.GYM_NAME LIKE CONCAT('%', #{searchTerm}, '%') OR g.ADDRESS LIKE CONCAT('%', #{searchTerm}, '%'))
+	        </if>
+	    </where>
+	    GROUP BY
+	        g.GYM_CODE, g.GYM_NAME, g.ADDRESS, g.TEL_NO, g.IMG_PATH, g.REG_DATE
+	    ORDER BY
+	        FAVORITES_COUNT DESC,
+	        g.REG_DATE DESC
+	    LIMIT #{cnt} OFFSET #{offset}
+	</select>
+	<select id="getGymsTotalCnt" resultType="int" parameterType="map">
+		SELECT 
+			count(*)
+		FROM 
+			p014_gym g
+		<where>
+			g.STATUS_CODE = 'ACTIVE'
+			<if test='searchTerm != null and searchTerm != ""'>
+				AND (g.GYM_NAME LIKE CONCAT('%', #{searchTerm}, '%') OR g.ADDRESS LIKE CONCAT('%', #{searchTerm}, '%'))
+			</if>
+		</where>
+	</select>
+	
+	<select id="getGymInfo" resultType="map" parameterType="string">
+		SELECT
+		    GYM_CODE,
+		    GYM_NAME,
+		    ADDRESS,
+		    TEL_NO,
+		    DESCRIPTION,
+		    OWNER_ID,
+		    IMG_PATH,
+		    (SELECT COUNT(*) 
+		     FROM p014_gym_favorites 
+		     WHERE GYM_CODE = #{paramCode}) AS FAVORITES_COUNT
+		FROM
+		    p014_gym
+		WHERE
+		    GYM_CODE = #{paramCode};
+	</select>
+	<select id="getGymMachineInfo" resultType="map" parameterType="string">
+		SELECT
+	        gm.MACHINE_CODE,
+	        m.MACHINE_NAME,
+	        m.MACHINE_TARGET
+	    FROM
+	        p014_gym_machine gm
+	    JOIN
+	        p014_machine m ON gm.MACHINE_CODE = m.MACHINE_CODE
+	    WHERE
+	        gm.GYM_CODE = #{paramCode}
+	    ORDER BY
+	        gm.MACHINE_CODE ASC
+	</select>
+	<select id="checkFavorite" resultType="int" parameterType="map">
+		SELECT 
+		    COUNT(*) 
+		FROM 
+		    p014_gym_favorites 
+		WHERE 
+		    ID = #{ID} AND GYM_CODE = #{CODE};
+	</select>
+	
+	<select id="insertFavoriteInfo" parameterType="map">
+		 INSERT INTO p014_gym_favorites (ID, GYM_CODE) 
+	    VALUES (#{ID}, #{CODE})
+	</select>
+	<select id="deleteFavoriteInfo" parameterType="map">
+		DELETE FROM p014_gym_favorites 
+  	 	WHERE ID = #{ID} AND GYM_CODE = #{CODE}
+	</select>
+	
+	<select id="getMyRecentGymList"  resultType="map"  parameterType="map">
+		SELECT
+	        g.GYM_CODE,
+	        g.GYM_NAME,
+	        g.ADDRESS,
+	        g.TEL_NO,
+	        g.IMG_PATH,
+	        (SELECT COUNT(*) FROM p014_gym_favorites WHERE GYM_CODE = g.GYM_CODE) AS FAVORITES_COUNT,
+	        1 AS IS_FAVORITE
+	    FROM
+	        p014_gym g
+	    JOIN
+	        p014_gym_favorites f ON g.GYM_CODE = f.GYM_CODE
+	    <where>
+	    	f.ID = #{ID}
+	        <if test='searchTerm != null and searchTerm != ""'>
+	            AND (g.GYM_NAME LIKE CONCAT('%', #{searchTerm}, '%') OR g.ADDRESS LIKE CONCAT('%', #{searchTerm}, '%'))
+	        </if>
+	    </where>
+	    ORDER BY
+	        g.REG_DATE DESC
+	    LIMIT #{cnt} OFFSET #{offset}
+	</select>
+	<select id="getMyFavoritesGymList"  resultType="map"  parameterType="map">
+		SELECT
+	        g.GYM_CODE,
+	        g.GYM_NAME,
+	        g.ADDRESS,
+	        g.TEL_NO,
+	        g.IMG_PATH,
+	        (SELECT COUNT(*) FROM p014_gym_favorites WHERE GYM_CODE = g.GYM_CODE) AS FAVORITES_COUNT,
+	        1 AS IS_FAVORITE
+	    FROM
+	        p014_gym g
+	    JOIN
+	        p014_gym_favorites f ON g.GYM_CODE = f.GYM_CODE
+	    <where>
+	    	f.ID = #{ID}
+	        <if test='searchTerm != null and searchTerm != ""'>
+	            AND (g.GYM_NAME LIKE CONCAT('%', #{searchTerm}, '%') OR g.ADDRESS LIKE CONCAT('%', #{searchTerm}, '%'))
+	        </if>
+	    </where>
+	    ORDER BY
+	        FAVORITES_COUNT DESC,
+	        g.REG_DATE DESC
+	    LIMIT #{cnt} OFFSET #{offset}
+	</select>
+	
+	<select id="getMyGymsTotalCnt" resultType="int" parameterType="map">
+	    SELECT 
+	        count(*)
+	    FROM 
+	        p014_gym g
+	    JOIN
+	        p014_gym_favorites f ON g.GYM_CODE = f.GYM_CODE
+	    <where>
+	        f.ID = #{ID}
+	        <if test='searchTerm != null and searchTerm != ""'>
+	            AND (g.GYM_NAME LIKE CONCAT('%', #{searchTerm}, '%') OR g.ADDRESS LIKE CONCAT('%', #{searchTerm}, '%'))
+	        </if>
+	    </where>
+	</select>
+	
+	<select id="getMarketList" resultType="map" parameterType="map">
+		SELECT
+			m.MARKET_NO,
+			m.SELLER_ID AS ID,
+			m.TITLE,
+			m.PRICE,
+			g.GYM_NAME,
+			m.STATUS_CODE,
+			DATEDIFF(m.END_DATE, NOW()) AS EXPIRY,
+			u.PROFILE_PATH
+		FROM
+			p014_market m
+		JOIN
+			p014_gym g ON m.GYM_CODE = g.GYM_CODE
+		JOIN
+			p014_user u ON m.SELLER_ID = u.ID  -- 사용자 테이블 JOIN
+		<where>
+			AND DATEDIFF(m.END_DATE, NOW()) >= 0
+			<if test='isShowSold.toString() == "N"'>
+				AND m.STATUS_CODE = 'SALE'
+			</if>
+			<if test='searchTerm != null and searchTerm != ""'>
+				AND (
+					m.TITLE LIKE CONCAT('%', #{searchTerm}, '%')
+					OR m.SELLER_ID LIKE CONCAT('%', #{searchTerm}, '%')
+					OR g.GYM_NAME LIKE CONCAT('%', #{searchTerm}, '%')
+				)
+			</if>
+		</where>
+		ORDER BY
+		<choose>
+			<when test='typeSearch == "PRICE_ASC"'>
+				m.PRICE ASC, m.UPLOAD_DATE DESC
+			</when>
+			<when test='typeSearch == "EXPIRY_DESC"'>
+				EXPIRY DESC, m.UPLOAD_DATE DESC
+			</when>
+			<when test='typeSearch == "RECENT"'>
+				m.UPLOAD_DATE DESC
+			</when>
+			<otherwise>
+				m.UPLOAD_DATE DESC
+			</otherwise>
+		</choose>
+		LIMIT #{cnt} OFFSET #{offset}
+	</select>
+	<select id="getMarketTotalCnt" resultType="int" parameterType="map">
+	    SELECT
+	        count(*)
+	    FROM
+	        p014_market m
+	    JOIN
+	        p014_gym g ON m.GYM_CODE = g.GYM_CODE
+	    <where>
+	    	AND DATEDIFF(m.END_DATE, NOW()) >= 0
+	        <if test='isShowSold.toString() == "N"'>
+	            AND m.STATUS_CODE = 'SALE'
+	        </if>
+	        <if test='searchTerm != null and searchTerm != ""'>
+	            AND (
+	                m.TITLE LIKE CONCAT('%', #{searchTerm}, '%')
+	                OR m.SELLER_ID LIKE CONCAT('%', #{searchTerm}, '%')
+	                OR g.GYM_NAME LIKE CONCAT('%', #{searchTerm}, '%')
+	            )
+	        </if>
+	    </where>
+	</select>
+	
+	<select id="getMarketInfo" resultType="map" parameterType="String">
+	    SELECT
+	        m.TITLE,
+	        m.CONTENT,
+	        g.GYM_CODE,
+	        g.GYM_NAME,
+	        g.ADDRESS,
+	        m.SELLER_ID,
+	        u.PROFILE_PATH,
+	        m.PRICE,
+	        DATE_FORMAT(m.UPLOAD_DATE, '%Y%m%d%H%i%s') AS UPLOAD_DATE, -- 업로드 시간은 유지
+	        DATE_FORMAT(m.START_DATE, '%Y%m%d') AS START_DATE,         -- YYYYMMDD 형식으로 변경
+	        DATE_FORMAT(m.END_DATE, '%Y%m%d') AS END_DATE,             -- YYYYMMDD 형식으로 변경
+	        m.STATUS_CODE
+	    FROM
+	        p014_market m
+	    JOIN
+	        p014_gym g ON m.GYM_CODE = g.GYM_CODE
+	    JOIN
+	        p014_user u ON m.SELLER_ID = u.ID
+	    WHERE
+	        m.MARKET_NO = #{paramNo}
+	</select>
+	<select id="getMarketCommentInfo" resultType="map" parameterType="String">
+	    SELECT
+	    	c.COMMENT_NO,
+	        c.PARENT_NO,
+	        c.WRITER_ID,
+	        u.PROFILE_PATH,
+	        c.CONTENT,
+	        DATE_FORMAT(c.REG_DATE, '%Y%m%d%H%i%s') AS REG_DATE
+	    FROM
+	        p014_market_comment c
+	    JOIN
+	        p014_user u ON c.WRITER_ID = u.ID
+	    WHERE
+	        c.MARKET_NO = #{paramNo}
+	    ORDER BY
+	        COALESCE(c.PARENT_NO, c.COMMENT_NO) DESC,
+	        c.PARENT_NO IS NULL DESC,
+	        c.REG_DATE ASC
+	</select>
+	
+	<insert id="insertMarketComment" parameterType="map">
+	    <selectKey keyProperty="COMMENT_NO" resultType="int" order="AFTER">
+	        SELECT LAST_INSERT_ID()
+	    </selectKey>
+	    INSERT INTO p014_market_comment (
+	        MARKET_NO, 
+	        PARENT_NO, 
+	        WRITER_ID, 
+	        CONTENT
+	    ) VALUES (
+	        #{MARKET_NO}, 
+	        #{PARENT_NO}, 
+	        #{WRITER_ID}, 
+	        #{CONTENT}
+	    )
+	</insert>
+	
+	<insert id="insertCommentNotification" parameterType="int">
+	    INSERT INTO p014_notification (
+	        USER_ID,
+	        NOTI_TYPE,
+	        TARGET_NO
+	    )
+	    SELECT
+	        CASE
+	            WHEN new_comment.PARENT_NO IS NOT NULL 
+	            THEN parent_comment.WRITER_ID -- 부모 댓글 작성자에게 알림
+	            
+	            ELSE market_post.SELLER_ID -- 게시글 작성자에게 알림
+	        END,
+	        
+	        CASE
+	            WHEN new_comment.PARENT_NO IS NOT NULL 
+	            THEN 'NEW_REPLY' 
+	            ELSE 'NEW_COMMENT'
+	        END,
+	        
+	        new_comment.MARKET_NO
+	        
+	    FROM
+	        p014_market_comment AS new_comment
+	    JOIN
+	        p014_market AS market_post ON new_comment.MARKET_NO = market_post.MARKET_NO
+	    LEFT JOIN
+	        p014_market_comment AS parent_comment ON new_comment.PARENT_NO = parent_comment.COMMENT_NO
+	        
+	    WHERE
+	        new_comment.COMMENT_NO = #{newCommentNo}
+	    AND
+	        -- 자기 자신에게는 알림을 보내지 않도록 처리
+	        (CASE
+	            WHEN new_comment.PARENT_NO IS NOT NULL THEN parent_comment.WRITER_ID
+	            ELSE market_post.SELLER_ID
+	        END) != new_comment.WRITER_ID
+	</insert>
+	
+	<select id="getGymList" resultType="map">
+		SELECT
+			GYM_CODE,
+			GYM_NAME,
+			ADDRESS
+		FROM
+			p014_gym
+		WHERE
+			STATUS_CODE = 'ACTIVE';
+	</select>
+	
+	<insert id="setNewMarket" parameterType="map">
+		INSERT INTO p014_market (
+	        TITLE, CONTENT, GYM_CODE, SELLER_ID, 
+	        PRICE, START_DATE, END_DATE
+	    ) VALUES (
+	        #{TITLE}, #{CONTENT}, #{GYM_CODE}, #{SELLER_ID}, 
+	        #{PRICE}, #{START_DATE}, #{END_DATE}
+	    )
+	</insert>
+	
+	<update id="setMembershipBuyer" parameterType="map">
+		UPDATE p014_market
+		    SET 
+		        BUYER_ID = #{BUYER_ID},
+		        SOLD_DATE = NOW(),
+		        STATUS_CODE = 'SOLD'
+		    WHERE 
+		        MARKET_NO = #{MARKET_NO}
+	</update>
+	<update id="insertMembershipTransfer" parameterType="map">
+		INSERT INTO p014_membership_transfer (
+	        MARKET_NO
+	    ) VALUES (
+	        #{MARKET_NO} 
+	    )
+	</update>
+	
+	<update id="updateAccountInfo" parameterType="map">
+		UPDATE p014_user
+		    SET 
+		        NAME = #{NAME},
+		        PW = #{PW},
+		        PHONE_NO = #{PHONE_NO},
+		        PROFILE_PATH = #{PROFILE_PATH}
+		    WHERE 
+		        ID = #{ID}
+	</update>
+	
+	<select id="getMyMarketList" resultType="map" parameterType="String">
+	    SELECT
+	        ROW_NUMBER() OVER (ORDER BY m.UPLOAD_DATE DESC) AS NO,
+	        g.GYM_NAME,
+	        m.STATUS_CODE,
+	        m.MARKET_NO
+	    FROM
+	        p014_market m
+	    JOIN
+	        p014_gym g ON m.GYM_CODE = g.GYM_CODE
+	    WHERE
+	        m.SELLER_ID = #{paramID}
+	</select>
+	
+	<select id="getMyMembershipList" resultType="map" parameterType="String">
+	    SELECT
+	        ROW_NUMBER() OVER (ORDER BY m.SOLD_DATE DESC) AS NO,
+	        g.GYM_NAME,
+	        t.STATUS_CODE,
+	        m.MARKET_NO
+	    FROM
+	        p014_market m
+	    JOIN
+	        p014_gym g ON m.GYM_CODE = g.GYM_CODE
+	    LEFT JOIN
+	        p014_membership_transfer t ON m.MARKET_NO = t.MARKET_NO
+	    WHERE
+	        m.BUYER_ID = #{paramID}
+	</select>
+	
+	<insert id="insertBuyCompletedNotification" parameterType="map">
+	    INSERT INTO p014_notification (
+	        USER_ID,
+	        NOTI_TYPE,
+	        TARGET_NO
+	    ) VALUES (
+	        #{BUYER_ID},
+	        'BUY_COMPLETED',
+	        #{MARKET_NO}
+	    )
+	</insert>
+	
+	<insert id="insertSaleCompletedNotification" parameterType="map">
+	    INSERT INTO p014_notification (
+	        USER_ID,
+	        NOTI_TYPE,
+	        TARGET_NO
+	    ) VALUES (
+	        #{SELLER_ID},
+	        'SALE_COMPLETED',
+	        #{MARKET_NO}
+	    )
+	</insert>
+	
+	<select id="getNotificationCount" resultType="int" parameterType="String">
+		SELECT
+		        COUNT(*)
+		    FROM
+		        p014_notification
+		    WHERE
+		        USER_ID = #{paramID}
+		    AND 
+		        IS_READ = 'N'
+	</select>
+	
+	<select id="getNotifications" resultType="map" parameterType="String">
+	    SELECT
+	        ROW_NUMBER() OVER (ORDER BY REG_DATE DESC) AS NO,
+	        NOTI_TYPE,
+	        TARGET_NO,
+	        MESSAGE,
+	        IS_READ,
+	        CASE
+	            WHEN TIMESTAMPDIFF(SECOND, REG_DATE, NOW()) &lt; 60 THEN '방금 전'
+	            WHEN TIMESTAMPDIFF(MINUTE, REG_DATE, NOW()) &lt; 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, REG_DATE, NOW()), '분 전')
+	            WHEN TIMESTAMPDIFF(HOUR, REG_DATE, NOW()) &lt; 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, REG_DATE, NOW()), '시간 전')
+	            WHEN TIMESTAMPDIFF(DAY, REG_DATE, NOW()) &lt;= 7 THEN CONCAT(TIMESTAMPDIFF(DAY, REG_DATE, NOW()), '일 전')
+	            ELSE DATE_FORMAT(REG_DATE, '%y.%m.%d %H:%i')
+	        END AS REG_DATE_STRING
+	    FROM
+	        p014_notification
+	    WHERE
+	        USER_ID = #{paramID}
+	    ORDER BY
+	        REG_DATE DESC
+	</select>
+	
+	<update id="updateIsRead" parameterType="map">
+	    UPDATE p014_notification
+	       SET IS_READ = 'Y'
+	     WHERE USER_ID = #{USER_ID}
+	       AND TARGET_NO = #{MARKET_NO}
+	       AND NOTI_TYPE NOT IN ('TRANSFER_APPROVED', 'TRANSFER_REJECTED')
+	</update>
+	
+	<update id="updateSingleNotiIsRead" parameterType="map">
+	    UPDATE p014_notification
+	       SET IS_READ = 'Y'
+	     WHERE USER_ID = #{USER_ID}
+	       AND TARGET_NO = #{MARKET_NO}
+	       AND NOTI_TYPE = #{NOTI_TYPE}
+	</update>
+	
+	<select id="getMyGymInfo" resultType="map" parameterType="String">
+	    SELECT
+	        GYM_CODE,
+	        GYM_NAME,
+	        ADDRESS,
+	        TEL_NO,
+	        DESCRIPTION,
+	        IMG_PATH
+	    FROM
+	        p014_gym
+	    WHERE
+	        OWNER_ID = #{OWNER_ID}
+	</select>
+	
+	<update id="updateGymInfo" parameterType="map">
+	    UPDATE p014_gym
+	       SET GYM_NAME    = #{GYM_NAME},
+	           ADDRESS     = #{ADDRESS},
+	           TEL_NO      = #{TEL_NO},
+	           DESCRIPTION = #{DESCRIPTION},
+	           IMG_PATH    = #{IMG_PATH}
+	     WHERE GYM_CODE = #{GYM_CODE}
+	</update>
+	
+	<update id="reUploadGymInfo" parameterType="map"> 
+	    UPDATE p014_gym 
+	       SET GYM_NAME    = #{GYM_NAME}, 
+	           ADDRESS     = #{ADDRESS}, 
+	           TEL_NO      = #{TEL_NO}, 
+	           DESCRIPTION = #{DESCRIPTION}, 
+	           IMG_PATH    = #{IMG_PATH}, 
+	           STATUS_CODE = 'PENDING',
+	           REG_DATE    = NOW()
+	     WHERE GYM_CODE = #{GYM_CODE} 
+	</update>
+	
+	<select id="getTransferManagementList" resultType="map" parameterType="String">
+	   SELECT
+	        m.MARKET_NO,
+	        DATE_FORMAT(m.SOLD_DATE, '%y.%m.%d %H:%i:%s') AS SOLD_DATE,
+	        t.STATUS_CODE,
+	        DATE_FORMAT(t.PROCESS_DATE, '%y.%m.%d %H:%i:%s') AS PROCESS_DATE,
+	        m.SELLER_ID,
+	        seller.NAME AS SELLER_NAME,
+	        -- 판매자 전화번호 포맷팅
+	        CASE
+	            WHEN LENGTH(seller.PHONE_NO) = 11 THEN CONCAT(SUBSTRING(seller.PHONE_NO, 1, 3), '-', SUBSTRING(seller.PHONE_NO, 4, 4), '-', SUBSTRING(seller.PHONE_NO, 8))
+	            WHEN LENGTH(seller.PHONE_NO) = 10 THEN CONCAT(SUBSTRING(seller.PHONE_NO, 1, 3), '-', SUBSTRING(seller.PHONE_NO, 4, 3), '-', SUBSTRING(seller.PHONE_NO, 7))
+	            ELSE seller.PHONE_NO
+	        END AS SELLER_PHONE_NO,
+	        seller.PROFILE_PATH AS SELLER_PROFILE_PATH,
+	        m.BUYER_ID,
+	        buyer.NAME AS BUYER_NAME,
+	        -- 구매자 전화번호 포맷팅
+	        CASE
+	            WHEN LENGTH(buyer.PHONE_NO) = 11 THEN CONCAT(SUBSTRING(buyer.PHONE_NO, 1, 3), '-', SUBSTRING(buyer.PHONE_NO, 4, 4), '-', SUBSTRING(buyer.PHONE_NO, 8))
+	            WHEN LENGTH(buyer.PHONE_NO) = 10 THEN CONCAT(SUBSTRING(buyer.PHONE_NO, 1, 3), '-', SUBSTRING(buyer.PHONE_NO, 4, 3), '-', SUBSTRING(buyer.PHONE_NO, 7))
+	            ELSE buyer.PHONE_NO
+	        END AS BUYER_PHONE_NO,
+	        buyer.PROFILE_PATH AS BUYER_PROFILE_PATH,
+	        (SELECT MESSAGE 
+	           FROM p014_notification n
+	          WHERE n.TARGET_NO = m.MARKET_NO
+	            AND n.NOTI_TYPE = 'TRANSFER_REJECTED'
+	          LIMIT 1) AS REJECT_MESSAGE
+	    FROM
+	        p014_market m
+	    LEFT JOIN
+	        p014_membership_transfer t ON m.MARKET_NO = t.MARKET_NO
+	    LEFT JOIN
+	        p014_user seller ON m.SELLER_ID = seller.ID
+	    LEFT JOIN
+	        p014_user buyer ON m.BUYER_ID = buyer.ID
+	    WHERE
+	        m.GYM_CODE = #{paramCode}
+	        AND m.STATUS_CODE IN ('SOLD', 'REJECTED')
+	    ORDER BY
+	        m.SOLD_DATE DESC
+	</select>
+	
+	<update id="updateTransferStatus" parameterType="map">
+	    UPDATE p014_membership_transfer
+	       SET STATUS_CODE  = #{NEW_STATUS},
+	           PROCESS_DATE = NOW()
+	     WHERE MARKET_NO = #{MARKET_NO}
+	</update>
+	
+	<update id="updateMarketStatusOnReject" parameterType="map">
+	    UPDATE p014_market
+	    	SET STATUS_CODE = 'REJECTED'
+	    WHERE MARKET_NO = #{MARKET_NO}
+	</update>
+	
+	<insert id="insertApprovalNotification" parameterType="map">
+	    INSERT INTO p014_notification (
+	        USER_ID,
+	        NOTI_TYPE,
+	        TARGET_NO
+	    ) VALUES (
+	        #{USER_ID},
+	        'TRANSFER_APPROVED',
+	        #{MARKET_NO}
+	    )
+	</insert>
+	
+	<insert id="insertRejectionNotification" parameterType="map">
+	    INSERT INTO p014_notification (
+	        USER_ID,
+	        NOTI_TYPE,
+	        TARGET_NO,
+	        MESSAGE
+	    ) VALUES (
+	        #{USER_ID},
+	        'TRANSFER_REJECTED',
+	        #{MARKET_NO},
+	        #{REJECT_MESSAGE}
+	    )
+	</insert>
+	
+	<select id="getMarketCountsInfo" resultType="map" parameterType="String">
+	    SELECT
+	        (SELECT COUNT(*)
+	           FROM p014_market m
+	           JOIN p014_membership_transfer t ON m.MARKET_NO = t.MARKET_NO
+	          WHERE m.GYM_CODE = #{paramCode}
+	            AND t.STATUS_CODE = 'REQUESTED') AS PENDING_COUNT,
+	
+	        (SELECT COUNT(*)
+	           FROM p014_market
+	          WHERE GYM_CODE = #{paramCode}
+	            AND STATUS_CODE = 'SALE') AS SALE_COUNT
+	</select>
+
+	<select id="getDashboardCurrentInfo" resultType="map" parameterType="String">
+	    SELECT
+	        (SELECT COUNT(*) FROM p014_user) AS TOTAL_USER_COUNT,
+	
+	        (SELECT COUNT(*)
+	           FROM p014_market
+	          WHERE GYM_CODE = #{paramCode}
+	            AND UPLOAD_DATE >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+	            AND STATUS_CODE IN ('SOLD', 'REJECTED')) AS MONTHLY_POST_COUNT,
+	
+	        (SELECT COUNT(*)
+	           FROM p014_gym_favorites
+	          WHERE GYM_CODE = #{paramCode}) AS FAVORITE_COUNT
+	</select>
+	
+	<select id="getDashboardPendingTransfers" resultType="map" parameterType="String">
+	    SELECT
+	        CONCAT(seller.NAME, ' 회원님 -> ', buyer.NAME, ' 회원님') AS TRANSFER_INFO
+	    FROM
+	        p014_market m
+	    JOIN
+	        p014_membership_transfer t ON m.MARKET_NO = t.MARKET_NO
+	    JOIN
+	        p014_user seller ON m.SELLER_ID = seller.ID
+	    JOIN
+	        p014_user buyer ON m.BUYER_ID = buyer.ID
+	    WHERE
+	        m.GYM_CODE = #{paramCode}
+	        AND t.STATUS_CODE = 'REQUESTED'
+	    ORDER BY
+	        m.SOLD_DATE DESC
+	    LIMIT 5
+	</select>
+	
+	<select id="getDashboardWorkLog" resultType="map" parameterType="String">
+	   SELECT
+	        CONCAT(
+	            seller.NAME, ', ', buyer.NAME, ' 회원님의 요청 ',
+	            CASE
+	                WHEN t.STATUS_CODE = 'APPROVED' THEN '승인'
+	                WHEN t.STATUS_CODE = 'REJECTED' THEN '반려'
+	            END
+	        ) AS WORK_LOG_INFO
+	    FROM
+	        p014_market m
+	    JOIN
+	        p014_membership_transfer t ON m.MARKET_NO = t.MARKET_NO
+	    JOIN
+	        p014_user buyer ON m.BUYER_ID = buyer.ID
+	    JOIN
+	        p014_user seller ON m.SELLER_ID = seller.ID
+	    WHERE
+	        m.GYM_CODE = #{paramCode}
+	        AND t.STATUS_CODE IN ('APPROVED', 'REJECTED')
+	    ORDER BY
+	        t.PROCESS_DATE DESC
+	    LIMIT 3
+	</select>
+	
+	<select id="getGymName" resultType="String" parameterType="String">
+	    SELECT
+	        GYM_NAME
+	    FROM
+	        p014_gym
+	    WHERE
+	        GYM_CODE = #{paramCode}
+	</select>
+	
+	<select id="getMyGymMachine" resultType="map" parameterType="String">
+	    SELECT
+	        m.MACHINE_CODE,
+	        m.MACHINE_NAME,
+	        CASE
+	            WHEN owned.MACHINE_CODE IS NOT NULL THEN 'Y'
+	            ELSE 'N'
+	        END AS IS_OWNED
+	    FROM
+	        p014_machine m
+	    LEFT JOIN (
+	        SELECT MACHINE_CODE
+	        FROM p014_gym_machine
+	        WHERE GYM_CODE = (SELECT GYM_CODE FROM p014_user WHERE ID = #{paramID})
+	    ) AS owned ON m.MACHINE_CODE = owned.MACHINE_CODE
+	    ORDER BY
+	        m.MACHINE_NAME ASC
+	</select>
+	
+	<delete id="deleteGymMachines" parameterType="String">
+	    DELETE FROM p014_gym_machine
+	     WHERE GYM_CODE = #{paramCode}
+	</delete>
+	
+	<delete id="deleteGymMachines1" parameterType="String">
+	    DELETE FROM p014_gym_machine
+	     WHERE GYM_CODE = #{gymCode}
+	</delete>
+	
+	<insert id="insertGymMachine" parameterType="map">
+	    INSERT INTO p014_gym_machine (
+	        GYM_CODE,
+	        MACHINE_CODE
+	    ) VALUES (
+	        #{gymCode},
+	        #{machineCode}
+	    )
+	</insert>
+	
+	<insert id="insertNewGymInfo" parameterType="map">
+	    <selectKey keyProperty="GYM_CODE" resultType="int" order="AFTER">
+	        SELECT LAST_INSERT_ID()
+	    </selectKey>
+	    INSERT INTO p014_gym (
+	        GYM_NAME, ADDRESS, TEL_NO, DESCRIPTION, IMG_PATH, OWNER_ID, STATUS_CODE
+	    ) VALUES (
+	        #{GYM_NAME}, #{ADDRESS}, #{TEL_NO}, #{DESCRIPTION}, #{IMG_PATH}, #{paramID}, 'PENDING'
+	    )
+	</insert>
+	
+	<update id="updateUserGymCode" parameterType="map">
+	    UPDATE p014_user
+	       SET GYM_CODE = #{GYM_CODE}
+	     WHERE ID = #{paramID}
+	</update>
+	
+	<select id="getMachineList" resultType="map">
+	    SELECT
+	        MACHINE_CODE,
+	        MACHINE_NAME,
+	        'N' AS IS_OWNED
+	    FROM
+	        p014_machine
+	    ORDER BY
+	        MACHINE_NAME ASC
+	</select>
+	
+	<select id="getRejectReason" resultType="map" parameterType="String">
+	    SELECT
+	        MESSAGE,
+	        DATE_FORMAT(REG_DATE, '%y.%m.%d %H:%i') AS REJECT_DATE
+	    FROM
+	        p014_notification
+	    WHERE
+	        TARGET_NO = #{paramCode}
+	        AND NOTI_TYPE = 'GYM_REGISTRATION_REJECTED'
+	    ORDER BY
+	        REG_DATE DESC
+	    LIMIT 1
+	</select>
+	
+	<select id="getCurrentInfo" resultType="map">
+	    SELECT
+	        (SELECT FORMAT(COUNT(*), 0) 
+	           FROM p014_user) AS TOTAL_USER_COUNT,
+	
+	        (SELECT FORMAT(COUNT(*), 0) 
+	           FROM p014_user 
+	          WHERE ROLE_TYPE = 'Admin') AS TOTAL_ADMIN_COUNT,
+	
+	        (SELECT FORMAT(COUNT(*), 0) 
+	           FROM p014_market 
+	          WHERE STATUS_CODE = 'SALE') AS SALE_MARKET_COUNT,
+	
+	        (SELECT FORMAT(COUNT(*), 0) 
+	           FROM p014_user 
+	          WHERE REG_DATE >= DATE_SUB(NOW(), INTERVAL 30 DAY)) AS NEW_USER_COUNT_30D,
+	
+	        (SELECT FORMAT(COUNT(*), 0) 
+	           FROM p014_gym 
+	          WHERE STATUS_CODE = 'ACTIVE' 
+	            AND REG_DATE >= DATE_SUB(NOW(), INTERVAL 30 DAY)) AS NEW_GYM_COUNT_30D
+	</select>
+	
+	<select id="getPendingGymList" resultType="map">
+	    SELECT
+	        GYM_CODE,
+	        GYM_NAME,
+	        ADDRESS,
+	        TEL_NO,
+	        DESCRIPTION,
+	        OWNER_ID,
+	        DATE_FORMAT(REG_DATE, '%y.%m.%d %H:%i:%s') AS REG_DATE,
+	        IMG_PATH
+	    FROM
+	        p014_gym
+	    WHERE
+	        STATUS_CODE = 'PENDING'
+	    ORDER BY
+	        REG_DATE ASC
+	</select>
+	
+	<update id="approveGym" parameterType="map">
+	    UPDATE p014_gym
+	       SET STATUS_CODE = 'ACTIVE',
+	           REG_DATE    = NOW()
+	     WHERE GYM_CODE = #{GYM_CODE}
+	</update>
+	
+	<update id="rejectGym" parameterType="map">
+	    UPDATE p014_gym
+	       SET STATUS_CODE = 'REJECTED'
+	     WHERE GYM_CODE = #{GYM_CODE}
+	</update>
+	
+	<insert id="insertGymRejectionNotification" parameterType="map">
+	    INSERT INTO p014_notification (
+	        USER_ID,
+	        NOTI_TYPE,
+	        TARGET_NO,
+	        MESSAGE
+	    )
+	    SELECT
+	        OWNER_ID,
+	        'GYM_REGISTRATION_REJECTED',
+	        #{GYM_CODE},
+	        #{REJECT_REASON}
+	    FROM
+	        p014_gym
+	    WHERE
+	        GYM_CODE = #{GYM_CODE}
+	</insert>
+	
+	<select id="getTotalUserCount" resultType="map">
+	    SELECT FORMAT(COUNT(*), 0) AS TOTAL_USER_COUNT FROM p014_user
+	</select>
+	
+	<select id="getTotalActiveGymCount" resultType="map">
+	    SELECT FORMAT(COUNT(*), 0) AS TOTAL_GYM_COUNT FROM p014_gym WHERE STATUS_CODE = 'ACTIVE'
+	</select>
+	
+	<select id="getMonthlyNewUserStats" resultType="map">
+	    SELECT
+	        DATE_FORMAT(calendar.MONTH, '%b') AS MONTH,
+	        COALESCE(COUNT(u.ID), 0) AS COUNT
+	    FROM (
+	        SELECT DATE(CONCAT(YEAR(NOW()), '-', n.num, '-01')) AS MONTH
+	        FROM (
+	            SELECT 1 AS num UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL
+	            SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL
+	            SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL
+	            SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12
+	        ) n
+	        WHERE n.num &lt;= MONTH(NOW())
+	    ) calendar
+	    LEFT JOIN p014_user u ON DATE_FORMAT(u.REG_DATE, '%Y-%m') = DATE_FORMAT(calendar.MONTH, '%Y-%m')
+	                         AND YEAR(u.REG_DATE) = YEAR(NOW())
+	    GROUP BY
+	        calendar.MONTH
+	    ORDER BY
+	        calendar.MONTH ASC
+	</select>
+	
+	<select id="getMonthlyNewGymStats" resultType="map">
+	    SELECT
+	        DATE_FORMAT(calendar.MONTH, '%b') AS MONTH,
+	        COALESCE(COUNT(g.GYM_CODE), 0) AS COUNT
+	    FROM (
+	        SELECT DATE(CONCAT(YEAR(NOW()), '-', n.num, '-01')) AS MONTH
+	        FROM (
+	            SELECT 1 AS num UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL
+	            SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL
+	            SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL
+	            SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12
+	        ) n
+	        WHERE n.num &lt;= MONTH(NOW())
+	    ) calendar
+	    LEFT JOIN p014_gym g ON DATE_FORMAT(g.REG_DATE, '%Y-%m') = DATE_FORMAT(calendar.MONTH, '%Y-%m')
+	                       AND g.STATUS_CODE = 'ACTIVE'
+	                       AND YEAR(g.REG_DATE) = YEAR(NOW())
+	    GROUP BY
+	        calendar.MONTH
+	    ORDER BY
+	        calendar.MONTH ASC
+	</select>
+	
+	<select id="getTop5GymsByTransaction" resultType="map">
+	    SELECT
+	        g.GYM_NAME,
+	        COUNT(m.MARKET_NO) AS COUNT
+	    FROM
+	        p014_market m
+	    JOIN
+	        p014_gym g ON m.GYM_CODE = g.GYM_CODE
+	    WHERE
+	        m.STATUS_CODE IN ('SOLD', 'REJECTED')
+	        AND m.SOLD_DATE >= DATE_SUB(NOW(), INTERVAL 1 YEAR)
+	    GROUP BY
+	        g.GYM_NAME
+	    ORDER BY
+	        COUNT DESC
+	    LIMIT 5
+	</select>
+	
+	<select id="getTotalTransactionGrowthMoM" resultType="map">
+	    SELECT
+	        (SELECT COUNT(*)
+	           FROM p014_market
+	          WHERE STATUS_CODE IN ('SOLD', 'REJECTED')
+	            AND SOLD_DATE >= DATE_FORMAT(NOW(), '%Y-%m-01')
+	        ) AS CURRENT_MONTH_COUNT,
+	
+	        (SELECT COUNT(*)
+	           FROM p014_market
+	          WHERE STATUS_CODE IN ('SOLD', 'REJECTED')
+	            AND SOLD_DATE BETWEEN DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01')
+	                              AND (NOW() - INTERVAL 1 MONTH)
+	        ) AS PREVIOUS_MONTH_COUNT
+	</select>
+	
+	<select id="getTotalApprovalRate" resultType="map">
+	    SELECT (COUNT(CASE WHEN STATUS_CODE = 'APPROVED' THEN 1 END) / COUNT(*)) * 100 AS APPROVAL_RATE
+	      FROM p014_membership_transfer
+	     WHERE STATUS_CODE IN ('APPROVED', 'REJECTED')
+	</select>
+	
+	<select id="getTotalSoldRate" resultType="map">
+	    SELECT 
+	        (COUNT(CASE WHEN STATUS_CODE = 'SOLD' THEN 1 END) / COUNT(*)) * 100 AS SOLD_RATE
+	    FROM 
+	        p014_market
+	</select>
+	
+	<select id="getMonthlyTransactionStats" resultType="map" parameterType="String">
+    SELECT
+        DATE_FORMAT(calendar.MONTH, '%b') AS MONTH,
+        CAST(COALESCE(COUNT(t.PROCESS_DATE), 0) AS SIGNED) AS COUNT
+    FROM (
+        SELECT DATE(CONCAT(YEAR(NOW()), '-', n.num, '-01')) AS MONTH
+        FROM (
+            SELECT 1 AS num UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL
+            SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL
+            SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL
+            SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12
+        ) n
+        WHERE n.num &lt;= MONTH(NOW())
+    ) calendar
+    LEFT JOIN (
+        SELECT m.MARKET_NO, t.PROCESS_DATE
+        FROM p014_market m
+        JOIN p014_membership_transfer t ON m.MARKET_NO = t.MARKET_NO
+        WHERE m.GYM_CODE = #{gymCode}
+          AND t.STATUS_CODE = 'APPROVED'
+          AND YEAR(t.PROCESS_DATE) = YEAR(NOW())
+    ) t ON DATE_FORMAT(t.PROCESS_DATE, '%Y-%m') = DATE_FORMAT(calendar.MONTH, '%Y-%m')
+    GROUP BY
+        calendar.MONTH
+    ORDER BY
+        calendar.MONTH ASC
+	</select>
+	
+	<select id="getTransactionGrowthMoM" resultType="map" parameterType="String">
+    SELECT
+        (SELECT COUNT(*)
+           FROM p014_market
+          WHERE GYM_CODE = #{gymCode}
+            AND STATUS_CODE IN ('SOLD', 'REJECTED')
+            AND SOLD_DATE >= DATE_FORMAT(NOW(), '%Y-%m-01')
+        ) AS CURRENT_MONTH_COUNT,
+
+        (SELECT COUNT(*)
+           FROM p014_market
+          WHERE GYM_CODE = #{gymCode}
+            AND STATUS_CODE IN ('SOLD', 'REJECTED')
+            AND SOLD_DATE BETWEEN DATE_FORMAT(NOW() - INTERVAL 1 MONTH, '%Y-%m-01')
+                              AND (NOW() - INTERVAL 1 MONTH)
+        ) AS PREVIOUS_MONTH_COUNT
+	</select>
+	
+	<select id="getTransferApprovalRate" resultType="map" parameterType="String">
+	    SELECT (COUNT(CASE WHEN t.STATUS_CODE = 'APPROVED' THEN 1 END) / COUNT(*)) * 100 AS APPROVAL_RATE
+	      FROM p014_market m
+	      JOIN p014_membership_transfer t ON m.MARKET_NO = t.MARKET_NO
+	     WHERE m.GYM_CODE = #{gymCode}
+	       AND t.STATUS_CODE IN ('APPROVED', 'REJECTED')
+	</select>
+	
+	<select id="getMonthlyProcessingTimeStats" resultType="map" parameterType="String">
+	    SELECT
+	        DATE_FORMAT(calendar.MONTH, '%b') AS MONTH,
+	        ROUND(COALESCE(AVG(TIMESTAMPDIFF(MINUTE, m.SOLD_DATE, t.PROCESS_DATE) / 60), 0), 1) AS AVG_HOURS
+	    FROM (
+	        SELECT DATE(CONCAT(YEAR(NOW()), '-', n.num, '-01')) AS MONTH
+	        FROM (
+	            SELECT 1 AS num UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL
+	            SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL
+	            SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL
+	            SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12
+	        ) n
+	        WHERE n.num &lt;= MONTH(NOW())
+	    ) calendar
+	    LEFT JOIN (
+	        SELECT m.MARKET_NO, m.SOLD_DATE, t.PROCESS_DATE
+	        FROM p014_market m
+	        JOIN p014_membership_transfer t ON m.MARKET_NO = t.MARKET_NO
+	        WHERE m.GYM_CODE = #{gymCode}
+	          AND t.STATUS_CODE IN ('APPROVED', 'REJECTED')
+	          AND YEAR(t.PROCESS_DATE) = YEAR(NOW())
+	    ) t ON DATE_FORMAT(t.PROCESS_DATE, '%Y-%m') = DATE_FORMAT(calendar.MONTH, '%Y-%m')
+	    LEFT JOIN p014_market m ON t.MARKET_NO = m.MARKET_NO
+	    GROUP BY
+	        calendar.MONTH
+	    ORDER BY
+	        calendar.MONTH DESC
+	</select>
+	
+	<select id="getRejectMessage" resultType="String" parameterType="map">
+	    SELECT
+	        MESSAGE
+	    FROM
+	        p014_notification
+	    WHERE
+	        USER_ID = #{USER_ID}
+	        AND TARGET_NO = #{MARKET_NO}
+	        AND NOTI_TYPE = 'TRANSFER_REJECTED'
+	    ORDER BY
+	        REG_DATE DESC
+	    LIMIT 1
+	</select>
+	
+	<update id="updatePW" parameterType="map">
+		UPDATE p014_user
+		    SET 
+		        PW = #{paramPW}
+		    WHERE 
+		        ID = #{paramID}
+	</update>
+</mapper>

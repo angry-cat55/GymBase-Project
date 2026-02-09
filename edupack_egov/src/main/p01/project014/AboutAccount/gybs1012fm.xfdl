@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Signup" width="1280" height="720" titletext="아이디/비번 찾기">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Static id="Static00" taborder="0" left="0" top="0" width="50%" height="50%" text="" visible="false" background="#ffe5fe"/>
+        <Div id="Div00" taborder="1" left="Static00:-175" top="Static00:-250" width="350" height="500" background="#efefef" borderRadius="30px" text="" cssclass="loginDiv" boxShadow="0px 0px 15px 0px rgba(0,0,0,0.41)" border="2px solid #000000">
+          <Layouts>
+            <Layout>
+              <Static id="sta_background" taborder="5" left="10" top="10" background="#ffffff" borderRadius="20px" right="10" bottom="10" text="" border="1px solid #d4d4d4"/>
+              <Button id="btn_ok" taborder="1" text="확인" left="45" width="190" height="48" cssclass="GB_Login" bottom="43" onclick="Div00_btn_ok_onclick"/>
+              <Static id="sta_findAccount" taborder="0" text="아이디/비밀번호 찾기" left="40" top="69" height="48" font="normal 18pt/normal &quot;Arial&quot;" padding="0px 0px 20px" border="0px none,0px none,2px solid black" right="40"/>
+              <Radio id="rdo_selectType" taborder="2" left="40" top="sta_findAccount:30" width="270" height="20" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" rowcount="1" font="normal 11pt/normal &quot;Arial&quot;" value="ID" text="아이디 찾기" index="0" onitemchanged="Div00_rdo_selectType_onitemchanged">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">ID</Col>
+                      <Col id="datacolumn">아이디 찾기</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">PW</Col>
+                      <Col id="datacolumn">비밀번호 찾기</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Radio>
+              <Div id="div_find" taborder="3" left="40" top="rdo_selectType:11" width="270" height="215" url="AboutAccount::gybs1013fm.xfdl"/>
+              <Button id="btn_cancel" taborder="4" text="취소" left="btn_ok:5" height="48" cssclass="GB_Cancel" bottom="43" right="45" onclick="Div00_btn_cancel_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.fvApp = nexacro.getApplication();
+this.comp = this.Div00.form.div_find.form;
+
+// 아이디 찾기 / 비번 찾기 선택
+this.Div00_rdo_selectType_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	if (obj.value == "ID") {
+		this.Div00.form.div_find.url = "AboutAccount::gybs1013fm.xfdl";
+	}
+	else if (obj.value == "PW") {
+		this.Div00.form.div_find.url = "AboutAccount::gybs1014fm.xfdl";
+	}
+	// comp 경로 재설정
+	this.comp = this.Div00.form.div_find.form;
+};
+
+// 로그인 화면으로
+this.Div00_btn_cancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fvApp.mainframe.Main.formurl = "AboutAccount::gybs1010fm.xfdl";
+};
+
+// 확인
+this.Div00_btn_ok_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	
+	// 미입력 체크
+	if (this.fn_checkNull() == false) {
+		this.gfnAlert("msg.err.enter.alldata", "", "msg.err.enter.alldata", "fnMsgCallback");	
+		return;
+	}
+	
+	var strSvcUrl = "p014/findAccount.do";
+	var inData    = "";
+	var outData   = "ds_findedInfo=ds_findedInfo";
+	var strArg    = "paramID=" + this.comp.edt_ID.value
+				  + " paramName=" + this.comp.edt_name.value
+				  + " paramPhoneNo=" + this.comp.msk_phoneNo.value;
+
+	this.gfnTransaction("findAccount", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+	
+};
+
+// 각 화면에서 미입력 정보가 있는지(false) 확인
+this.fn_checkNull = function()
+{
+	if (this.Div00.form.rdo_selectType.value == "ID") {
+		if (this.comp.edt_name.value == null ||
+			this.comp.msk_phoneNo.value == null) {
+			return false;
+		}
+	}
+	else if (this.Div00.form.rdo_selectType.value == "PW") {
+		if (this.comp.edt_name.value == null ||
+			this.comp.msk_phoneNo.value == null ||
+			this.comp.edt_ID.value == null) {
+			return false;
+		}
+	}
+	return true;
+};
+
+this.fnCallback = function(svcId, errCd, errMsg) {
+	if (errCd < 0) {
+		arrArg = [errMsg];
+		this.gfnAlert("msg.server.error.msg", arrArg, "msg.server.error.msg", "fnMsgCallback");	
+	}
+	
+	if (svcId == "findAccount") {
+		if (errCd == 10120) { // 찾기 실패
+			if (this.Div00.form.rdo_selectType.value == "ID") {
+			
+				var objChildFrame = new ChildFrame("popupFailFindID", 0, 0, 250, 300);
+				objChildFrame.formurl = "AboutAccount::gybs1112pu.xfdl";
+				objChildFrame.openalign = "center middle";
+				objChildFrame.overlaycolor = "RGBA(196,196,196,0.5)";
+				objChildFrame.dragmovetype = "none";
+				objChildFrame.showtitlebar = false;
+				objChildFrame.border = "1px solid black";
+				
+				var objParam = {};
+				objChildFrame.showModal(this.getOwnerFrame(), objParam, this, "fn_popupCallback");
+			}
+			else if (this.Div00.form.rdo_selectType.value == "PW") {
+			
+				var objChildFrame = new ChildFrame("popupFailFindPW", 0, 0, 250, 300);
+				objChildFrame.formurl = "AboutAccount::gybs1114pu.xfdl";
+				objChildFrame.openalign = "center middle";
+				objChildFrame.overlaycolor = "RGBA(196,196,196,0.5)";
+				objChildFrame.dragmovetype = "none";
+				objChildFrame.showtitlebar = false;
+				objChildFrame.border = "1px solid black";
+				
+				var objParam = {};
+				objChildFrame.showModal(this.getOwnerFrame(), objParam, this, "fn_popupCallback");
+			}
+		}
+		else if (errCd == 10121) { // 찾기 성공
+			if (this.Div00.form.rdo_selectType.value == "ID") {
+			
+				var objChildFrame = new ChildFrame("popupSuccessFindID", 0, 0, 250, 300);
+				objChildFrame.formurl = "AboutAccount::gybs1111pu.xfdl";
+				objChildFrame.openalign = "center middle";
+				objChildFrame.overlaycolor = "RGBA(196,196,196,0.5)";
+				objChildFrame.dragmovetype = "none";
+				objChildFrame.showtitlebar = false;
+				objChildFrame.border = "1px solid black";
+				
+				var objParam = {param_name : this.comp.edt_name.value, param_ID : this.ds_findedInfo.getColumn(0, "ID")};
+				objChildFrame.showModal(this.getOwnerFrame(), objParam, this, "fn_popupCallback");
+			}
+			else if (this.Div00.form.rdo_selectType.value == "PW") {
+			
+				var objChildFrame = new ChildFrame("popupSuccessFindPW", 0, 0, 360, 470);
+				objChildFrame.formurl = "AboutAccount::gybs1113pu.xfdl";
+				objChildFrame.openalign = "center middle";
+				objChildFrame.overlaycolor = "RGBA(196,196,196,0.5)";
+				objChildFrame.dragmovetype = "none";
+				objChildFrame.showtitlebar = false;
+				objChildFrame.border = "1px solid black";
+				
+				var objParam = {param_ID : this.ds_findedInfo.getColumn(0, "ID"), param_name : this.comp.edt_name.value, param_PW : this.ds_findedInfo.getColumn(0, "PW")};
+				objChildFrame.showModal(this.getOwnerFrame(), objParam, this, "fn_popupCallback");
+			}
+			this.fvApp.mainframe.Main.formurl = "AboutAccount::gybs1010fm.xfdl";
+		}
+	}
+}]]></Script>
+    <Objects>
+      <Dataset id="ds_findedInfo">
+        <ColumnInfo>
+          <Column id="ID" type="STRING" size="256"/>
+          <Column id="PW" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Signup" width="1280" height="720" titletext="회원가입">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Static id="Static00" taborder="0" left="0" top="0" width="50%" height="50%" text="" visible="false" background="#ffe5fe"/>
+        <Div id="Div00" taborder="1" left="Static00:-175" top="Static00:-250" width="350" height="500" background="#efefef" borderRadius="30px" text="" cssclass="loginDiv" boxShadow="0px 0px 15px 0px rgba(0,0,0,0.41)" border="2px solid #000000">
+          <Layouts>
+            <Layout>
+              <Static id="sta_background" taborder="16" left="10" top="10" background="#ffffff" borderRadius="20px" right="10" bottom="10" text="" border="1px solid #d4d4d4"/>
+              <Edit id="Edit_ID" taborder="1" left="45" top="85" width="166" height="36" text="" borderRadius="10px 5px 5px 10px" padding="0px 0px 0px 15px" displaynulltext="아이디" border="1px solid gray" onkillfocus="Common_onkillfocus" onchanged="Div00_Edit_ID_onchanged"/>
+              <Button id="Btn_Signup" taborder="7" text="가입" left="45" width="190" height="48" cssclass="GB_Login" bottom="43" onclick="Div00_Btn_Signup_onclick"/>
+              <Edit id="Edit_PW" taborder="3" left="45" top="Edit_ID:25" width="260" height="36" password="true" borderRadius="10px" displaynulltext="비밀번호" border="1px solid gray" onkillfocus="Common_onkillfocus" padding="0px 0px 0px 15px"/>
+              <Static id="Sta_IncorrectID" taborder="9" text="아이디를 입력하십시오." left="55" top="Edit_ID:4" width="117" height="15" font="normal bold 8pt/normal &quot;Arial&quot;" color="red" visible="false"/>
+              <Static id="Sta_IncorrectPW" taborder="10" text="비밀번호를 입력하십시오." left="55" top="Edit_PW:4" width="128" height="15" font="normal bold 8pt/normal &quot;Arial&quot;" color="red" visible="false"/>
+              <Button id="Btn_IDCheck" taborder="2" text="아이디 중복 확인" left="215" top="85" width="90" height="36" font="normal bold 10px/normal &quot;Arial&quot;" border="1px solid gray" background="white" borderRadius="5px 10px 10px 5px" onclick="Div00_Btn_IDCheck_onclick" onkillfocus="Common_onkillfocus"/>
+              <Edit id="Edit_PWCK" taborder="4" left="45" top="Edit_PW:25" width="260" height="36" password="true" borderRadius="10px" displaynulltext="비밀번호 확인" border="1px solid gray" padding="0px 0px 0px 15px" onkillfocus="Common_onkillfocus"/>
+              <Static id="Sta_IncorrectPWCK" taborder="11" text="비밀번호가 일치하지 않습니다." left="55" top="Edit_PWCK:4" width="153" height="15" font="normal bold 8pt/normal &quot;Arial&quot;" color="red" visible="false"/>
+              <Edit id="Edit_Name" taborder="5" left="45" top="Edit_PWCK:25" width="260" height="36" password="false" borderRadius="10px" displaynulltext="이름" border="1px solid gray" padding="0px 0px 0px 15px" onkillfocus="Common_onkillfocus"/>
+              <Static id="Sta_IncorrectName" taborder="12" text="이름을 입력하십시오." left="55" top="Edit_Name:4" width="128" height="15" font="normal bold 8pt/normal &quot;Arial&quot;" color="red" visible="false"/>
+              <MaskEdit id="Msk_PhoneNo" taborder="6" left="45" top="Edit_Name:25" width="260" height="36" border="1px solid gray" borderRadius="10px" format="###-####-####" type="string" autoselect="true" onkillfocus="Common_onkillfocus" trimtype="both"/>
+              <Static id="Sta_IncorrectPhoneNo" taborder="13" text="번호가 올바르지 않습니다." left="55" top="Msk_PhoneNo:4" width="128" height="15" font="normal bold 8pt/normal &quot;Arial&quot;" color="red" visible="false"/>
+              <Radio id="Rdo_RoleType" taborder="0" left="45" top="40" width="260" height="19" columncount="2" rowcount="1" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" onkillfocus="Common_onkillfocus">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">Admin</Col>
+                      <Col id="datacolumn">관리자</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">User</Col>
+                      <Col id="datacolumn">사용자</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Radio>
+              <Static id="Sta_IncorrectRoleType" taborder="14" text="계정 유형을 선택하십시오." left="55" top="Rdo_RoleType:4" width="131" height="15" font="normal bold 8pt/normal &quot;Arial&quot;" color="red" visible="false"/>
+              <Button id="btn_cancel" taborder="8" text="취소" left="Btn_Signup:5" height="48" cssclass="GB_Cancel" bottom="43" right="45" onclick="Div00_btn_cancel_onclick"/>
+              <Static id="Sta_IncorrectIDCkeck" taborder="15" text="아이디 중복 확인을 하십시오." left="55" top="125" width="145" height="15" font="normal bold 8pt/normal &quot;Arial&quot;" color="red" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.fvApp = nexacro.getApplication();
+this.idCheckYn = "N";
+
+this.Div00_Edit_PWCK_onkillfocus = function(obj:nexacro.Edit,e:nexacro.KillFocusEventInfo)
+{
+	var PW = this.Div00.form.Edit_PW.value;
+	if (obj.value != PW) {
+		obj.border = "1px solid red";
+		this.Div00.form.Sta_IncorrectPWCK.visible = true;
+	}
+	else {
+		obj.border = "1px solid gray";
+		this.Div00.form.Sta_IncorrectPWCK.visible = false;
+	}
+};
+
+
+this.Div00_Btn_Signup_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 회원가입 작성 목록 중 올바르지 않은 항목이 있을 경우 (+ 아이디 중복 체크 안 했을 경우)
+	if (this.is_correctSignup() == false) return;
+
+	// 이상 없을시 ds_accountInfo에 데이터 저장 후 트랜잭션으로 서버에 데이터 전송
+	var strSvcUrl = "p014/setAccountInfo.do";
+	var inData    = "ds_accountInfo=ds_accountInfo";
+	var outData   = "";
+	var strArg    = "";
+	this.gfnTransaction("setAccountInfo", strSvcUrl, inData, outData, strArg, "fnCallback");
+
+
+	// 회원가입 성공 모달 팝업
+	var objChildFrame = new ChildFrame("popupModal", 0, 0, 250, 300);
+	objChildFrame.formurl = "AboutAccount::gybs1110pu.xfdl";
+ 	objChildFrame.openalign = "center middle";
+ 	objChildFrame.overlaycolor = "RGBA(196,196,196,0.5)";
+	objChildFrame.dragmovetype = "none";
+	objChildFrame.showtitlebar = false;
+ 	objChildFrame.border = "1px solid black";
+	
+	var objParam = {param_name : this.Div00.form.Edit_Name.value};
+	objChildFrame.showModal(this.getOwnerFrame(), objParam, this, "fn_popupCallback");
+
+};
+
+this.is_correctSignup = function()
+{
+	// 입력이 올바르지 않은 항목 있으면 포커스 + 보더 빨강 + 언더 텍스트 표시
+	while(true) {
+		if (this.Div00.form.Edit_PW.value != this.Div00.form.Edit_PWCK.value) {
+			this.Div00.form.Edit_PWCK.border = "1px solid red";
+			this.Div00.form.Sta_IncorrectPWCK.visible = true;
+			this.Div00.form.Edit_PWCK.setFocus();
+			break;
+		}
+		else if (this.Div00.form.Rdo_RoleType.value == null) {
+			this.Div00.form.Sta_IncorrectRoleType.visible = true;
+			this.Div00.form.Rdo_RoleType.setFocus();
+			break;
+		}
+		else if (this.Div00.form.Edit_ID.value == null) {
+			this.Div00.form.Edit_ID.border = "1px solid red";
+			this.Div00.form.Sta_IncorrectID.visible = true;
+			this.Div00.form.Edit_ID.setFocus();
+			break;
+		}
+		else if (this.Div00.form.Edit_PW.value == null) {
+			this.Div00.form.Edit_PW.border = "1px solid red";
+			this.Div00.form.Sta_IncorrectPW.visible = true;
+			this.Div00.form.Edit_PW.setFocus();
+			break;
+		}
+		else if (this.Div00.form.Edit_PWCK.value == null) {
+			this.Div00.form.Edit_PWCK.border = "1px solid red";
+			this.Div00.form.Sta_IncorrectPWCK.visible = true;
+			this.Div00.form.Edit_PWCK.setFocus();
+			break;
+		}
+		else if (this.Div00.form.Edit_Name.value == null) {
+			this.Div00.form.Edit_Name.border = "1px solid red";
+			this.Div00.form.Sta_IncorrectName.visible = true;
+			this.Div00.form.Edit_Name.setFocus();
+			break;
+		}
+		else if (this.Div00.form.Msk_PhoneNo.value == null || this.Div00.form.Msk_PhoneNo.value.length < 11) {
+			this.Div00.form.Msk_PhoneNo.border = "1px solid red";
+			this.Div00.form.Sta_IncorrectPhoneNo.visible = true;
+			this.Div00.form.Msk_PhoneNo.setFocus();
+			break;
+		}
+		else if (this.idCheckYn == "N") {
+			this.Div00.form.Btn_IDCheck.border = "1px solid red";
+			this.Div00.form.Sta_IncorrectIDCkeck.visible = true;
+			this.Div00.form.Btn_IDCheck.setFocus();
+			break;
+		}
+		else return true;
+	}
+	return false;
+}
+
+this.Div00_Btn_IDCheck_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 아이디 중복 체크
+	
+	// 아이디 데이터 존재 확인
+	if (this.Div00.form.Edit_ID.value == null) {
+		this.Div00.form.Sta_IncorrectID.visible = true;
+		this.Div00.form.Edit_ID.setFocus();
+		return;
+	}
+			
+	// 아이디 중복 여부 초기화
+	this.idCheckYn = "N";
+	
+	var strSvcUrl = "p014/checkID.do";
+	var inData    = "";
+	var outData   = "";
+	var strArg    = "paramID=" + this.Div00.form.Edit_ID.value;
+
+	this.gfnTransaction("checkID", strSvcUrl, inData, outData, strArg, "fnCallback");
+};
+
+this.Div00_btn_cancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fvApp.mainframe.Main.formurl = "AboutAccount::gybs1010fm.xfdl";
+};
+
+
+this.fnCallback = function(svcId, errCd, errMsg) {
+	if (errCd < 0) {
+		arrArg = [errMsg];
+		this.gfnAlert("msg.server.error.msg", errMsg, "msg.server.error.msg", "fnMsgCallback");	
+	}
+	
+	if (svcId == "checkID") {
+		if (errCd == 10100) { // 아이디 중복 상태
+			this.gfnAlert("msg.err.signup.fail.IDcheck", "", "msg.err.signup.fail.IDcheck", "fnMsgCallback");	
+		}
+		else if (errCd == 10101) { // 아이디 사용 가능
+			this.gfnAlert("msg.signup.IDcheck", "", "msg.signup.IDcheck", "fnMsgCallback");	
+			this.idCheckYn = "Y";
+			this.Div00.form.Btn_IDCheck.border = "1px solid gray";
+			this.Div00.form.Sta_IncorrectIDCkeck.visible = false;
+		}
+	}
+}
+this.Common_onkillfocus = function(obj:nexacro.Radio,e:nexacro.KillFocusEventInfo)
+{
+	// 컴포넌트의 포커스가 벗겨지면 언더 텍스트 비활성화
+	this.Div00.form.Sta_IncorrectRoleType.visible = false;
+	this.Div00.form.Sta_IncorrectID.visible = false;
+	this.Div00.form.Sta_IncorrectPW.visible = false;
+	this.Div00.form.Sta_IncorrectPWCK.visible = false;
+	this.Div00.form.Sta_IncorrectName.visible = false;
+	this.Div00.form.Sta_IncorrectPhoneNo.visible = false;
+	this.Div00.form.Sta_IncorrectIDCkeck.visible = false;
+	
+	// 컴포넌트의 포커스가 벗겨지면 보더 초기화
+	this.Div00.form.Edit_ID.border = "1px solid gray";
+	this.Div00.form.Edit_PW.border = "1px solid gray";
+	this.Div00.form.Edit_PWCK.border = "1px solid gray";
+	this.Div00.form.Edit_Name.border = "1px solid gray";
+	this.Div00.form.Msk_PhoneNo.border = "1px solid gray";
+	
+};
+
+this.Div00_Edit_ID_onchanged = function(obj:nexacro.Edit,e:nexacro.ChangeEventInfo)
+{
+	this.idCheckYn = "N";
+};
+]]></Script>
+    <Objects>
+      <Dataset id="ds_accountInfo">
+        <ColumnInfo>
+          <Column id="ID" type="STRING" size="256"/>
+          <Column id="PW" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+          <Column id="PHONE_NO" type="STRING" size="256"/>
+          <Column id="ROLE_TYPE" type="STRING" size="256"/>
+          <Column id="GYM_CODE" type="STRING" size="256"/>
+          <Column id="PROFILE_PATH" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="Div00.form.Rdo_RoleType" propid="value" datasetid="ds_accountInfo" columnid="ROLE_TYPE"/>
+      <BindItem id="item1" compid="Div00.form.Edit_ID" propid="value" datasetid="ds_accountInfo" columnid="ID"/>
+      <BindItem id="item2" compid="Div00.form.Edit_PW" propid="value" datasetid="ds_accountInfo" columnid="PW"/>
+      <BindItem id="item3" compid="Div00.form.Edit_Name" propid="value" datasetid="ds_accountInfo" columnid="NAME"/>
+      <BindItem id="item4" compid="Div00.form.Msk_PhoneNo" propid="value" datasetid="ds_accountInfo" columnid="PHONE_NO"/>
+    </Bind>
+  </Form>
+</FDL>

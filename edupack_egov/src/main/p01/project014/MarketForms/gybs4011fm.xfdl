@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="gybs4011fm" width="1280" height="940" titletext="게시글 화면" onload="gybs4011fm_onload">
+    <Layouts>
+      <Layout height="940" mobileorientation="landscape" width="1280">
+        <Div id="div_marketInfo" taborder="0" left="20" top="80" background="#efefef" borderRadius="20px" right="20" height="760" border="1px solid #d4d4d4">
+          <Layouts>
+            <Layout>
+              <Static id="sta_background2" taborder="20" left="54" top="85" bottom="20" background="#ffffff" border="1px solid #d5d5d5" borderRadius="10px" width="558"/>
+              <Button id="btn_close" taborder="0" left="54" top="30" width="45" height="45" background="url('imagerc::form/backIcon3.png') no-repeat center center /contain" border="0px none" onclick="div_marketInfo_btn_close_onclick" text=""/>
+              <ImageViewer id="img_profile" taborder="6" left="109" top="315" width="70" height="70" stretch="fixaspectratio" borderRadius="100px" border="1px solid black" background="transparent" image="url('imagerc::form/profileIcon.png')"/>
+              <Static id="sta_ID" taborder="1" top="345" height="40" background="#ffffff" borderRadius="10px" verticalAlign="middle" padding="0px 20px" font="normal 600 13pt/normal &quot;Arial&quot;" textAlign="left" width="114" text="아이디" color="#000000" left="img_profile:15" fittocontents="width" border="1px solid #d5d5d5"/>
+              <Static id="sta_price" taborder="2" top="105" height="40" background="#ffffff" borderRadius="10px" verticalAlign="middle" padding="0px 20px" font="normal 600 13pt/normal &quot;Arial&quot;" textAlign="right" width="125" text="가격" color="#000000" left="224" border="1px solid #d5d5d5"/>
+              <Static id="sta_content" taborder="3" top="469" background="#ffffff" borderRadius="10px" verticalAlign="top" padding="20px" font="normal 500 13pt/normal &quot;Arial&quot;" textAlign="left" width="450" text="글 내용" wordWrap="english" color="#000000" letterSpacing="1px" left="109" bottom="30" border="1px solid #d5d5d5"/>
+              <Static id="sta_gymName" taborder="4" top="sta_price:10" height="40" background="#ffffff" borderRadius="10px" verticalAlign="middle" padding="0px 0px 0px 20px" font="normal 600 13pt/normal &quot;Arial&quot;" textAlign="left" width="400" text="헬스장 이름" color="#000000" left="109" border="1px solid #d5d5d5"/>
+              <Static id="sta_status" taborder="5" top="105" height="40" background="#ffffff" borderRadius="10px" verticalAlign="middle" font="normal 600 13pt/normal &quot;Arial&quot;" textAlign="center" width="100" text="판매 상태" color="#000000" left="109" border="1px solid #d5d5d5"/>
+              <Grid id="grd_comments" taborder="7" binddataset="ds_marketComment" autofittype="col" autosizingtype="row" extendsizetype="row" tabstop="false" border="1px solid #d5d5d5" borderRadius="0px 10px 10px" top="125" bottom="139" oncellclick="div_marketInfo_grd_comments_oncellclick" left="629" scrolldisplaymode="line" right="51">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="20"/>
+                      <Column size="150"/>
+                      <Column size="23"/>
+                      <Column size="52"/>
+                      <Column size="85"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="40"/>
+                    </Rows>
+                    <Band id="body">
+                      <Cell wordWrap="english" verticalAlign="top" font="normal 600 12px/normal &quot;Arial&quot;" border="1px solid #dbdee2,0px none,1px solid #dbdee2,1px solid #dbdee2" text="expr:(PARENT_NO == null || PARENT_NO == &quot;&quot;) ? &quot;imagerc::form/comment.png&quot; : &quot;imagerc::form/replyArrow.png&quot;" autosizerow="none" displaytype="imagecontrol" textAlign="right" controlautosizingtype="width" autosizecol="none" imagestretch="fixaspectratio" padding="0px 10px 0px 10px"/>
+                      <Cell col="1" text="bind:CONTENT" displaytype="text" wordWrap="english" verticalAlign="top" padding="15px 10px 15px 0px" font="normal 600 14px/normal &quot;Arial&quot;" textAlign="left" border="1px solid #dbdee2,0px none" color="#000000"/>
+                      <Cell col="2" displaytype="imagecontrol" border="1px solid #dbdee2,0px none" imagestretch="fit" text="bind:PROFILE_PATH" autosizerow="none" verticalAlign="top" textAlign="center" autosizecol="none" controlautosizingtype="width" padding="0px" cssclass="comment"/>
+                      <Cell col="3" text="bind:WRITER_ID" wordWrap="english" verticalAlign="middle" padding="10px" font="normal 600 12px/normal &quot;Arial&quot;" displaytype="text" border="1px solid #dbdee2,0px none" textAlign="left" color="#000000"/>
+                      <Cell col="4" wordWrap="english" verticalAlign="middle" padding="10px" font="normal 600 12px/normal &quot;Arial&quot;" textAlign="center" border="0px none,1px solid #dbdee2,1px solid #dbdee2,0px none" text="expr:REG_DATE.substring(0,4) + &quot;.&quot; + REG_DATE.substring(4,6) + &quot;.&quot; + REG_DATE.substring(6,8) + &quot; &quot; + REG_DATE.substring(8,10) + &quot;:&quot; + REG_DATE.substring(10,12) + &quot;:&quot; + REG_DATE.substring(12,14)" color="#000000"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <ImageViewer id="btn_gotoGym" taborder="8" image="url('imagerc::form/btn.png')" stretch="fixaspectratio" border="0px none" borderRadius="25px" bottom="565" left="sta_gymName:15" onclick="div_marketInfo_btn_gotoGym_onclick" text="" width="35" top="158"/>
+              <Static id="sta_addr" taborder="17" top="sta_gymName:10" height="40" background="#ffffff" borderRadius="10px" verticalAlign="middle" padding="0px 0px 0px 20px" font="normal 600 13pt/normal &quot;Arial&quot;" textAlign="left" width="450" text="주소" color="#000000" left="109" border="1px solid #d5d5d5"/>
+              <Static id="sta_date" taborder="9" top="sta_addr:10" height="40" background="#ffffff" borderRadius="10px" verticalAlign="middle" padding="0px 0px 0px 20px" font="normal 600 13pt/normal &quot;Arial&quot;" textAlign="left" width="450" text="기간" color="#000000" left="109" border="1px solid #d5d5d5"/>
+              <Static id="sta_background" taborder="11" left="1149" width="40" height="80" background="#ffffff" borderRadius="0px 10px 10px 0px" bottom="20"/>
+              <ImageViewer id="img_sendComment" taborder="10" width="30" image="url('imagerc::form/writeComment.png')" stretch="fixaspectratio" border="0px none" right="sta_background:-32" background="transparent" onclick="div_marketInfo_img_sendComment_onclick" height="30" bottom="sta_background:-40"/>
+              <TextArea id="txtArea_comment" taborder="12" left="629" width="520" height="80" font="normal 600 11pt/normal &quot;Arial&quot;" borderRadius="10px 0px 0px 10px" letterSpacing="1px" padding="20px" textAlign="left" wordWrap="english" displaynulltext="내용을 입력하세요." scrollbartype="none none" bottom="20" onkeydown="div_marketInfo_txtArea_comment_onkeydown" border="0px none"/>
+              <Static id="sta_replyTo" taborder="13" left="629" top="629" width="147" padding="0px 0px 0px 20px" textAlign="left" verticalAlign="middle" background="#ffffff" bottom="txtArea_comment:-20" visible="false" borderRadius="10px  0px 0px" font="normal bold 10pt/normal &quot;Arial&quot;"/>
+              <Div id="div_background" taborder="14" left="sta_replyTo:0" top="629" width="30" height="40" background="#ffffff" borderRadius="0px 10px 0px 0px" visible="false">
+                <Layouts>
+                  <Layout>
+                    <ImageViewer id="img_removeReply" taborder="0" left="0" top="5" background="transparent" border="0px none" image="url('imagerc::form/cancel.png')" stretch="fixaspectratio" right="5" bottom="10" visible="false" enable="false" onclick="div_marketInfo_div_background_img_removeReply_onclick"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Button id="btn_buyMembership" taborder="15" text="구매하기" left="434" top="105" width="125" height="40" cssclass="GB_SoldButton" onclick="div_marketInfo_btn_buyMembership_onclick" enable="false"/>
+              <Static id="sta_commentCnt" taborder="16" left="629" top="85" width="110" height="41" text="댓글 [N]" font="normal bold 11pt/normal &quot;Arial&quot;" color="#000000" background="#ffffff" border="1px solid #d4d4d4,1px solid #d4d4d4,0px none" padding="0px 10px" borderRadius="10px 10px 0px 0px" textAlign="center"/>
+              <Static id="sta_upload" taborder="18" top="345" height="40" background="#ffffff" borderRadius="10px" verticalAlign="middle" padding="0px 20px" font="normal 600 13pt/normal &quot;Arial&quot;" textAlign="right" width="151" text="업로드 일자" color="#000000" fittocontents="width" border="1px solid #d5d5d5" right="679"/>
+              <Static id="sta_title" taborder="19" top="402" background="#ffffff" borderRadius="10px" verticalAlign="top" padding="20px" font="normal 600 13pt/normal &quot;Arial&quot;" textAlign="left" width="450" text="제목 내용" wordWrap="english" color="#000000" letterSpacing="1px" left="109" bottom="299" border="1px solid #d5d5d5"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.fvApp = nexacro.getApplication();
+this.rejectMessage = "";
+
+this.gybs4011fm_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{	
+	var marketNo = this.fvApp.gv_marketNo;
+	// 전달받은 마켓 넘버로 게시글 정보와 댓글 정보, GYM_CODE 가져오기
+	var strSvcUrl = "p014/getMarketInfo.do";
+	var inData    = "";
+	var outData   = "ds_marketInfo=ds_marketInfo ds_marketComment=ds_marketComment";
+	var strArg    = "paramNo=" + marketNo + " paramID=" + this.fvApp.gds_accountInfo.getColumn(0, "ID"); 
+	this.gfnTransaction("getMarketInfo", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+	
+	var nHeight = this.getLayoutInfo(this.getCurrentLayoutID(), "height");
+ 	this.parent.parent.fnMainPageOnLoad(nHeight);
+	this.parent.parent.scrollTo(0,0);
+};
+
+this.div_marketInfo_btn_close_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.fvApp.gds_search.getColumn(0, "gotoMain") == 1) { // 메인으로
+		this.parent.url = "UserForms::gybs2011fm.xfdl";
+	}
+	else if (this.fvApp.gds_search.getColumn(0, "gotoMain") == 0) { // 정기권 목록으로
+		this.parent.url = "MarketForms::gybs4010fm.xfdl";
+	}
+	else if (this.fvApp.gds_search.getColumn(0, "gotoMain") == 4) { // 마이페이지로
+		this.parent.url = "UserForms::gybs2014fm.xfdl";
+	}
+};
+
+
+this.div_marketInfo_btn_gotoGym_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	this.fvApp.gv_tempGotoMainType = this.fvApp.gds_search.getColumn(0, "gotoMain");
+	this.fvApp.gds_search.setColumn(0, "gotoMain", 3);
+	this.parent.url = "UserForms::gybs2310fm.xfdl";
+};
+
+this.div_marketInfo_img_sendComment_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	// 댓글 내용이 없으면 무반응
+	if (this.div_marketInfo.form.txtArea_comment.value == null || this.div_marketInfo.form.txtArea_comment.value == "") {
+		return;
+	}
+	
+	// ds_newComment에 새로 등록할 댓글/답글 데이터 저장
+	this.ds_newComment.setColumn(0, "MARKET_NO", this.fvApp.gv_marketNo);
+	this.ds_newComment.setColumn(0, "WRITER_ID", this.fvApp.gds_accountInfo.getColumn(0, "ID"));
+	this.ds_newComment.setColumn(0, "CONTENT", this.div_marketInfo.form.txtArea_comment.value);
+	this.ds_newComment.setColumn(0, "PROFILE_PATH", this.fvApp.gds_accountInfo.getColumn(0, "PROFILE_PATH"));
+	
+	// 트랜잭션으로 데이터 보낸 후 서버 쿼리에서 답글, 댓글 구분하여 데이터 저장
+	var strSvcUrl = "p014/setComment.do";
+	var inData    = "ds_newComment=ds_newComment";
+	var outData   = "ds_marketComment=ds_marketComment";
+	var strArg    = "paramNo=" + this.fvApp.gv_marketNo;
+
+	this.gfnTransaction("setComment", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+	
+	
+	// 코멘트 전송 후 다시 텍스트 초기화 && 답글 ui 제거
+	this.div_marketInfo.form.txtArea_comment.value = null;
+	this.div_marketInfo_div_background_img_removeReply_onclick();
+};
+
+this.div_marketInfo_grd_comments_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	// 댓글을 클릭했을 때만 기능
+	if (this.ds_marketComment.getColumn(e.row, "PARENT_NO") == null) {
+		this.div_marketInfo.form.sta_replyTo.text = this.ds_marketComment.getColumn(e.row, "WRITER_ID") + "님에게 답글";
+		this.div_marketInfo.form.sta_replyTo.visible = true;
+		this.div_marketInfo.form.div_background.visible = true;
+		this.div_marketInfo.form.div_background.form.img_removeReply.visible = true;
+		this.div_marketInfo.form.div_background.form.img_removeReply.enable = true;
+		this.ds_newComment.setColumn(0, "PARENT_NO", this.ds_marketComment.getColumn(e.row, "COMMENT_NO"));
+	}
+	// 답글을 클릭했을 때 ui 제거
+	else {
+		this.div_marketInfo_div_background_img_removeReply_onclick();
+	}
+};
+
+this.div_marketInfo_txtArea_comment_onkeydown = function(obj:nexacro.TextArea,e:nexacro.KeyEventInfo)
+{
+	if (e.keycode == 13) {
+		this.div_marketInfo_img_sendComment_onclick();
+	}
+};
+
+this.div_marketInfo_div_background_img_removeReply_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	this.div_marketInfo.form.sta_replyTo.text = "";
+	this.div_marketInfo.form.sta_replyTo.visible = false;
+	this.div_marketInfo.form.div_background.visible = false;
+	this.div_marketInfo.form.div_background.form.img_removeReply.visible = false;
+	this.div_marketInfo.form.div_background.form.img_removeReply.enable = false;
+	this.ds_newComment.setColumn(0, "PARENT_NO", null);
+};
+
+this.fnCallback = function (svcId, errCd, errMsg)
+{
+	if (svcId == "getMarketInfo") {
+		// 메인 화면에서 반려 사유 알림 클릭으로 왔을 경우 반려 사유 팝업 띄우기
+		if (this.fvApp.gds_rejectNoti.getColumn(0, "IS_FROM_REJECT") == "Y") {
+			this.fvApp.gds_rejectNoti.setColumn(0, "MESSAGE", this.rejectMessage);
+			trace("rejectMessage >>>>>>> " + this.fvApp.gds_rejectNoti.getColumn(0, "MESSAGE"));
+			var objChildFrame = new ChildFrame("popupRejectReason", 0, 0, 400, 500);
+			objChildFrame.formurl = "MarketForms::gybs4310pu.xfdl";
+			objChildFrame.openalign = "center middle";
+			objChildFrame.overlaycolor = "RGBA(196,196,196,0.5)";
+			objChildFrame.dragmovetype = "none";
+			objChildFrame.showtitlebar = false;
+			objChildFrame.border = "0px none";
+			
+			var objParam = "";
+			objChildFrame.showModal(this.getOwnerFrame(), objParam, this, "fn_popupCallback");
+			
+			
+			this.fvApp.gds_rejectNoti.setColumn(0, "IS_FROM_REJECT", "N");
+		}
+		
+		// 정보 바인딩
+		// 판매중 / 판매완료 구분해서 구매 버튼 활성화, 비활성화
+		if (this.ds_marketInfo.getColumn(0, "STATUS_CODE") == "SALE") {
+			this.div_marketInfo.form.btn_buyMembership.enable = true;
+			this.div_marketInfo.form.btn_buyMembership.cssclass = "GB_Login";
+		}
+		else if (this.ds_marketInfo.getColumn(0, "STATUS_CODE") == "SOLD" || this.ds_marketInfo.getColumn(0, "STATUS_CODE") == "REJECTED") {
+			this.div_marketInfo.form.btn_buyMembership.enable = false;
+			this.div_marketInfo.form.btn_buyMembership.cssclass = "GB_SoldButton";
+		}
+		
+		// 기본 정보들 바인딩
+		this.fvApp.gv_gymCode						 = this.ds_marketInfo.getColumn(0, "GYM_CODE");
+		var sStatus = "";
+		switch(this.ds_marketInfo.getColumn(0, "STATUS_CODE")) {
+			case "SALE":
+				sStatus = "판매 중";
+				break;
+			case "SOLD":
+				sStatus = "판매 완료";
+				break;
+			case "REJECTED":
+				sStatus = "등록 반려";
+				break;
+		}
+		this.div_marketInfo.form.sta_status.text	 = sStatus;
+		var profilePath = "";
+		if (this.ds_marketInfo.getColumn(0, "PROFILE_PATH") == null || this.ds_marketInfo.getColumn(0, "PROFILE_PATH") == "") {
+			profilePath = "imagerc::form/profileIcon.png";
+		}
+		else profilePath = this.ds_marketInfo.getColumn(0, "PROFILE_PATH");
+		this.div_marketInfo.form.img_profile.image	 = profilePath;
+		this.div_marketInfo.form.sta_price.text	 = this.gfnAppendComma(this.ds_marketInfo.getColumn(0, "PRICE")) + "원";
+		var startDate = this.ds_marketInfo.getColumn(0, "START_DATE");
+		startDate = startDate.substring(0, 4) + "년 " + startDate.substring(4, 6) + "월 " + startDate.substring(6, 8) + "일";
+		var endDate = this.ds_marketInfo.getColumn(0, "END_DATE");
+		endDate = endDate.substring(0, 4) + "년 " + endDate.substring(4, 6) + "월 " + endDate.substring(6, 8) + "일";
+		this.div_marketInfo.form.sta_addr.text		 = "[주소] " + this.ds_marketInfo.getColumn(0, "ADDRESS");
+		this.div_marketInfo.form.sta_date.text		 = "[기간] " + startDate + " ~ " + endDate;
+		var uploadDate = this.ds_marketInfo.getColumn(0, "UPLOAD_DATE");
+		uploadDate = uploadDate.substring(0,4) + "." + uploadDate.substring(4,6) + "."  + uploadDate.substring(6,8);
+		this.div_marketInfo.form.sta_upload.text	 = uploadDate;
+		this.div_marketInfo.form.sta_commentCnt.text = "댓글 [" + this.ds_marketComment.rowcount + "]";
+		this.div_marketInfo.form.sta_title.text = this.ds_marketInfo.getColumn(0, "TITLE");
+	}
+	else if (svcId == "setComment") {
+		// 댓글 수 세팅
+		this.div_marketInfo.form.sta_commentCnt.text = "댓글 [" + this.ds_marketComment.rowcount + "]";
+	}
+};
+this.div_marketInfo_btn_buyMembership_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 구매버튼 비활성화면 리턴 (안전 장치)
+	if (obj.enable == false) return;
+	
+	// 구매 가능한 상태 => 구매 진행
+	var objChildFrame = new ChildFrame("popupBuyMembershp", 0, 0, 350, 500);
+	objChildFrame.formurl = "MarketForms::gybs4210pu.xfdl";
+ 	objChildFrame.openalign = "center middle";
+ 	objChildFrame.overlaycolor = "RGBA(196,196,196,0.5)";
+	objChildFrame.dragmovetype = "none";
+	objChildFrame.showtitlebar = false;
+ 	objChildFrame.border = "0px none";
+	
+	var endDate = this.ds_marketInfo.getColumn(0, "END_DATE");
+	endDate = endDate.substring(0, 4) + "년 " + endDate.substring(4, 6) + "월 " + endDate.substring(6, 8) + "일";
+	
+	var objParam = {param_gymName : this.ds_marketInfo.getColumn(0, "GYM_NAME"),
+					param_gymAddr : this.ds_marketInfo.getColumn(0, "ADDRESS"),
+					param_endDate : endDate,
+					param_title : this.ds_marketInfo.getColumn(0, "TITLE"),
+					param_sellerID : this.ds_marketInfo.getColumn(0, "SELLER_ID"),
+					param_price : this.ds_marketInfo.getColumn(0, "PRICE")}; // 만료일 D-Day 정보는 전역 변수로 전달
+	objChildFrame.showModal(this.getOwnerFrame(), objParam, this, "fn_popupCallback");
+};
+
+this.fnBuyMembership = function ()
+{
+	var objChildFrame = new ChildFrame("popupSuccessBuy", 0, 0, 330, 270);
+	objChildFrame.formurl = "MarketForms::gybs4211pu.xfdl";
+ 	objChildFrame.openalign = "center middle";
+ 	objChildFrame.overlaycolor = "RGBA(196,196,196,0.5)";
+	objChildFrame.dragmovetype = "none";
+	objChildFrame.showtitlebar = false;
+ 	objChildFrame.border = "0px none";
+	
+	objChildFrame.showModal(this.getOwnerFrame(), "", this, "fn_popupCallback");
+};
+
+this.fn_popupCallback = function (sPopupId, sReturn)
+{
+	if (sPopupId == "popupSuccessBuy") {
+		this.gybs4011fm_onload();
+	}
+};]]></Script>
+    <Objects>
+      <Dataset id="ds_marketInfo">
+        <ColumnInfo>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="CONTENT" type="STRING" size="256"/>
+          <Column id="GYM_CODE" type="STRING" size="256"/>
+          <Column id="GYM_NAME" type="STRING" size="256"/>
+          <Column id="ADDRESS" type="STRING" size="256"/>
+          <Column id="SELLER_ID" type="STRING" size="256"/>
+          <Column id="PROFILE_PATH" type="STRING" size="256"/>
+          <Column id="PRICE" type="STRING" size="256"/>
+          <Column id="UPLOAD_DATE" type="STRING" size="256"/>
+          <Column id="START_DATE" type="STRING" size="256"/>
+          <Column id="END_DATE" type="STRING" size="256"/>
+          <Column id="STATUS_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_marketComment">
+        <ColumnInfo>
+          <Column id="COMMENT_NO" type="STRING" size="256"/>
+          <Column id="PARENT_NO" type="STRING" size="256"/>
+          <Column id="WRITER_ID" type="STRING" size="256"/>
+          <Column id="PROFILE_PATH" type="STRING" size="256"/>
+          <Column id="CONTENT" type="STRING" size="256"/>
+          <Column id="REG_DATE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_newComment">
+        <ColumnInfo>
+          <Column id="MARKET_NO" type="STRING" size="256"/>
+          <Column id="PARENT_NO" type="STRING" size="256"/>
+          <Column id="WRITER_ID" type="STRING" size="256"/>
+          <Column id="PROFILE_PATH" type="STRING" size="256"/>
+          <Column id="CONTENT" type="STRING" size="256"/>
+          <Column id="REG_DATE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="div_marketInfo.form.sta_ID" propid="text" datasetid="ds_marketInfo" columnid="SELLER_ID"/>
+      <BindItem id="item2" compid="div_marketInfo.form.sta_gymName" propid="text" datasetid="ds_marketInfo" columnid="GYM_NAME"/>
+      <BindItem id="item3" compid="div_marketInfo.form.sta_content" propid="text" datasetid="ds_marketInfo" columnid="CONTENT"/>
+      <BindItem id="item1" compid="div_marketInfo.form.sta_title" propid="text" datasetid="ds_marketInfo" columnid="CONTENT"/>
+    </Bind>
+  </Form>
+</FDL>

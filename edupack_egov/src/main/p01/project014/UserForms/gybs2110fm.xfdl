@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="gybs2110fm" width="910" height="490" titletext="스탭 페이지" ontimer="Step_ontimer" onload="form_onload" background="white" border="1px solid #d5d5d5">
+    <Layouts>
+      <Layout height="490" mobileorientation="landscape" width="910" stepcount="4">
+        <ImageViewer id="ImageViewer00" taborder="0" left="0" top="0" image="url('imagerc::form/workout1.jpg')" stretch="fit" positionstep="1" border="1px solid #d5d5d5" right="0" bottom="0"/>
+        <ImageViewer id="ImageViewer00_00" taborder="1" left="0" top="0" image="url('imagerc::form/workout2.jpg')" stretch="fit" positionstep="2" border="1px solid #d5d5d5" right="0" bottom="0"/>
+        <ImageViewer id="ImageViewer00_01" taborder="2" left="0" top="0" image="url('imagerc::form/workout3.jpg')" stretch="fit" positionstep="3" border="1px solid #d5d5d5" right="0" bottom="0"/>
+        <ImageViewer id="ImageViewer00_01_00_00" taborder="3" left="0" top="0" image="url('imagerc::form/Logo_darkMode1.png')" stretch="fit" positionstep="0" border="0px none" background="#242323" text="" right="0" bottom="0"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.fvStep = 0;
+this.elapseTime = 3000;
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.stepselector.visible = false;
+	this.stepshowtype = "action";
+	
+	this.setTimer(0, this.elapseTime);	
+};
+
+this.Step_ontimer = function(obj:nexacro.Form,e:nexacro.TimerEventInfo)
+{
+	if (e.timerid == 0){
+		if (this.fvStep == 3) {
+			this.fvStep = 0;
+			this.stepselector.stepindex = 0;
+		}
+		else {
+			this.stepselector.stepindex = (++this.fvStep);
+		}
+	}
+};]]></Script>
+  </Form>
+</FDL>

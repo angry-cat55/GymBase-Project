@@ -1,0 +1,737 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Work_Emp" width="900" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="900">
+        <Static id="sta00" taborder="0" text="사원 관리" left="20" top="7" width="81" height="35" cssclass="sta_WF_GuideTitle1"/>
+        <Button id="btnSearch" taborder="1" text="조회" top="7" height="27" width="70" right="250" onclick="btnSearch_onclick"/>
+        <Button id="btnAdd" taborder="2" text="입력" top="7" height="27" width="70" right="170" onclick="btnAdd_onclick"/>
+        <Button id="btnDelete" taborder="3" text="삭제" top="7" height="27" width="70" right="90" onclick="btnDelete_onclick"/>
+        <Button id="btnSave" taborder="4" text="저장" top="7" height="27" width="70" right="10" onclick="btnSave_onclick"/>
+        <Grid id="grd01" taborder="5" top="124" width="870" height="218" binddataset="ds_emp" autosizingtype="none" left="20" autofittype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="27"/>
+                <Column size="63"/>
+                <Column size="63"/>
+                <Column size="63"/>
+                <Column size="114"/>
+                <Column size="94"/>
+                <Column size="69"/>
+                <Column size="51"/>
+                <Column size="48"/>
+                <Column size="93"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+                <Row size="24" band="summ"/>
+                <Row size="24" band="summ"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="No"/>
+                <Cell col="1" text="월급"/>
+                <Cell col="2" text="EMP_NAME"/>
+                <Cell col="3" text="EMP_ID"/>
+                <Cell col="4" text="DEPT_CODE"/>
+                <Cell col="5" text="POSITION"/>
+                <Cell col="6" text="HIRE_DATE"/>
+                <Cell col="7" text="GENDER"/>
+                <Cell col="8" text="MARRIED"/>
+                <Cell col="9" text="SKILL"/>
+              </Band>
+              <Band id="body">
+                <Cell text="expr:currow + 1" edittype="text" textAlign="center"/>
+                <Cell col="1" text="expr:Math.round(SALARY / 12)" edittype="text"/>
+                <Cell col="2" text="bind:EMP_NAME" edittype="expr:EMP_ID.substring(0, 2) == dataset.parent.fv_corp ? &quot;text&quot; : &quot;none&quot;"/>
+                <Cell col="3" text="bind:EMP_ID" edittype="mask" editautoselect="true" maskedittype="string" maskeditformat="AA-###" displaytype="mask" textAlign="center"/>
+                <Cell col="4" text="bind:DEPT_CODE" displaytype="combotext" edittype="combo" combodataset="ds_dept" combocodecol="DEPT_CODE" combodatacol="DEPT_NAME"/>
+                <Cell col="5" text="bind:POSITION" displaytype="combocontrol" edittype="combo" combodataset="ds_pos" combocodecol="CODE" combodatacol="NAME"/>
+                <Cell col="6" text="bind:HIRE_DATE" displaytype="date" edittype="date"/>
+                <Cell col="7" text="expr:GENDER == &quot;M&quot; ? &quot;남자&quot; : &quot;여자&quot;"/>
+                <Cell col="8" text="bind:MARRIED" edittype="checkbox" displaytype="checkboxcontrol"/>
+                <Cell col="9" text="bind:SKILL" displaytype="multicombocontrol" edittype="multicombo" multicombodataset="ds_skill" multicombocodecol="CODE" multicombodatacol="NAME"/>
+              </Band>
+              <Band id="summary">
+                <Cell text="expr:dataset.getRowCount()"/>
+                <Cell col="1"/>
+                <Cell col="2"/>
+                <Cell col="3" text="평균급여(남)"/>
+                <Cell col="4" text="expr:Math.round(dataset.getCaseAvg(&quot;GENDER == 'M'&quot;, &quot;SALARY&quot;, 0, -1, false) * 100) / 100.0"/>
+                <Cell col="5"/>
+                <Cell col="6"/>
+                <Cell col="7"/>
+                <Cell col="8"/>
+                <Cell col="9"/>
+                <Cell row="1"/>
+                <Cell row="1" col="1"/>
+                <Cell row="1" col="2"/>
+                <Cell row="1" col="3" text="평균급여(여)"/>
+                <Cell row="1" col="4" text="expr:Math.round(dataset.getCaseAvg(&quot;GENDER == 'F'&quot;, &quot;SALARY&quot;, 0, -1, false) * 100) / 100.0"/>
+                <Cell row="1" col="5"/>
+                <Cell row="1" col="6"/>
+                <Cell row="1" col="7"/>
+                <Cell row="1" col="8"/>
+                <Cell row="1" col="9"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="div00" taborder="6" text="div00" left="20" top="349" width="870" height="270" cssclass="div_WF_Area">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="0" text="성명" left="8" top="6" width="72" height="35"/>
+              <Edit id="edt00" taborder="1" left="80" top="5" width="119" height="35"/>
+              <Static id="sta00_00" taborder="2" text="사원번호" left="8" top="62" width="72" height="35"/>
+              <MaskEdit id="msk00" taborder="3" left="80" top="60" width="119" height="35" type="string" format="AA-###"/>
+              <Static id="sta00_00_00" taborder="4" text="연봉" left="8" top="114" width="72" height="35"/>
+              <MaskEdit id="msk01" taborder="5" left="80" top="115" width="119" height="35" format="#,###"/>
+              <Static id="sta00_00_00_00" taborder="6" text="입사일자" left="8" top="171" width="72" height="35" onclick="div00_sta00_00_00_00_onclick"/>
+              <Calendar id="cal00" taborder="7" left="80" top="170" width="119" height="35"/>
+              <Static id="sta00_00_00_00_00" taborder="8" text="결혼여부" left="8" top="222" width="72" height="35"/>
+              <CheckBox id="chk00" taborder="9" text="" left="80" top="222" width="19" height="35" value="false" truevalue="true" falsevalue="false"/>
+              <Static id="sta00_01" taborder="10" text="성명" left="245" top="6" width="72" height="35"/>
+              <TextArea id="txt00" taborder="11" left="316" top="6" width="199" height="88" onchanged="div00_txt00_onchanged"/>
+              <Combo id="cbo00" taborder="12" text="cbo00" left="316" top="116" width="199" height="35" innerdataset="ds_dept" codecolumn="DEPT_CODE" datacolumn="DEPT_NAME"/>
+              <Static id="sta00_01_00" taborder="13" text="부서" left="244" top="116" width="72" height="35"/>
+              <Static id="sta00_01_01" taborder="14" text="직급" left="560" top="6" width="72" height="35"/>
+              <ListBox id="lst00" taborder="15" left="631" top="7" width="173" height="93" innerdataset="ds_pos" codecolumn="CODE" datacolumn="NAME"/>
+              <Static id="sta00_01_01_00" taborder="16" text="성별" left="560" top="115" width="72" height="35"/>
+              <Radio id="rdo00" taborder="17" left="631" top="115" width="129" height="33" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" rowcount="1" columncount="2">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">M</Col>
+                      <Col id="datacolumn">남자</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">F</Col>
+                      <Col id="datacolumn">여자</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Radio>
+              <Static id="sta00_01_00_00" taborder="18" text="보유기술" left="245" top="170" width="72" height="35"/>
+              <Static id="sta00_01_01_00_00" taborder="19" text="취미" left="560" top="171" width="72" height="35"/>
+              <CheckBoxSet id="CheckBoxSet00" taborder="20" left="316" top="173" width="199" height="86" innerdataset="ds_skill" codecolumn="CODE" datacolumn="NAME" rowcount="3"/>
+              <MultiCombo id="MultiCombo00" taborder="21" text="MultiCombo00" left="626" top="170" width="176" height="35" innerdataset="ds_hobby" codecolumn="CODE" datacolumn="NAME" buttonsize="25"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divSearch" taborder="7" text="div01" left="20" top="52" width="870" height="65" cssclass="div_WF_Area">
+          <Layouts>
+            <Layout>
+              <Static id="sta00" taborder="0" text="부서" left="18" top="15" width="31" height="33"/>
+              <Edit id="edtDeptCode" taborder="1" left="65" top="15" width="98" height="33"/>
+              <Edit id="edtDeptName" taborder="2" left="195" top="15" width="175" height="33"/>
+              <Button id="btnPopupDept" taborder="3" left="163" top="15" width="27" height="33" cssclass="btn_WF_Find" onclick="divSearch_btnPopupDept_onclick"/>
+              <Static id="sta00_00" taborder="4" text="이름" left="419" top="15" width="41" height="33"/>
+              <Edit id="edtName" taborder="5" left="466" top="15" width="98" height="33"/>
+              <Static id="sta00_00_00" taborder="6" text="성별" left="609" top="15" width="41" height="33"/>
+              <Radio id="rdo00" taborder="7" left="659" top="15" width="190" height="33" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" rowcount="1" onitemchanged="divSearch_rdo00_onitemchanged">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="datacolumn">All</Col>
+                      <Col id="codecolumn">A</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">M</Col>
+                      <Col id="datacolumn">남자</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">F</Col>
+                      <Col id="datacolumn">여자</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Radio>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds00"/>
+      <Dataset id="ds_dept">
+        <ColumnInfo>
+          <Column id="DEPT_CODE" type="string" size="255"/>
+          <Column id="DEPT_NAME" type="string" size="255"/>
+          <Column id="DEPT_EMP" type="string" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_pos">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_skill">
+        <ColumnInfo>
+          <Column id="CODE" type="string" size="255"/>
+          <Column id="NAME" type="string" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_hobby">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_emp">
+        <ColumnInfo>
+          <Column id="EMP_NAME" type="STRING" size="50"/>
+          <Column id="EMP_ID" type="STRING" size="10"/>
+          <Column id="DEPT_CODE" type="STRING" size="256"/>
+          <Column id="POSITION" type="STRING" size="10"/>
+          <Column id="HIRE_DATE" type="DATE" size="10"/>
+          <Column id="SALARY" type="INT" size="10"/>
+          <Column id="GENDER" type="STRING" size="256"/>
+          <Column id="MARRIED" type="STRING" size="256"/>
+          <Column id="SKILL" type="STRING" size="256"/>
+          <Column id="HOBBY" type="STRING" size="256"/>
+          <Column id="MEMO" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="EMP_NAME">Melon</Col>
+            <Col id="EMP_ID">KR010</Col>
+            <Col id="POSITION">10</Col>
+            <Col id="HIRE_DATE">20071001</Col>
+            <Col id="SALARY">9000</Col>
+            <Col id="GENDER">F</Col>
+            <Col id="MARRIED">false</Col>
+            <Col id="SKILL">01,07</Col>
+            <Col id="HOBBY">01,05</Col>
+            <Col id="DEPT_CODE">10</Col>
+            <Col id="MEMO">aqua</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">Jackson</Col>
+            <Col id="EMP_ID">US050</Col>
+            <Col id="POSITION">60</Col>
+            <Col id="HIRE_DATE">20091021</Col>
+            <Col id="SALARY">6000</Col>
+            <Col id="GENDER">M</Col>
+            <Col id="MARRIED">false</Col>
+            <Col id="SKILL">11,03,13</Col>
+            <Col id="HOBBY">09,14</Col>
+            <Col id="DEPT_CODE">20</Col>
+            <Col id="MEMO">gold</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">Jennie</Col>
+            <Col id="EMP_ID">KR240</Col>
+            <Col id="POSITION">50</Col>
+            <Col id="HIRE_DATE">20110508</Col>
+            <Col id="SALARY">7000</Col>
+            <Col id="GENDER">F</Col>
+            <Col id="MARRIED">true</Col>
+            <Col id="SKILL">01,06</Col>
+            <Col id="HOBBY">05</Col>
+            <Col id="DEPT_CODE">40</Col>
+            <Col id="MEMO">greenyellow</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">Dennis </Col>
+            <Col id="EMP_ID">JP150</Col>
+            <Col id="POSITION">20</Col>
+            <Col id="HIRE_DATE">20091021</Col>
+            <Col id="SALARY">5000</Col>
+            <Col id="GENDER">M</Col>
+            <Col id="MARRIED">false</Col>
+            <Col id="SKILL">09,11</Col>
+            <Col id="HOBBY">07,06,05</Col>
+            <Col id="DEPT_CODE">30</Col>
+            <Col id="MEMO">khaki</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">Andrew</Col>
+            <Col id="EMP_ID">US020</Col>
+            <Col id="POSITION">60</Col>
+            <Col id="HIRE_DATE">20160602</Col>
+            <Col id="SALARY">6500</Col>
+            <Col id="GENDER">M</Col>
+            <Col id="MARRIED">true</Col>
+            <Col id="SKILL">07,06,06</Col>
+            <Col id="HOBBY">09,13</Col>
+            <Col id="DEPT_CODE">40</Col>
+            <Col id="MEMO">lightpink</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">Jungkook</Col>
+            <Col id="EMP_ID">KR200</Col>
+            <Col id="POSITION">60</Col>
+            <Col id="HIRE_DATE">20120304</Col>
+            <Col id="SALARY">7000</Col>
+            <Col id="GENDER">M</Col>
+            <Col id="MARRIED">true</Col>
+            <Col id="SKILL">07,06,06</Col>
+            <Col id="HOBBY">09,14</Col>
+            <Col id="DEPT_CODE">50</Col>
+            <Col id="MEMO">orange</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">Adam</Col>
+            <Col id="EMP_ID">JP230</Col>
+            <Col id="POSITION">50</Col>
+            <Col id="HIRE_DATE">20110928</Col>
+            <Col id="SALARY">8000</Col>
+            <Col id="GENDER">M</Col>
+            <Col id="MARRIED">true</Col>
+            <Col id="SKILL">11,03,13</Col>
+            <Col id="HOBBY">09,15</Col>
+            <Col id="DEPT_CODE">30</Col>
+            <Col id="MEMO">silver</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">JiYoung</Col>
+            <Col id="EMP_ID">KR080</Col>
+            <Col id="POSITION">50</Col>
+            <Col id="HIRE_DATE">20131120</Col>
+            <Col id="SALARY">8500</Col>
+            <Col id="GENDER">F</Col>
+            <Col id="MARRIED">false</Col>
+            <Col id="SKILL">01,07</Col>
+            <Col id="HOBBY">05</Col>
+            <Col id="DEPT_CODE">40</Col>
+            <Col id="MEMO">violet</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds00_copy"/>
+      <Dataset id="ds_dept_copy">
+        <ColumnInfo>
+          <Column id="DEPT_CODE" type="string" size="255"/>
+          <Column id="DEPT_NAME" type="string" size="255"/>
+          <Column id="DEPT_EMP" type="string" size="255"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="DEPT_CODE">10</Col>
+            <Col id="DEPT_NAME">Accounting Team</Col>
+            <Col id="DEPT_EMP">Kate</Col>
+          </Row>
+          <Row>
+            <Col id="DEPT_CODE">20</Col>
+            <Col id="DEPT_NAME">Finances Team</Col>
+            <Col id="DEPT_EMP">Dennis</Col>
+          </Row>
+          <Row>
+            <Col id="DEPT_CODE">30</Col>
+            <Col id="DEPT_NAME">Human Resource Team</Col>
+            <Col id="DEPT_EMP">Adam</Col>
+          </Row>
+          <Row>
+            <Col id="DEPT_CODE">40</Col>
+            <Col id="DEPT_NAME">Support Team</Col>
+            <Col id="DEPT_EMP">Jackson</Col>
+          </Row>
+          <Row>
+            <Col id="DEPT_CODE">50</Col>
+            <Col id="DEPT_NAME">Sales Team</Col>
+            <Col id="DEPT_EMP">Belle</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_pos_copy">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">10</Col>
+            <Col id="NAME">CEO</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">20</Col>
+            <Col id="NAME">Director</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">30</Col>
+            <Col id="NAME">General Manager</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">40</Col>
+            <Col id="NAME">Manager</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">50</Col>
+            <Col id="NAME">Assistant Manager</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">60</Col>
+            <Col id="NAME">Staff</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_skill_copy">
+        <ColumnInfo>
+          <Column id="CODE" type="string" size="255"/>
+          <Column id="NAME" type="string" size="255"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">01</Col>
+            <Col id="NAME">HTML</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">02</Col>
+            <Col id="NAME">CSS</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">03</Col>
+            <Col id="NAME">JavaScript</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">04</Col>
+            <Col id="NAME">JAVA</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">05</Col>
+            <Col id="NAME">C/C++</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">06</Col>
+            <Col id="NAME">Python</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_hobby_copy">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">01</Col>
+            <Col id="NAME">Climbing</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">02</Col>
+            <Col id="NAME">Running</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">03</Col>
+            <Col id="NAME">Cycling</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">04</Col>
+            <Col id="NAME">Swimming</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">05</Col>
+            <Col id="NAME">Yoga</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">06</Col>
+            <Col id="NAME">Golf</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">07</Col>
+            <Col id="NAME">tennis</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">08</Col>
+            <Col id="NAME">Reading </Col>
+          </Row>
+          <Row>
+            <Col id="CODE">09</Col>
+            <Col id="NAME">Cooking</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">10</Col>
+            <Col id="NAME">Photography</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">11</Col>
+            <Col id="NAME">Painting</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">12</Col>
+            <Col id="NAME">Movie and Drama</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">13</Col>
+            <Col id="NAME">Game</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">14</Col>
+            <Col id="NAME">Sleeping</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">15</Col>
+            <Col id="NAME">Shopping</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_emp_copy">
+        <ColumnInfo>
+          <Column id="EMP_NAME" type="STRING" size="50"/>
+          <Column id="EMP_ID" type="STRING" size="10"/>
+          <Column id="DEPT_CODE" type="STRING" size="256"/>
+          <Column id="POSITION" type="STRING" size="10"/>
+          <Column id="HIRE_DATE" type="DATE" size="10"/>
+          <Column id="SALARY" type="INT" size="10"/>
+          <Column id="GENDER" type="STRING" size="256"/>
+          <Column id="MARRIED" type="STRING" size="256"/>
+          <Column id="SKILL" type="STRING" size="256"/>
+          <Column id="HOBBY" type="STRING" size="256"/>
+          <Column id="MEMO" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="EMP_NAME">Melon</Col>
+            <Col id="EMP_ID">KR010</Col>
+            <Col id="POSITION">10</Col>
+            <Col id="HIRE_DATE">20071001</Col>
+            <Col id="SALARY">9000</Col>
+            <Col id="GENDER">F</Col>
+            <Col id="MARRIED">false</Col>
+            <Col id="SKILL">01,07</Col>
+            <Col id="HOBBY">01,05</Col>
+            <Col id="DEPT_CODE">10</Col>
+            <Col id="MEMO">aqua</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">Jackson</Col>
+            <Col id="EMP_ID">US050</Col>
+            <Col id="POSITION">60</Col>
+            <Col id="HIRE_DATE">20091021</Col>
+            <Col id="SALARY">6000</Col>
+            <Col id="GENDER">M</Col>
+            <Col id="MARRIED">false</Col>
+            <Col id="SKILL">11,03,13</Col>
+            <Col id="HOBBY">09,14</Col>
+            <Col id="DEPT_CODE">20</Col>
+            <Col id="MEMO">gold</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">Jennie</Col>
+            <Col id="EMP_ID">KR240</Col>
+            <Col id="POSITION">50</Col>
+            <Col id="HIRE_DATE">20110508</Col>
+            <Col id="SALARY">7000</Col>
+            <Col id="GENDER">F</Col>
+            <Col id="MARRIED">true</Col>
+            <Col id="SKILL">01,06</Col>
+            <Col id="HOBBY">05</Col>
+            <Col id="DEPT_CODE">40</Col>
+            <Col id="MEMO">greenyellow</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">Dennis </Col>
+            <Col id="EMP_ID">JP150</Col>
+            <Col id="POSITION">20</Col>
+            <Col id="HIRE_DATE">20091021</Col>
+            <Col id="SALARY">5000</Col>
+            <Col id="GENDER">M</Col>
+            <Col id="MARRIED">false</Col>
+            <Col id="SKILL">09,11</Col>
+            <Col id="HOBBY">07,06,05</Col>
+            <Col id="DEPT_CODE">30</Col>
+            <Col id="MEMO">khaki</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">Andrew</Col>
+            <Col id="EMP_ID">US020</Col>
+            <Col id="POSITION">60</Col>
+            <Col id="HIRE_DATE">20160602</Col>
+            <Col id="SALARY">6500</Col>
+            <Col id="GENDER">M</Col>
+            <Col id="MARRIED">true</Col>
+            <Col id="SKILL">07,06,06</Col>
+            <Col id="HOBBY">09,13</Col>
+            <Col id="DEPT_CODE">40</Col>
+            <Col id="MEMO">lightpink</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">Jungkook</Col>
+            <Col id="EMP_ID">KR200</Col>
+            <Col id="POSITION">60</Col>
+            <Col id="HIRE_DATE">20120304</Col>
+            <Col id="SALARY">7000</Col>
+            <Col id="GENDER">M</Col>
+            <Col id="MARRIED">true</Col>
+            <Col id="SKILL">07,06,06</Col>
+            <Col id="HOBBY">09,14</Col>
+            <Col id="DEPT_CODE">50</Col>
+            <Col id="MEMO">orange</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">Adam</Col>
+            <Col id="EMP_ID">JP230</Col>
+            <Col id="POSITION">50</Col>
+            <Col id="HIRE_DATE">20110928</Col>
+            <Col id="SALARY">8000</Col>
+            <Col id="GENDER">M</Col>
+            <Col id="MARRIED">true</Col>
+            <Col id="SKILL">11,03,13</Col>
+            <Col id="HOBBY">09,15</Col>
+            <Col id="DEPT_CODE">30</Col>
+            <Col id="MEMO">silver</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">JiYoung</Col>
+            <Col id="EMP_ID">KR080</Col>
+            <Col id="POSITION">50</Col>
+            <Col id="HIRE_DATE">20131120</Col>
+            <Col id="SALARY">8500</Col>
+            <Col id="GENDER">F</Col>
+            <Col id="MARRIED">false</Col>
+            <Col id="SKILL">01,07</Col>
+            <Col id="HOBBY">05</Col>
+            <Col id="DEPT_CODE">40</Col>
+            <Col id="MEMO">violet</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="div00.form.edt00" propid="value" datasetid="ds_emp" columnid="EMP_NAME"/>
+      <BindItem id="item3" compid="div00.form.msk00" propid="value" datasetid="ds_emp" columnid="EMP_ID"/>
+      <BindItem id="item2" compid="div00.form.msk01" propid="value" datasetid="ds_emp" columnid="SALARY"/>
+      <BindItem id="item4" compid="div00.form.cal00" propid="value" datasetid="ds_emp" columnid="HIRE_DATE"/>
+      <BindItem id="item5" compid="div00.form.chk00" propid="value" datasetid="ds_emp" columnid="MARRIED"/>
+      <BindItem id="item6" compid="div00.form.txt00" propid="value" datasetid="ds_emp" columnid="MEMO"/>
+      <BindItem id="item9" compid="div00.form.cbo00" propid="value" datasetid="ds_emp" columnid="DEPT_CODE"/>
+      <BindItem id="item10" compid="div00.form.lst00" propid="value" datasetid="ds_emp" columnid="POSITION"/>
+      <BindItem id="item11" compid="div00.form.rdo00" propid="value" datasetid="ds_emp" columnid="GENDER"/>
+      <BindItem id="item7" compid="div00.form.lst00" propid="acceptvaluetype" datasetid="ds_pos" columnid="CODE"/>
+      <BindItem id="item8" compid="div00.form.CheckBoxSet00" propid="value" datasetid="ds_emp" columnid="SKILL"/>
+      <BindItem id="item12" compid="div00.form.MultiCombo00" propid="value" datasetid="ds_emp" columnid="HOBBY"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[this.fn_gender = function(arg)
+{
+	if (arg == 'M') return "남자";
+	else return "여자";
+}
+
+this.fv_corp = "KR";
+this.divSearch_btnPopupDept_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objCF = new ChildFrame("popupDept", 0, 0, 400, 500);
+	objCF.formurl = "Work::Work_PopupDept.xfdl";
+	objCF.openalign = "center middle";
+	objCF.dragmovetype = "all";
+	objCF.showtitlebar = false;
+	var objParam = {pTitle : "부서 검색창", pValue : "ABC" };
+	
+	objCF.showModal(this.getOwnerFrame(), objParam, this, "fnPopupCallback");
+	// 다른 프레임을 호출을 해도, 해당 프레임이 종료되지 않아도 이하 코드를 계속 진행함
+	// 그렇기에 네 번째 인자인 fnPopupCallback이라는 함수를 전달해서,
+	// 이 함수에서 비동기 스크립트를 전달받아서 전달받은 값을 사용할 수 있음.
+};
+
+this.fnPopupCallback = function(sPopupId, sReturn)
+{
+	if (sReturn == undefined) return;
+	if (sPopupId == "popupDept") {
+		var sCode = sReturn.split(":")[0]; // 구분자(:)을 기준으로 인덱스가 부여되며 나뉨
+		var sName = sReturn.split(":")[1];
+		this.divSearch.form.edtDeptCode.value = sCode;
+		this.divSearch.form.edtDeptName.value = sName;
+	}
+	
+}
+
+// 사원 데이터 조회
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sDeptCode = this.divSearch.form.edtDeptCode.value;
+	var sEmpName = this.divSearch.form.edtName.value;
+	// 필수 인자 6개
+	this.transaction("svcGetEmp" // ID
+					, "SvcUrl::edu/edupack24_jsp/select_emp.jsp" // 서버 주소
+					, "" // 화면 데이터 --> 서버 전달 용 (추가)
+					, "ds_emp=out_emp" // 서버 데이터(out_emp) --> 화면 전달(ds_emp) 용 (조회)
+					, "deptCode=" + sDeptCode + " empName=" + nexacro.wrapQuote(sEmpName) // 서버로 전달할 변수
+					// nexacro.wrapQuote() : 인자로 받은 문자열에 있는 공백 문자를 무시해줌.
+					, "fncallback" // 비동기 데이터를 받을 변수(함수)
+					);
+};
+
+this.fncallback = function(svcId, errCd, errMsg)
+{
+	if (errCd < 0) {
+		alert("에러" + errMsg);
+		return ;
+	}
+	if(svcId == "svcGetEmp") {
+		alert(this.ds_emp.getRowCount() + "건 조회되었습니다.");
+	}
+	else if (svcId == "svcSaveEmp") {
+		alert("저장되었습니다.");
+	}
+	else if (svcId == "svcGetCode") {
+		this.btnSearch_onclick();
+	}
+}
+
+this.btnAdd_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nRow = this.ds_emp.addRow(); // 추가된 인덱스 번호를 반환함
+	this.ds_emp.setColumn("nRow", "HIRE_DATE", "20250704");
+};
+
+this.btnDelete_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.ds_emp.deleteRow(this.ds_emp.rowposition);
+};
+
+this.btnSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.transaction("svcSaveEmp"
+					,"SvcUrl::edu/edupack24_jsp/save_emp.jsp"
+					,"in_emp=ds_emp:u" // 데이터 구분자 : 공백 문자
+					,""
+					,""
+					,"fncallback"
+					);
+};
+this.Work_Emp_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.transaction("svcGetCode"
+					, "SvcUrl::edu/edupack24_jsp/select_code.jsp"
+					, ""
+					, "ds_dept=out_dept ds_pos=out_pos ds_hobby=out_hobby ds_skill=out_skill"
+					, ""
+					, "fncallback"
+					);
+};
+
+this.divSearch_rdo00_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	var sValue = this.divSearch.form.rdo00.value;
+	// == obj.value
+	// == e.postvalue
+	
+	if (sValue == 'M') {
+		this.ds_emp.filter("GENDER == 'M'");
+	}
+	else if (sValue == 'F') {
+		this.ds_emp.filter("GENDER == 'F'");
+	}
+	else {
+		this.ds_emp.filter("");
+	}
+	
+//  혹은
+// 	if (e.postvalue == 'A') {
+// 		this.ds_emp.filter("");
+// 	}
+// 	else {
+// 		this.ds_emp.filter("GENDER == '" + e.postvalue + "'");
+};]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="gybs2412fm" width="498" height="528" titletext="마이페이지-정기권관련" background="transparent">
+    <Layouts>
+      <Layout height="528" width="498">
+        <Div id="div_membership" taborder="0" top="0" background="#ffffff" borderRadius="10px" bottom="0" right="0" left="0">
+          <Layouts>
+            <Layout>
+              <Div id="div_uploadedMembership" taborder="0" left="30" top="72" height="155" right="30" borderRadius="20px" border="1px solid #d5d5d5" background="#efefef">
+                <Layouts>
+                  <Layout>
+                    <Static id="sta_uploadedmembership" taborder="0" text="등록한 정기권" left="0" top="65" height="25" font="normal 600 14pt/normal &quot;Arial&quot;" right="70" padding="0px 0px 0px 20px" color="#000000" verticalAlign="middle"/>
+                    <ImageViewer id="btn_goMyMarket" taborder="1" width="35" height="35" image="url('imagerc::form/btn.png')" stretch="fixaspectratio" border="0px none" borderRadius="25px" right="20" bottom="58" onclick="div_info_div_membership_div_uploadedMembership_btn_goMyMarket_onclick"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="div_membershipManage" taborder="1" left="31" height="155" right="29" background="#efefef" borderRadius="20px" border="1px solid #d5d5d5" bottom="72">
+                <Layouts>
+                  <Layout>
+                    <Static id="sta_membershipManage" taborder="0" text="정기권 구매 내역" left="0" top="65" height="25" font="normal 600 14pt/normal &quot;Arial&quot;" right="70" padding="0px 0px 0px 20px" color="#000000" verticalAlign="middle"/>
+                    <ImageViewer id="btn_goMyMembership" taborder="1" width="35" height="35" image="url('imagerc::form/btn.png')" stretch="fixaspectratio" border="0px none" borderRadius="25px" right="20" bottom="58" onclick="div_info_div_membership_div_membershipManage_btn_goMyMembership_onclick"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.div_info_div_membership_div_uploadedMembership_btn_goMyMarket_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	this.parent.url = "UserForms::gybs2410fm.xfdl";
+};
+
+this.div_info_div_membership_div_membershipManage_btn_goMyMembership_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	this.parent.url = "UserForms::gybs2411fm.xfdl";
+};
+]]></Script>
+  </Form>
+</FDL>

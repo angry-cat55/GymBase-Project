@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="StepSlide" width="740" height="320" titletext="New Form">
+    <Layouts>
+      <Layout height="320" width="740" stepcount="0">
+        <Div id="Div00" taborder="0" text="Div00" left="110" top="40" width="500" height="150" url="테스트폼들::StepSlide_Steps.xfdl"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[]]></Script>
+  </Form>
+</FDL>

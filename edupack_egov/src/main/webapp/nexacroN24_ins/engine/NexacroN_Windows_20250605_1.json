@@ -1,0 +1,21 @@
+﻿{
+  "Nexacro N": {
+    "os":"windows", 
+    "version":"24.0.0.701", 
+    "type":"native",
+    "name": "NRE for Windows",
+    "resources":
+    [
+      {
+        "file": "NexacroN_SetupRuntime_x86.exe",
+        "setupKey": "4B8DB8B0-0FB6-4255-90AD-11E5A1692EDB",
+        "arch": "x86"
+      },
+      {
+        "file": "NexacroN_SetupRuntime_x64.exe",
+        "setupKey": "4CFEF184-BAED-42a6-B61E-A93938C9F07E",
+        "arch": "x64"
+      }
+    ]
+  }
+}

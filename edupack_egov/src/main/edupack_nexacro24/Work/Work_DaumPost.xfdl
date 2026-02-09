@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Work_DaumPost" width="790" height="570" titletext="New Form" onload="Work_DaumPost_onload">
+    <Layouts>
+      <Layout height="570" width="790">
+        <Edit id="edtPost" taborder="0" left="30" top="30" width="90" height="29"/>
+        <Button id="btnPost" taborder="1" text="우편번호 찾기" left="130" top="30" width="136" height="29" onclick="btnPost_onclick"/>
+        <Edit id="edtAddr1" taborder="2" left="30" top="69" width="236" height="29" onkeyup="edtAddr1_onkeyup"/>
+        <Edit id="edtAddr2" taborder="3" left="30" top="108" width="236" height="29"/>
+        <WebView id="WebView00" taborder="4" left="282" top="30" width="236" height="383" onusernotify="WebView00_onusernotify"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.Work_DaumPost_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.WebView00.url = "http://localhost:8088/edupack_egov/external/p01/P014DaumPost.html";
+};
+this.btnPost_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var param = this.edtAddr1.value;
+	if (this.gfnIsNull(param)) param = "";
+	this.WebView00.callScript("searchDaumPost('" + param + "')");
+	
+};
+
+this.WebView00_onusernotify = function(obj:nexacro.WebView,e:nexacro.WebUserNotifyEventInfo)
+{
+	trace(e.userdata);
+	
+	var addrArr = e.userdata.split("::");
+	
+	this.edtPost.value = addrArr[0];
+	this.edtAddr1.value = addrArr[1];
+	this.edtAddr2.value = addrArr[2];
+};
+
+this.edtAddr1_onkeyup = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if (e.keycode == 13) {
+		this.btnPost_onclick();
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

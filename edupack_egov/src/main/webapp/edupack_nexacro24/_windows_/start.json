@@ -1,0 +1,106 @@
+﻿{
+    "version" : "24.0.0.1",
+    "runtime" :
+    {
+        "target" :
+        {
+            "os" : "windows"
+        },
+        "framework" :
+        [    
+        "./nexacrolib/framework/Framework.js?nexaversion=24.0.0.701"
+        ],
+        "component" :
+        [    
+        "./nexacrolib/component/CompBase.js?nexaversion=24.0.0.701",
+        "./nexacrolib/component/ComComp.js?nexaversion=24.0.0.701",
+        "./nexacrolib/component/Grid.js?nexaversion=24.0.0.701",
+        "./nexacrolib/component/ListView.js?nexaversion=24.0.0.701",
+        "./nexacrolib/component/DeviceAPI.js?nexaversion=24.0.0.701",
+        "./nexacrolib/component/MobileComp.js?nexaversion=24.0.0.701",
+        "./nexacrolib/component/Graphics.js?nexaversion=24.0.0.701",
+        "./nexacrolib/component/Push.js?nexaversion=24.0.0.701",
+        "./nexacrolib/component/Splitter.js?nexaversion=0",
+        "./nexacrolib/component/History.js?nexaversion=14.0.0.142",
+        "./nexacrolib/component/rMateChartH5.js?nexaversion=1.0.0.0",
+        "./nexacrolib/component/ExtJs.js?nexaversion=1.0.0.0"
+        ],
+        "environment" :
+        [    
+        {
+        "file":"./environment.xml.js?nexaversion=2020.07.06"
+        }
+        ],
+        "screen" :
+        [    
+        {"id":"screen_desktop","type":"desktop","userzoom":"false","filesecurelevel":"all","networksecurelevel":"all","httpretry":"0","usehttpkeepalive":"true","tracemode":"append","themeid":"theme::theme_edu","initvaluefileid":"initvalue::initComp.xiv"},
+        {"id":"screen_phone","type":"mobile_small","key":"edupack_nexacro_m","filesecurelevel":"all","networksecurelevel":"all","httpretry":"0","usehttpkeepalive":"true","tracemode":"append","themeid":"theme::theme_edu","initvaluefileid":"initvalue::initComp.xiv"},
+        {"id":"screen_desktop_sdi","type":"desktop","filesecurelevel":"all","networksecurelevel":"all","httpretry":"0","usehttpkeepalive":"true","tracemode":"new","themeid":"theme::theme_edu","initvaluefileid":"initvalue::initComp.xiv"}
+        ],
+        "xadl" :
+        [
+        {
+        	"screenid":"screen_desktop",
+        	"launch":"./application_edupack.xadl.js",
+        	"quickview":"./application_edupack.xadl.quickview.js",
+        	"form":[
+        				"./Frame/FrameTop.xfdl.js",
+        		"./Frame/FrameLeft.xfdl.js",
+        		"./Frame/FrameLeftBar.xfdl.js",
+        		"./Frame/FrameMdi.xfdl.js",
+        		"./Frame/FrameMain.xfdl.js"
+        	]
+        },
+        {
+        	"screenid":"screen_phone",
+        	"launch":"./application_edupack_phone.xadl.js",
+        	"quickview":"./application_edupack_phone.xadl.quickview.js",
+        	"form":[]
+        },
+        {
+        	"screenid":"screen_desktop_sdi",
+        	"launch":"./application_edupack_sdi.xadl.js",
+        	"quickview":"./application_edupack_sdi.xadl.quickview.js",
+        	"form":[
+        				"./SDIFrame/SDIFrameMain.xfdl.js"
+        	]
+        }
+        ],  
+        "protocol" :
+        {
+            "adaptors" :
+            []
+        },
+        "resource" :
+        {
+            "windows" : {
+                "updateurl" : "./",
+                "timeout" : "30",
+                "retry" : "3",
+                "autoupdate" : "auto",
+                "updatetype" : "server"
+            }
+        },
+		"deploy" :
+        {
+            "windows" : {
+                "updateurl" : "./"
+            }
+        },
+        "userfont" :
+        [
+        {
+            "font-family" : "NotoSansKR-Regular",
+            "font-style" : "normal",
+            "font-weight" : "400",
+            "local-font-family" : "Noto Sans KR Regular"
+        },
+        {
+            "font-family" : "NotoSansKR-Bold",
+            "font-style" : "normal",
+            "font-weight" : "800",
+            "local-font-family" : "Noto Sans KR Bold"
+        }
+        ]
+    }
+}

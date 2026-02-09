@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="gybs2015pu" width="330" height="300" titletext="비밀번호 확인 팝업" background="transparent">
+    <Layouts>
+      <Layout height="300" mobileorientation="landscape" width="330">
+        <Div id="div_buy" taborder="0" left="0" top="0" width="330" height="300" background="#ffffff" borderRadius="10px" border="1px solid #000000">
+          <Layouts>
+            <Layout>
+              <Static id="sta_checkPW" taborder="1" text="비밀번호 확인" left="0" top="85" font="normal 700 14pt/normal &quot;Arial&quot;" textAlign="center" color="#000000" height="30" right="0"/>
+              <Button id="btn_check" taborder="2" text="확인" top="249" width="80" height="35" cssclass="GB_Login" font="normal 700 10pt/normal &quot;Arial&quot;" right="168" onclick="div_buy_btn_check_onclick"/>
+              <Static id="sta" taborder="3" text="회원님의 정보를 안전하게 보호하기 위해&#13;&#10;" left="0" top="122" height="30" font="normal 500 10pt/normal &quot;Arial&quot;" textAlign="center" color="#000000" verticalAlign="middle" right="0"/>
+              <ImageViewer id="img_workout" taborder="4" left="140" top="29" width="50" image="url('imagerc::form/checkPassword.png')" background="transparent" border="0px none" stretch="fixaspectratio" height="50"/>
+              <Button id="btn_cancel" taborder="5" text="취소" left="btn_check:8" top="249" width="80" height="35" cssclass="GB_Cancel" font="normal 700 10pt/normal &quot;Arial&quot;" onclick="div_buy_btn_cancel_onclick"/>
+              <Static id="sta0" taborder="6" text="비밀번호를 다시 한번 입력해주세요." left="0" top="144" height="30" font="normal 500 10pt/normal &quot;Arial&quot;" textAlign="center" color="#000000" verticalAlign="middle" right="0"/>
+              <Edit id="edt_pw" taborder="0" left="40" top="189" height="40" border="1px solid #d4d4d4" borderRadius="10px" letterSpacing="4px" padding="0px 20px" textAlign="left" password="true" font="normal 12pt/normal &quot;Arial&quot;" right="38" onkeyup="div_buy_edt_pw_onkeyup" autoselect="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.fvApp = nexacro.getApplication();
+
+this.div_buy_btn_cancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close();
+};
+
+this.div_buy_btn_check_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.fvApp.gds_accountInfo.getColumn(0, "PW") == this.div_buy.form.edt_pw.value) {
+		this.opener.fnCorrectPassword();
+		this.close();
+	}
+	else {
+		this.gfnAlert("msg.err.wrong.password", "", "msg.err.wrong.password", "fnMsgCallback");	
+	}
+};
+
+this.div_buy_edt_pw_onkeyup = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if (e.keycode == 13) {
+		this.div_buy_btn_check_onclick();
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

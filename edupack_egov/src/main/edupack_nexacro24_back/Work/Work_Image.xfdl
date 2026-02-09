@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Work_Image" width="800" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="800">
+        <ImageViewer id="imgPhoto" taborder="0" left="57" top="50" width="123" height="124" text="" stretch="fixaspectratio"/>
+        <Button id="btnSelect" taborder="1" text="이미지 선택" left="57" top="184" width="123" height="26" cssclass="btn_WF_LineRed" onclick="btnSelect_onclick"/>
+        <Edit id="edtName" taborder="2" left="211" top="50" width="140" height="26" displaynulltext="성명"/>
+        <Edit id="edtMail" taborder="3" left="211" top="96" width="140" height="26" displaynulltext="이메일"/>
+        <Edit id="edtTelNo" taborder="4" left="211" top="142" width="140" height="26" displaynulltext="전화번호"/>
+        <Button id="btnSave" taborder="5" text="등록" left="211" top="184" width="69" height="26" cssclass="btn_WF_FillBlue" onclick="btnSave_onclick"/>
+        <Grid id="grd00" taborder="6" left="30" top="235" width="680" height="270" binddataset="dsUser">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="215"/>
+                <Column size="217"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="USER_NAME"/>
+                <Cell col="1" text="EMAIL"/>
+                <Cell col="2" text="TEL_NO"/>
+                <Cell col="3" text="IMAGE_ID"/>
+                <Cell col="4" text="IMAGE_NAME"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:USER_NAME"/>
+                <Cell col="1" text="bind:EMAIL"/>
+                <Cell col="2" text="bind:TEL_NO"/>
+                <Cell col="3" text="bind:IMAGE_ID"/>
+                <Cell col="4" text="bind:IMAGE_NAME"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnSearch" taborder="7" text="조회" left="281" top="184" width="69" height="26" onclick="btnSearch_onclick" cssclass="btn_WF_FillRed"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsUser" onrowposchanged="dsUser_onrowposchanged">
+        <ColumnInfo>
+          <Column id="USER_NAME" type="STRING" size="256"/>
+          <Column id="EMAIL" type="STRING" size="256"/>
+          <Column id="TEL_NO" type="STRING" size="256"/>
+          <Column id="IMAGE_ID" type="STRING" size="256"/>
+          <Column id="IMAGE_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <FileDialog id="FileDialog00" onclose="FileDialog00_onclose"/>
+      <FileUpTransfer id="FileUpTransfer00" onsuccess="FileUpTransfer00_onsuccess"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="edtName" propid="value" datasetid="dsUser" columnid="USER_NAME"/>
+      <BindItem id="item1" compid="edtMail" propid="value" datasetid="dsUser" columnid="EMAIL"/>
+      <BindItem id="item2" compid="edtTelNo" propid="value" datasetid="dsUser" columnid="TEL_NO"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[
+this.btnSelect_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.FileDialog00.open("이미지 선택", 1, "%MYDOCUMENT%");
+	
+};
+
+this.FileDialog00_onclose = function(obj:nexacro.FileDialog,e:nexacro.FileDialogEventInfo)
+{
+	var objFile = e.virtualfiles[0];
+	var sFileName = objFile.filename;
+	
+	if (!/\.(jpe?g|png|gif)$/i.test(sFileName)) // 정규식으로 파일 유형 체크
+	{
+		alert("이미지 파일을 선택하십시오.");
+		return;
+	}
+	
+	this.FileUpTransfer00.clearFileList();
+	this.FileUpTransfer00.addFile(sFileName, objFile);
+	var nRow = this.dsUser.addRow();
+	this.dsUser.setColumn(nRow, "IMAGE_ID", sFileName);
+	this.dsUser.setColumn(nRow, "IMAGE_NAME", sFileName);
+	
+	if (nexacro._Browser == "Runtime") {
+		// NRE
+		this.imgPhoto.image = "URL('file://" + objFile.fullpath + "')";
+	}
+	else {
+		// NRE 아닐 때 (웹 브라우저)
+		var reader = new FileReader();
+		reader.targetForm = this;
+		reader.addEventListener("load"
+								,function() {
+									this.targetForm.imgPhoto.image = this.result;
+								}
+								,false);
+		reader.readAsDataURL(objFile._handle);
+		// 파일을 base64 형태로 읽기
+	}
+};
+
+this.btnSave_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sUrl = "SvcUrl::edu/uploadFile.do";
+	this.FileUpTransfer00.setPostData("userDir", "nexa_file");
+	this.FileUpTransfer00.upload(sUrl);
+};
+
+this.FileUpTransfer00_onsuccess = function(obj:nexacro.FileUpTransfer,e:nexacro.FileUpTransferEventInfo)
+{
+	var objDs = e.datasets[0];
+	this.dsUser.setColumn(0,"IMAGE_ID", objDs.getColumn(0, "file_id"));
+	this.fnSaveData();
+};
+
+this.fnSaveData = function()
+{
+	this.gfnTransaction("saveUserInfo"
+						, "edu/saveUserInfo.do"
+						, "outUser=dsUser"
+						, ""
+						, ""
+						, "fnCallback");
+};
+
+
+
+this.btnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.gfnTransaction("searchUserInfo"
+						, "edu/searchUserInfo.do"
+						, ""
+						, "dsUser=outSearch"
+						, ""
+						, "fnCallback");
+};
+
+this.sUploadUrl = this.gfnGetServerUrl() + "upload/nexa_file/";
+// this.gfnGetServerUrl() => http://localhost8088/edupack_egov/
+
+this.dsUser_onrowposchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSRowPosChangeEventInfo)
+{
+	var sImg = this.sUploadUrl + obj.getColumn(e.newrow, "IMAGE_ID");
+	this.imgPhoto.image = sImg;
+};
+
+]]></Script>
+  </Form>
+</FDL>

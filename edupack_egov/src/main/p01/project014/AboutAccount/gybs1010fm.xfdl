@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Login" width="1280" height="720" titletext="로그인" onload="Login_onload" onkeyup="Login_onkeyup">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Static id="Static00" taborder="1" left="0" top="0" width="50%" height="50%" text="" visible="false" background="#ffe5fe"/>
+        <Div id="Div00" left="Static00:-175" top="Static00:-250" width="350" height="500" background="#efefef" borderRadius="30px" text="" cssclass="loginDiv" boxShadow="0px 0px 15px 0px rgba(0,0,0,0.41)" tabstop="true" border="2px solid #000000">
+          <Layouts>
+            <Layout>
+              <Static id="sta_background" taborder="10" left="10" top="10" background="#ffffff" borderRadius="20px" right="10" bottom="10" text="" border="1px solid #d4d4d4"/>
+              <Edit id="Edit_ID" taborder="0" left="45" top="164" width="260" height="48" text="" borderRadius="10px" onchanged="Div00_Edit_ID_onchanged" padding="0px 0px 0px 15px" displaynulltext="아이디" border="1px solid gray" onkillfocus="Div00_Edit_ID_onkillfocus" letterSpacing="1px"/>
+              <CheckBox id="Ckb_RememberID" taborder="2" text="아이디 저장하기" left="45" top="308" width="114" height="20" font="normal bold 10pt/normal &quot;Arial&quot;"/>
+              <Button id="Btn_Login" taborder="3" text="로그인" left="45" top="344" width="260" height="48" cssclass="GB_Login" onclick="Div00_Btn_Login_onclick"/>
+              <Button id="findIDorPW" taborder="4" text="아이디 / 비밀번호 찾기" left="109" top="410" width="132" height="20" cssclass="hideBackground" onclick="Div00_findIDorPW_onclick"/>
+              <Button id="signUp" taborder="5" text="회원가입" left="149" top="findIDorPW:10" width="52" height="20" cssclass="hideBackground" onclick="Div00_signUp_onclick"/>
+              <Edit id="Edit_PW" taborder="1" left="45" top="235" width="260" height="48" password="true" borderRadius="10px" displaynulltext="비밀번호" border="1px solid gray" onkillfocus="Div00_Edit_PW_onkillfocus" padding="0px 0px 0px 15px" autoselect="true" letterSpacing="1px"/>
+              <Button id="Btn_ShowPW" taborder="7" left="Edit_PW:-40" top="244" width="30" height="30" cssclass="rememberPW" text="" onclick="Div00_Btn_ShowPW_onclick"/>
+              <Static id="Sta_IncorrectID" taborder="8" text="아이디를 입력하십시오." left="55" top="Edit_ID:4" width="117" height="15" font="normal bold 8pt/normal &quot;Arial&quot;" color="red" visible="false"/>
+              <Static id="Sta_IncorrectPW" taborder="9" text="비밀번호를 입력하십시오." left="55" top="Edit_PW:4" width="128" height="15" font="normal bold 8pt/normal &quot;Arial&quot;" color="red" visible="false"/>
+              <ImageViewer id="img_logo" taborder="6" left="55" top="70" height="70" image="url('imagerc::form/Logo_r.png')" stretch="fixaspectratio" background="transparent" border="0px none" tabstop="false" right="55"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.fvApp = nexacro.getApplication();
+
+this.Div00_Btn_ShowPW_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var btnClass = obj.cssclass == "rememberPW" ? "rememberPW_S" : "rememberPW";
+	obj.cssclass = btnClass;
+	var showPW = (this.Div00.form.Btn_ShowPW.cssclass == "rememberPW" ? true : false);
+	this.Div00.form.Edit_PW.password = showPW;
+};
+	
+this.Div00_Btn_Login_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 아이디나 비밀번호 중 공백이 있을 경우 로그인 막기
+	if (this.Div00.form.Edit_ID.value == null || this.Div00.form.Edit_ID.value == "") {
+		this.Div00.form.Edit_ID.border = "2px solid red";
+		this.Div00.form.Edit_ID.setFocus();
+		this.Div00.form.Sta_IncorrectID.visible = true;
+		return;
+	}
+	else if (this.Div00.form.Edit_PW.value == null || this.Div00.form.Edit_PW.value == "") {
+		this.Div00.form.Edit_PW.border = "2px solid red";
+		this.Div00.form.Edit_PW.setFocus();
+		this.Div00.form.Sta_IncorrectPW.visible = true;
+		return;
+	}
+	// 로그인을 진행 (아이디 존재, 비밀번호 일치 확인 후 결과 fnCallback에서)
+	var strSvcUrl = "p014/login.do";
+	var inData    = "";
+	var outData   = "ds_accountInfo=ds_accountInfo";
+	var strArg    = "paramID=" + this.Div00.form.Edit_ID.value + " paramPW=" + this.Div00.form.Edit_PW.value;
+	this.gfnTransaction("login", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+};
+
+this.Div00_Edit_ID_onkillfocus = function(obj:nexacro.Edit,e:nexacro.KillFocusEventInfo)
+{
+	this.Div00.form.Edit_ID.border = "1px solid gray";
+	this.Div00.form.Sta_IncorrectID.visible = false;
+};
+
+this.Div00_Edit_PW_onkillfocus = function(obj:nexacro.Edit,e:nexacro.KillFocusEventInfo)
+{
+	this.Div00.form.Edit_PW.border = "1px solid gray";
+	this.Div00.form.Sta_IncorrectPW.visible = false;
+};
+
+this.Div00_signUp_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fvApp.mainframe.Main.formurl = "AboutAccount::gybs1011fm.xfdl";
+};
+
+this.Div00_findIDorPW_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fvApp.mainframe.Main.formurl = "AboutAccount::gybs1012fm.xfdl";
+};
+
+this.fnCallback = function(svcId, errCd, errMsg) {
+	if (errCd < 0) {
+		arrArg = [errMsg];
+		this.gfnAlert("msg.server.error.msg", arrArg, "msg.server.error.msg", "fnMsgCallback");	
+	}
+	
+	if (svcId == "login") 
+	{
+		if (errCd == 10110) { // 로그인 실패
+			this.gfnAlert("msg.err.login.fail", "", "msg.err.login.fail", "fnMsgCallback");	
+		}
+		else if (errCd == 10111) { // 로그인 성공
+			this.fvApp.gds_accountInfo.copyData(this.ds_accountInfo);
+			
+			// 아이디 기억하기 활성화 후 로그인 -> 로컬 스토리지에 저장
+			if (this.Div00.form.Ckb_RememberID.value == true) {
+				nexacro.setPrivateProfile("ID", this.Div00.form.Edit_ID.value);
+			}
+			else { // 아이디 기억하기 활성화 X -> 제거
+				nexacro.setPrivateProfile("ID", "");
+			}
+			
+			// 계정 유형 확인
+			// 회원
+			if (this.fvApp.gds_accountInfo.getColumn(0, "ROLE_TYPE") == "User") {
+				this.fvApp.mainframe.Main.formurl = "UserForms::gybs2010fm.xfdl";
+			}
+			// 운영자
+			else if (this.fvApp.gds_accountInfo.getColumn(0, "ROLE_TYPE") == "SuperAdmin") {
+				this.fvApp.mainframe.Main.formurl = "SuperAdminForms::gybs5010fm.xfdl";
+			}
+			// 관리자
+			else if (this.fvApp.gds_accountInfo.getColumn(0, "ROLE_TYPE") == "Admin") {
+				switch(this.fvApp.gds_accountInfo.getColumn(0, "GYM_STATUS")) {
+				case "ACTIVE": // 승인된 헬스장 관리자
+					this.fvApp.mainframe.Main.formurl = "AdminForms::gybs3010fm.xfdl";
+					break;
+				case "PENDING": // 승인 대기 중인 헬스장 관리자
+					this.fvApp.mainframe.Main.formurl = "AdminForms::gybs3211fm.xfdl";
+					break;
+				case "REJECTED": // 등록 반려된 헬스장 관리자
+					this.fvApp.mainframe.Main.formurl = "AdminForms::gybs3212fm.xfdl";
+					break;
+				default: // 헬스장을 등록하지 않은 관리자
+					this.fvApp.mainframe.Main.formurl = "AdminForms::gybs3210fm.xfdl";
+					break;
+				}
+			}
+		}
+	}
+}
+
+this.Login_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var userID = nexacro.getPrivateProfile("ID");
+	// 저장된 아이디 존재 확인
+	if (userID != null && userID.length > 0) {
+		this.Div00.form.Ckb_RememberID.value = true;
+		this.Div00.form.Edit_ID.value = userID;
+	}
+};
+
+this.Login_onkeyup = function(obj:nexacro.Form,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == 13) {
+		this.Div00_Btn_Login_onclick();
+	}
+};]]></Script>
+    <Objects>
+      <Dataset id="ds_accountInfo">
+        <ColumnInfo>
+          <Column id="ID" type="STRING" size="256"/>
+          <Column id="PW" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+          <Column id="PHONE_NO" type="STRING" size="256"/>
+          <Column id="ROLE_TYPE" type="STRING" size="256"/>
+          <Column id="GYM_CODE" type="STRING" size="256"/>
+          <Column id="PROFILE_PATH" type="STRING" size="256"/>
+          <Column id="NOTI_COUNT" type="STRING" size="256"/>
+          <Column id="GYM_STATUS" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="Div00.form.Edit_ID" propid="value" datasetid="ds_accountInfo" columnid="ID"/>
+      <BindItem id="item1" compid="Div00.form.Edit_PW" propid="value" datasetid="ds_accountInfo" columnid="PW"/>
+    </Bind>
+  </Form>
+</FDL>

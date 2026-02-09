@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Sample" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Button id="Button00" taborder="0" text="Sample 화면입니다. " left="17" top="21" width="169" height="47"/>
+        <Grid id="Grid00" taborder="1" left="20" top="86" width="463" height="276" binddataset="Dataset00">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="334"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Column0"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0" displaytype="normal" edittype="text"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Calendar id="Calendar00" taborder="2" left="515" top="89" width="195" height="48" dateformat="yyyy-MM-dd HH:mm:ss" editformat="yyyy-MM-dd HH:mm:ss"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="Dataset00">
+        <ColumnInfo>
+          <Column id="Column0" type="DATETIME" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">2022-08-12 12:13:41:111</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="Calendar00" propid="value" datasetid="Dataset00" columnid="Column0"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="SampleArrangement" width="1020" height="700" titletext="아코디언 (Position Base)" onload="form_onload">
+    <Layouts>
+      <Layout height="700" mobileorientation="landscape" width="1020">
+        <TextArea id="txtDesc" taborder="5" left="20" top="60" height="60" cssclass="txt_WF_Desc" value="1. Design탭에서 상대적으로 적용하기 위해 기준이 되는 컴포넌트의 ID 를 설정한다.&#10;2. 숨길때 Div의 height를 0 으로 지정하고, 펼치때는 원래 Div의 height로 지정한다." right="20"/>
+        <Div id="Div00" taborder="0" left="20" top="txtDesc:20" height="40" cssclass="div_WF_Area" width="980">
+          <Layouts>
+            <Layout>
+              <Button id="Button00" taborder="0" right="6" height="26" width="60" onclick="Div00_Button00_onclick" text="접기" top="6" cssclass="btn_WF_FillGray"/>
+              <Static id="Static00" taborder="1" text="1) 타이틀 1" left="10" top="6" width="178" height="26" cssclass="sta_WF_Title4"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="Div01" taborder="1" left="20" top="Div00:-1" height="120" cssclass="div_WF_Area" background="#fffaa6" right="20">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="컨텐츠" left="20" top="6" width="178" height="28" cssclass="sta_WF_Title4"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="Div02" taborder="2" left="20" top="Div01:10" right="20" height="40" cssclass="div_WF_Area">
+          <Layouts>
+            <Layout>
+              <Button id="Button00" taborder="0" right="6" bottom="6" height="26" width="60" onclick="Div02_Button00_onclick" text="접기" cssclass="btn_WF_FillGray"/>
+              <Static id="Static01" taborder="1" text="2) 타이틀 2" left="10" top="6" width="228" height="28" cssclass="sta_WF_Title4"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="Div03" taborder="3" left="20" top="Div02:-1" height="450" cssclass="div_WF_Area" background="#fffaa6" right="20">
+          <Layouts>
+            <Layout>
+              <Div id="Div00" taborder="0" left="30" top="30" right="30" height="40" text="" cssclass="div_WF_Area">
+                <Layouts>
+                  <Layout>
+                    <Button id="Button00" taborder="0" right="6" height="26" bottom="6" width="60" onclick="Div03_Div00_Button00_onclick" text="접기" cssclass="btn_WF_FillGray"/>
+                    <Static id="Static00" taborder="1" text="2-1) 타이틀 2-1" left="10" top="6" width="178" height="28" cssclass="sta_WF_Title4"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="Div01" taborder="1" left="30" top="69" right="30" height="150" cssclass="div_WF_Area" background="#bfffff">
+                <Layouts>
+                  <Layout>
+                    <Static id="Static00" taborder="0" text="컨텐츠 2-1" left="20" top="6" width="178" height="28" cssclass="sta_WF_Title4"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="Div02" taborder="2" left="30" top="Div01:10" right="30" height="40" text="" cssclass="div_WF_Area">
+                <Layouts>
+                  <Layout>
+                    <Button id="Button00" taborder="0" right="6" height="26" bottom="6" width="60" onclick="Div03_Div02_Button00_onclick" text="접기" cssclass="btn_WF_FillGray"/>
+                    <Static id="Static00" taborder="1" text="2-2) 타이틀 2-2" left="10" top="6" width="178" height="28" cssclass="sta_WF_Title4"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="Div03" taborder="3" left="30" top="Div02:-1" right="30" height="150" cssclass="div_WF_Area" background="#bfffff">
+                <Layouts>
+                  <Layout>
+                    <Static id="Static00" taborder="0" text="컨텐츠 2-2" left="20" top="6" width="178" height="28" cssclass="sta_WF_Title4"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staTitle" taborder="4" text="아코디언 (상대좌표 지정)" left="20" top="0" width="281" height="60" cssclass="sta_WF_Title1"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  Nexacro Professional Training Couse
+*  @MenuPath    개발가이드 > 컴포넌트 연동 > 아코디언
+*  @FileName 	SampleArrangement.xfdl 
+*  @Creator 	TOBESOFT Education
+*  @CreateDate 	2025/01/03
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2025/01/03      		 TOBESOFT Education	 	  	최초 생성 
+*******************************************************************************
+*/
+
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this);
+	
+	this.Div02_Button00_onclick(this.Div02.form.Button00,{});
+};
+
+this.Div00_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(obj.text == "접기"){
+		this.Div01.setOffsetHeight(0);
+		obj.text = "펼치기"; 
+	}
+	else{
+		this.Div01.setOffsetHeight(180);
+		obj.text = "접기";
+	}	
+	this.resetScroll();
+};
+
+this.Div02_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(obj.text == "접기"){
+		this.Div03.setOffsetHeight(0);
+		obj.text = "펼치기"; 
+	}
+	else{
+		this.Div03.setOffsetHeight(450);
+		obj.text = "접기";
+	}	
+	this.resetScroll();
+};
+
+this.Div03_Div00_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(obj.text == "접기"){
+		this.Div03.form.Div01.setOffsetHeight(0);
+		obj.text = "펼치기"; 
+	}
+	else{
+		this.Div03.form.Div01.setOffsetHeight(150);
+		obj.text = "접기";
+	}	
+	this.Div03.form.resetScroll();	
+};
+
+this.Div03_Div02_Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(obj.text == "접기"){
+		this.Div03.form.Div03.setOffsetHeight(0);
+		obj.text = "펼치기"; 
+	}
+	else{
+		this.Div03.form.Div03.setOffsetHeight(150);
+		obj.text = "접기";
+	}
+	this.Div03.form.resetScroll();	
+};
+]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Work_Formetc" width="1280" height="720" titletext="New Form" ontimer="Work_Formetc_ontimer">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Button id="btn00" taborder="0" text="모달" left="54" top="40" width="207" height="71" onclick="btn00_onclick"/>
+        <Button id="btn01" taborder="1" text="모달리스" left="293" top="41" width="202" height="76" onclick="btn01_onclick"/>
+        <Div id="div00" taborder="2" text="" left="57" top="144" width="436" height="249" cssclass="div_WF_Area">
+          <Layouts>
+            <Layout>
+              <Button id="btn02" taborder="0" text="btn02" left="14" top="13" width="186" height="63" onclick="div00_btn02_onclick"/>
+              <Button id="btn03" taborder="1" text="btn03" left="225" top="13" width="187" height="63" onclick="div00_btn03_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div01" taborder="3" text="" left="560" top="140" width="436" height="249" cssclass="div_WF_Area" url="Work::Work_FormSub.xfdl">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Edit id="edt00" taborder="4" left="552" top="56" width="368" height="64" value="부모창에 있는 edit" text="부모창에 있는 edit"/>
+        <Button id="btn04" taborder="5" text="form에 생성되는 있는 컴포넌트 정보" left="70" top="432" width="273" height="62" onclick="btn04_onclick"/>
+        <Button id="btn05" taborder="6" text="string을 object로 변환" left="68" top="531" width="280" height="58" onclick="btn05_onclick"/>
+        <PopupDiv id="pdiv00" text="" visible="false" left="822" top="413" width="532" height="194" background="#009316">
+          <Layouts>
+            <Layout>
+              <Button id="btn06" taborder="0" text="버른" left="52" top="36" width="185" height="131"/>
+              <ImageViewer id="img00" taborder="1" text="" left="295" top="37" width="173" height="74"/>
+            </Layout>
+          </Layouts>
+        </PopupDiv>
+        <Button id="btn07" taborder="7" text="PopupDiv open" left="371" top="432" width="238" height="62" onclick="btn07_onclick"/>
+        <Button id="btn08" taborder="8" text="타이머 설정" left="376" top="528" width="114" height="61" onclick="btn08_onclick"/>
+        <Static id="sta00" taborder="9" text="sta00" left="382" top="607" width="220" height="29" cssclass="sta_WF_Title1"/>
+        <Button id="btn09C" taborder="14" text="타이머 끄기" left="516" top="528" width="114" height="61" onclick="btn09C_onclick"/>
+        <Button id="btn10C" taborder="15" text="btn10" top="426" height="87" right="480" width="144" onclick="btn10C_onclick"/>
+        <Button id="btn11C" taborder="16" text="btn11" left="650" top="526" height="79" width="7.8125%" onclick="btn11C_onclick"/>
+        <Button id="btn12C" taborder="17" text="동적 생성" left="57" top="607" width="141" height="71" onclick="btn12C_onclick"/>
+        <Button id="btn13C" taborder="18" text="동적 제거" left="208" top="605" width="132" height="73" onclick="btn13C_onclick"/>
+        <Button id="btn14C" taborder="19" text="동적 이벤트 생성" left="360" top="636" width="164" height="61" onclick="btn14C_onclick"/>
+        <Button id="btn03" taborder="16" text="btn02" left="1034" top="250" width="186" height="120"/>
+        <Button id="btn02" taborder="17" text="div 동적 생성" left="550" top="636" width="190" height="61" onclick="btn02_onclick"/>
+        <Button id="btn06" taborder="18" text="div 동적 제거" left="778" top="636" width="212" height="58" onclick="btn06_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.btn01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nW=400;
+	var nH=500;
+	var objApp=nexacro.getApplication();
+	var nLeft=(objApp.mainframe.width/2)-Math.round(nW/2);
+	var nTop=(objApp.mainframe.height/2)-Math.round(nH/2);
+	nLeft=system.clientToScreenX(this,nLeft);
+	nTop=system.clientToScreenY(this,nTop);
+	
+	var sOpenStype="showtitlebar=true showstatusbar=false titletext='모달리스 팝업'";
+	var objParam={pTitle:"모달리스",pValue:"NEXACRO"};
+	nexacro.open("popupDept"
+				 , "Work::Work_PopupDept.xfdl"
+				 , this.getOwnerFrame()
+				 , objParam
+				 , sOpenStype
+				 , nLeft
+				 , nTop
+				 , nW
+				 , nH
+				 , this);
+};
+
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objCF=new ChildFrame("popupDept",0,0,400,500);
+	objCF.formurl="Work::Work_PopupDept.xfdl";
+	objCF.openalign="center middle";
+	objCF.dragmovetype="all";
+	objCF.showtitlebar=false;
+	var objParam={pTitle:"부서 검색창",
+				  pValue:"ABC"};
+				  
+	objCF.showModal(this.getOwnerFrame(),objParam,this,"fnPopupCallback");
+};
+
+
+this.fnPopupCallback=function(sPopupId,sReturn)
+{	
+	if(sReturn==undefined) return;
+
+	if(sPopupId=="popupDept")	
+	{
+		var sCode=sReturn.split(":")[0];
+		var sName=sReturn.split(":")[1];
+		this.divSearch.form.edtDeptCode.value=sCode;
+		this.divSearch.form.edtDeptName.value=sName;
+	}
+
+};
+
+this.fnReturn=function(objDs)
+{
+	this.ds00.copyData(objDs);
+	trace(this.ds00.saveXML());
+}
+
+this.div00_btn02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var a=this.div00.form.btn00.text;
+};
+
+this.btn04_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var arrObj=this.components;//all을 하면 데이터 셋까지 볼 수 있다
+	for(var i=0;i<arrObj.length;i++){
+		trace(arrObj[i]+":"+arrObj[i].id);
+	}
+};//string을 object형태로 변환할때 사용 가능
+
+this.btn05_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sId="btn03";
+
+// 	var objBtn=eval("this."+sId);
+	var objBtn=this.components[sId];
+	trace(typeof objBtn + " : "+objBtn.text);
+	//eval 함수는 처리되는 속도도 늦고 보안 코드에 영향을 줄 수 있다
+	//string을 오브젝트로 변환시키는 방법
+};
+
+this.btn07_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.pdiv00.trackPopupByComponent(obj,0,obj.height);
+};
+
+
+
+this.btn08_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.setTimer(10,1000);
+};
+
+this.Work_Formetc_ontimer = function(obj:nexacro.Form,e:nexacro.TimerEventInfo)
+{
+	if(e.timerid==10){
+		this.fnGetTime();
+	}
+};
+
+this.fnGetTime=function(){
+	var objDate=new Date();
+	var nH=objDate.getHours("h");
+	var nM=objDate.getMinutes();	
+	var nS=objDate.getSeconds();
+	var sH=nH.toString().length<2? "0"+nH.toString():nH.toString();
+	var sM=nM.toString().length<2? "0"+nM.toString():nM.toString();	
+	var sS=nS.toString().length<2? "0"+nS.toString():nS.toString();
+	
+	this.sta00.text=sH+":"+sM+":"+sS;
+};
+
+this.btn09C_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.killTimer(10);
+};
+
+this.btn10C_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nLeft=this.btn10.left;
+	var nLeft2=this.btn10.getOffsetLeft();
+	var nWidth=this.btn11.width;
+	var nWidth2=this.btn11.getOffsetWidth();
+	
+	
+	trace(nLeft2);
+	trace(nWidth2);
+};
+
+
+
+this.btn12C_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objBtn=new Button("btnCreate",100,100,300,200);
+	this.addChild(objBtn.id,objBtn);
+	objBtn.background="gold";
+	objBtn.text="동적 생성 버튼";
+	objBtn.show();
+};
+
+this.btn13C_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.removeChild("btnCreate");
+	objBtn.destroy();
+	objBtn=null;
+};
+
+this.btn14C_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.btnCreate.addEventHandler("onclick",this.fnClick,this);
+};
+
+this.fnClick=function()
+{
+	alert("이벤트 핸들러 추가 함수");
+}
+
+
+
+this.btn02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objBtn=new Button("btnCreate",100,100,300,200);
+	this.div00.addChild(objBtn.id,objBtn);
+	objBtn.background="gold";
+	objBtn.text="동적 생성 버튼";
+	objBtn.show();
+};
+
+
+this.btn06_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.div00.removeChild("btnCreate");
+	objBtn.destroy();
+	objBtn=null;
+};
+]]></Script>
+    <Objects>
+      <Dataset id="ds00"/>
+    </Objects>
+  </Form>
+</FDL>

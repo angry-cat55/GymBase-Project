@@ -1,0 +1,470 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Work_Dataset" width="1000" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1000">
+        <Static id="sta00" taborder="0" text="Dataset 기능" left="30" top="20" width="156" height="30"/>
+        <Grid id="grd00" taborder="1" left="30" top="85" width="550" height="255" binddataset="ds_emp">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="28" band="head"/>
+                <Row size="28"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="EMP_NAME"/>
+                <Cell col="1" text="EMP_ID"/>
+                <Cell col="2" text="DEPT_CODE"/>
+                <Cell col="3" text="POSITION"/>
+                <Cell col="4" text="HIRE_DATE"/>
+                <Cell col="5" text="SALARY"/>
+                <Cell col="6" text="GENDER"/>
+                <Cell col="7" text="MARRIED"/>
+                <Cell col="8" text="SKILL"/>
+                <Cell col="9" text="HOBBY"/>
+                <Cell col="10" text="MEMO"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:EMP_NAME" edittype="normal"/>
+                <Cell col="1" text="bind:EMP_ID" edittype="normal"/>
+                <Cell col="2" text="bind:DEPT_CODE" edittype="normal"/>
+                <Cell col="3" text="bind:POSITION" edittype="normal"/>
+                <Cell col="4" text="bind:HIRE_DATE" edittype="normal"/>
+                <Cell col="5" text="bind:SALARY" edittype="normal"/>
+                <Cell col="6" text="bind:GENDER" edittype="normal"/>
+                <Cell col="7" text="bind:MARRIED" edittype="normal"/>
+                <Cell col="8" text="bind:SKILL" edittype="normal"/>
+                <Cell col="9" text="bind:HOBBY" edittype="normal"/>
+                <Cell col="10" text="bind:MEMO" edittype="normal"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btn00" taborder="2" text="컬럼 레코드 개수" left="30" top="357" width="167" height="45" onclick="btn00_onclick"/>
+        <Button id="btn01" taborder="3" text="컬럼 추가" left="199" top="357" width="167" height="45" onclick="btn01_onclick"/>
+        <Button id="btn02" taborder="4" text="데이터 찾기 - 단일조건" left="368" top="357" width="167" height="45" onclick="btn02_onclick"/>
+        <Button id="btn02_00" taborder="5" text="데이터 찾기 - 다중조건" left="537" top="357" width="167" height="45" onclick="btn02_00_onclick"/>
+        <Button id="btn02_00_00" taborder="6" text="데이터 목록 구하기" left="706" top="357" width="167" height="45" onclick="btn02_00_00_onclick"/>
+        <Button id="btn00_00" taborder="7" text="데이터 정렬" left="30" top="408" width="167" height="45" onclick="btn00_00_onclick"/>
+        <Button id="btn00_00_00" taborder="8" text="데이터 필터" left="199" top="408" width="167" height="45" onclick="btn00_00_00_onclick"/>
+        <Button id="btn00_00_00_00" taborder="9" text="필터 초기화" left="368" top="408" width="167" height="45" onclick="btn00_00_00_00_onclick"/>
+        <Button id="btn00_00_00_00_00" taborder="10" text="필터 후 레코드 검색" left="537" top="408" width="167" height="45" onclick="btn00_00_00_00_00_onclick"/>
+        <Button id="btn00_00_00_00_00_00" taborder="11" text="LIKE 필터" left="706" top="408" width="167" height="45" onclick="btn00_00_00_00_00_00_onclick"/>
+        <Edit id="edt00" taborder="12" left="875" top="414" width="40" height="32" value="a" text="a"/>
+        <Button id="btn00_00_01" taborder="13" text="평균 구하기" left="30" top="459" width="167" height="45" onclick="btn00_00_01_onclick"/>
+        <Button id="btn00_00_01_00" taborder="14" text="행 추가" left="199" top="459" width="167" height="45" onclick="btn00_00_01_00_onclick"/>
+        <Button id="btn00_00_01_00_00" taborder="15" text="데이터 변경" left="368" top="459" width="167" height="45" onclick="btn00_00_01_00_00_onclick"/>
+        <Button id="btn00_00_01_00_00_00" taborder="16" text="변경 전 데이터 조회" left="537" top="459" width="167" height="45" onclick="btn00_00_01_00_00_00_onclick"/>
+        <Button id="btn00_00_01_00_00_00_00" taborder="17" text="특정 데이터들 삭제" left="706" top="459" width="167" height="45" onclick="btn00_00_01_00_00_00_00_onclick"/>
+        <Button id="btn00_00_01_01" taborder="18" text="삭제한 레코드 정보" left="30" top="510" width="167" height="45" onclick="btn00_00_01_01_onclick"/>
+        <Button id="btn00_00_01_01_00" taborder="19" text="데이터 변경 여부" left="199" top="510" width="167" height="45" onclick="btn00_00_01_01_00_onclick"/>
+        <Button id="btn00_00_01_01_00_00" taborder="20" text="리셋 or 클리어" left="368" top="510" width="167" height="45" onclick="btn00_00_01_01_00_00_onclick"/>
+        <Grid id="grd01" taborder="21" left="597" top="86" width="388" height="255"/>
+        <Button id="btn00_00_01_01_00_00_00" taborder="22" text="데이터 복사" left="537" top="510" width="167" height="45" onclick="btn00_00_01_01_00_00_00_onclick"/>
+        <Button id="btn00_00_01_01_00_00_00_00" taborder="23" text="데이터 붙이기" left="706" top="510" width="167" height="45" onclick="btn00_00_01_01_00_00_00_00_onclick"/>
+        <Button id="btn00_00_01_01_01" taborder="24" text="행 단위 복사" left="30" top="560" width="167" height="45" onclick="btn00_00_01_01_01_onclick"/>
+        <Button id="btn00_00_01_01_01_00" taborder="25" text="데이터 백개 입력" left="199" top="560" width="167" height="45" onclick="btn00_00_01_01_01_00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_emp" cancolumnchange="ds_emp_cancolumnchange" oncolumnchanged="ds_emp_oncolumnchanged" canrowposchange="ds_emp_canrowposchange">
+        <ColumnInfo>
+          <Column id="EMP_NAME" type="STRING" size="50"/>
+          <Column id="EMP_ID" type="STRING" size="10"/>
+          <Column id="DEPT_CODE" type="STRING" size="256"/>
+          <Column id="POSITION" type="STRING" size="10"/>
+          <Column id="HIRE_DATE" type="DATE" size="10"/>
+          <Column id="SALARY" type="INT" size="10"/>
+          <Column id="GENDER" type="STRING" size="256"/>
+          <Column id="MARRIED" type="STRING" size="256"/>
+          <Column id="SKILL" type="STRING" size="256"/>
+          <Column id="HOBBY" type="STRING" size="256"/>
+          <Column id="MEMO" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="EMP_NAME">Melon</Col>
+            <Col id="EMP_ID">KR010</Col>
+            <Col id="POSITION">10</Col>
+            <Col id="HIRE_DATE">20071001</Col>
+            <Col id="SALARY">9000</Col>
+            <Col id="GENDER">F</Col>
+            <Col id="MARRIED">false</Col>
+            <Col id="SKILL">01,07</Col>
+            <Col id="HOBBY">01,05</Col>
+            <Col id="DEPT_CODE">10</Col>
+            <Col id="MEMO">aqua</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">Jackson</Col>
+            <Col id="EMP_ID">US050</Col>
+            <Col id="POSITION">60</Col>
+            <Col id="HIRE_DATE">20091021</Col>
+            <Col id="SALARY">6000</Col>
+            <Col id="GENDER">M</Col>
+            <Col id="MARRIED">false</Col>
+            <Col id="SKILL">11,03,13</Col>
+            <Col id="HOBBY">09,14</Col>
+            <Col id="DEPT_CODE">20</Col>
+            <Col id="MEMO">gold</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">Jennie</Col>
+            <Col id="EMP_ID">KR240</Col>
+            <Col id="POSITION">50</Col>
+            <Col id="HIRE_DATE">20110508</Col>
+            <Col id="SALARY">7000</Col>
+            <Col id="GENDER">F</Col>
+            <Col id="MARRIED">true</Col>
+            <Col id="SKILL">01,06</Col>
+            <Col id="HOBBY">05</Col>
+            <Col id="DEPT_CODE">40</Col>
+            <Col id="MEMO">greenyellow</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">Dennis </Col>
+            <Col id="EMP_ID">JP150</Col>
+            <Col id="POSITION">20</Col>
+            <Col id="HIRE_DATE">20091021</Col>
+            <Col id="SALARY">5000</Col>
+            <Col id="GENDER">M</Col>
+            <Col id="MARRIED">false</Col>
+            <Col id="SKILL">09,11</Col>
+            <Col id="HOBBY">07,06,05</Col>
+            <Col id="DEPT_CODE">30</Col>
+            <Col id="MEMO">khaki</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">Andrew</Col>
+            <Col id="EMP_ID">US020</Col>
+            <Col id="POSITION">60</Col>
+            <Col id="HIRE_DATE">20160602</Col>
+            <Col id="SALARY"/>
+            <Col id="GENDER">M</Col>
+            <Col id="MARRIED">true</Col>
+            <Col id="SKILL">07,06,06</Col>
+            <Col id="HOBBY">09,13</Col>
+            <Col id="DEPT_CODE">40</Col>
+            <Col id="MEMO">lightpink</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">Jungkook</Col>
+            <Col id="EMP_ID">KR200</Col>
+            <Col id="POSITION">60</Col>
+            <Col id="HIRE_DATE">20120304</Col>
+            <Col id="SALARY">7000</Col>
+            <Col id="GENDER">M</Col>
+            <Col id="MARRIED">true</Col>
+            <Col id="SKILL">07,06,06</Col>
+            <Col id="HOBBY">09,14</Col>
+            <Col id="DEPT_CODE">50</Col>
+            <Col id="MEMO">orange</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">Adam</Col>
+            <Col id="EMP_ID">JP230</Col>
+            <Col id="POSITION">50</Col>
+            <Col id="HIRE_DATE">20110928</Col>
+            <Col id="SALARY"/>
+            <Col id="GENDER">M</Col>
+            <Col id="MARRIED">true</Col>
+            <Col id="SKILL">11,03,13</Col>
+            <Col id="HOBBY">09,15</Col>
+            <Col id="DEPT_CODE">30</Col>
+            <Col id="MEMO">silver</Col>
+          </Row>
+          <Row>
+            <Col id="EMP_NAME">JiYoung</Col>
+            <Col id="EMP_ID">KR080</Col>
+            <Col id="POSITION">50</Col>
+            <Col id="HIRE_DATE">20131120</Col>
+            <Col id="SALARY">8500</Col>
+            <Col id="GENDER">F</Col>
+            <Col id="MARRIED">false</Col>
+            <Col id="SKILL">01,07</Col>
+            <Col id="HOBBY">05</Col>
+            <Col id="DEPT_CODE">40</Col>
+            <Col id="MEMO">violet</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_temp"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nColCnt = this.ds_emp.getColCount(); // == this.ds_emp.colcount;
+	var nRowCnt = this.ds_emp.getRowCount(); // == this.ds_emp.rowcount;
+	
+	for (var i = 0; i < nColCnt; i++) {
+		var sColId = this.ds_emp.getColID(i); // i번째 인덱스의 컬럼을 읽어옴
+		trace(sColId);
+		
+		var objCol = this.ds_emp.getColumnInfo(i); // 해당 컬럼의 정보 (id, type, size 등등)
+		trace(objCol.id + " : " + objCol.type + " : " + + objCol.size);
+	}
+	
+	trace(nColCnt + " : " + nRowCnt);
+};
+
+this.btn01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.ds_emp.addColumn("Col_CHK", "STRING", 10); // 사이즈의 기본값 : 256
+};
+
+this.btn02_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 사원 번호(KR240)를 통해 이름 탐색
+	var nRow = this.ds_emp.findRow("EMP_ID", "KR240"); // 해당 행 인덱스를 반환 (없을 시 -1 반환)
+	if (nRow == -1) {
+		trace("일치하는 데이터가 없습니다.");
+	}
+	else {
+		var sName = this.ds_emp.getColumn(nRow, "EMP_NAME");
+		trace(sName);
+	}
+	
+	var sName2 = this.ds_emp.lookup("EMP_ID", "KR240", "EMP_NAME"); // ~열이 ~인 행의 ~열 데이터를 반환하는 함수
+};
+
+this.btn02_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 부서코드(40), 성별(여자)을 통해 이름 탐색
+	var nRow = this.ds_emp.findRowExpr("DEPT_CODE == '40' && GENDER == 'F'");
+	var sName = this.ds_emp.getColumn(nRow, "EMP_NAME");
+	trace(sName); // 처음 발견한 행에서 탐색 종료 -> 이후 행에서 동일한 조건의 이름이 있어도 찾지 못함
+};
+
+this.btn02_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+// 	for (var i = 0; i < this.ds_emp.rowcount; i++) {
+// 		var sDept = this.ds_emp.getColumn(i, "DEPT_CODE");
+// 		if (sDept == "40") {
+// 			var sName = this.ds_emp.getColumm(i);
+// 			trace(sName);
+// 		}
+// 	}
+	
+	var arrRow = this.ds_emp.extractRows("DEPT_CODE == '40'");
+	for (var i = 0; i < arrRow.length; i++) {
+		var sName = this.ds_emp.getColumn(arrRow[i], "EMP_NAME");
+		trace(sName);
+	}
+	
+	
+};
+
+this.btn00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.ds_emp.keystring = ("S:+DEPT_CODE-HIRE_DATE");
+	// S : 정렬(쿼리의 ORDER BY), G : 그룹화(쿼리의 GROUP BY)
+	// + : 오름차순, - : 내림차순
+};
+
+this.btn00_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.ds_emp.filter("DEPT_CODE == '40'");
+	// 필터 후 레코드 조회 등의 함수를 호출하면 필터된 쿼리의 데이터를 조사
+};
+
+this.btn00_00_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.ds_emp.filter("");
+};
+
+this.btn00_00_00_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nRow1 = this.ds_emp.getRowCount();
+	var nRow2 = this.ds_emp.getRowCountNF(); // 필터 전 데이터 조사
+	trace("필터 후(현재) 데이터 : " + nRow1 + ", 필터 전 데이터 : " + nRow2);
+};
+
+
+this.btn00_00_00_00_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sText = this.edt00.value;
+	this.ds_emp.filter("EMP_NAME.toUpperCase().indexOf('" + sText.toUpperCase() + "') > -1");
+	// indexOf() :  해당 열 데이터에 '문자'가 있으면 그 인덱스를 반환, 없으면 -1 반환
+	// toUpperCase() : 해당 string을 모두 대문자로 변경
+};
+
+this.btn00_00_01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nAvg = this.ds_emp.getAvg("SALARY");
+	trace(nAvg);
+	
+	var nAvg1 = this.ds_emp.getCaseAvg("GENDER == 'M'", "SALARY", 0, -1, false);
+	// 0(최상위)부터 -1(마지막)까지, false : 없는 데이터는 생략 (디폴트 = true);
+	var nAvg2 = this.ds_emp.getCaseAvg("GENDER == 'F'", "SALARY", 0, -1, false);
+	trace("남자 : " + nAvg1 + ", 여자 : " + nAvg2);
+};
+
+this.btn00_00_01_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nRow = this.ds_emp.insertRow(this.ds_emp.rowposition); // 선택한 행의 인덱스에 새 행 추가
+	var nType = this.ds_emp.getRowType(nRow); // 행 인덱스 : 행 상태 번호
+	trace(nRow + " : " + nType);
+};
+
+
+this.btn00_00_01_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.ds_emp.setColumn(this.ds_emp.rowposition, "EMP_NAME", "홍길동");
+	var nType = this.ds_emp.getRowType(this.ds_emp.rowposition);
+	trace(nType);
+};
+
+this.btn00_00_01_00_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sCurName = this.ds_emp.getColumn(this.ds_emp.rowposition, "EMP_NAME");
+	var sOrgName = this.ds_emp.getOrgColumn(this.ds_emp.rowposition, "EMP_NAME");
+	// 데이터를 계속 바꿔도 원본(데이터셋)의 데이터만 저장함
+	trace("변경 전 : " + sOrgName + ", 변경 후 : " + sCurName);
+};
+
+this.btn00_00_01_00_00_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 부서가 40인 데이터 삭제
+
+// 	for (var i = 0; i < this.ds_emp.rowcount; i++) {
+// 		var sDept = this.ds_emp.getColumn(i, "DEPT_CODE");
+// 		if (sDept == "40") {
+// 			this.ds_emp.deleteRow(i);
+// 		}
+// 	}
+// 이와 같이 위에서부터 아래로 반복문을 돌면, 인덱스가 꼬여서 제대로 삭제 처리가 안될  수 있음.
+// 그래서 아래와 같이 아래에서부터 위로 삭제해야 함.
+
+// 	for (var i = this.ds_emp.rowcount; i > 0; i--) {
+// 		var sDept = this.ds_emp.getColumn(i, "DEPT_CODE");
+// 		if (sDept == "40") {
+// 			this.ds_emp.deleteRow(i);
+// 		}
+// 	}
+
+// 	var arrRow = [0, 3, 6];
+// 	this.ds_emp.deleteMultiRows(arrRow);
+// 이처럼 특정 인덱스를 지정해서 멀티 삭제가 가능함.
+
+// 연습 : POSITION이 50인 사람 삭제
+	var arrRow = this.ds_emp.extractRows("POSITION == '50'");
+	this.ds_emp.deleteMultiRows(arrRow); // 배열로 삭제를 해도 아래 행부터 삭제 진행
+
+};
+
+this.btn00_00_01_01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nCnt = this.ds_emp.getDeletedRowCount();
+	var sName = this.ds_emp.getDeletedColumn(0, "EMP_NAME"); // 삭제된 레코드의 0번째 인덱스 정보 불러오기
+	trace(nCnt + " : " + sName);
+};
+
+this.btn00_00_01_01_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var rtn = this.fnCheckData(this.ds_emp);
+	if (rtn) {
+		alert("변경된 데이터가 있습니다. 그래도 종료하시겠습니까?");
+	}
+};
+
+// 데이터 변경 여부 체크
+this.fnCheckData = function(objDs)
+{
+	if (objDs.getDeletedRowCount() > 0) {
+		// 삭제된 거
+		return true;
+	}
+	
+	for (var i = 0; i < this.ds_emp.rowcount; i++) {
+		var nType = this.ds_emp.getRowType(i);
+		if (nType ==2 || nType == 4) {
+			// 추가, 변경된 거
+			return true;
+		}
+	}
+	// 변경 안된 거
+	return false;
+}
+this.btn00_00_01_01_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// this.ds_emp.reset();
+	this.ds_emp.clearData();
+	// 실제 데이터의 삭제가 아닌 표면적인 데이터가 클리어됨
+	// this.ds_emp.clear();
+	// column의 정보까지 클리어
+	trace(this.ds_emp.saveXML());
+};
+
+this.btn00_00_01_01_00_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.ds_temp.copyData(this.ds_emp); //  데이터 타입이 1번(수정X)인 데이터만 복사
+	// this.ds_temp.assign(this.ds_emp); => 기존 데이터셋을 그대로 복사
+	this.grd01.binddataset = "ds_temp";
+	this.grd01.createFormat();
+};
+
+this.btn00_00_01_01_00_00_00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.ds_temp.appendData(this.ds_emp);
+};
+
+this.btn00_00_01_01_01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nFromRow = this.ds_emp.findRow("EMP_ID", "KR240");
+	var nToRow = this.ds_temp.addRow();
+	var sCol = "DEPT_CODE=EMP_ID, POSITION=EMP_NAME";
+	this.ds_temp.copyRow(nToRow, this.ds_emp, nFromRow, sCol);
+};
+
+this.ds_emp_cancolumnchange = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	// 변경될 때 실행됨
+	// 리턴값 가질 수 있음
+	trace("1 ds_emp_cancolumnchange");
+	
+	var nRow = obj.findRowExpr("EMP_ID == '" + e.newvalue + "' && currow !=" + e.row);
+	if (nRow > -1) {
+		alert("데이터 중복");
+		return false
+		// false를 리턴하면 값이 변경되지 않음(oncolumnchanged 실행 X)
+		// 데이터 정합성 검사할 때 유용
+	}
+};
+
+this.ds_emp_oncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	// 변경된 후 실행됨
+	trace("2 ds_emp_oncolumnchanged");
+};
+
+// canrowposchange, onrowposchange는 행이 변경될 떄 실행
+
+
+this.btn00_00_01_01_01_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.ds_emp.clearData();
+	this.ds_emp.enableevent = false;
+	for (var i = 0; i < 100; i++) {
+		this.ds_emp.addRow();
+		this.ds_emp.setColumn(i , "EMP_NAME", "Insert Data" + i.toString());
+		// 프로그램 내부적으로 can,onchanged 이벤트가 호출되므로 실행 속도가 느려짐
+	}
+	this.ds_emp.enableevent = true;
+	// 그래서 고반복 작업 앞뒤로 enableevent의 값을 변경하자.
+};
+]]></Script>
+  </Form>
+</FDL>

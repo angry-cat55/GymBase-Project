@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script version="1.0" type="xscript5.1"><![CDATA[
+this.lfn_getToday=function(){
+		var objDate = new Date();
+		var sToday  = objDate.getFullYear().toString();
+	    sToday += (objDate.getMonth()+1).toString().padLeft(2, "0")
+	    sToday += objDate.getDate().toString().padLeft(2, "0"); 
+	return sToday;
+}
+
+
+this.lfn_Firstday=function(){
+	var objDate = new Date();
+	var sToday  = objDate.getFullYear().toString();
+	    sToday += (objDate.getMonth()+1).toString().padLeft(2, "0")
+		sToday+="01";
+	return sToday;
+}
+
+
+
+]]></Script>

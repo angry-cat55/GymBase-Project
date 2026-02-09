@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="gfnAlert" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Button id="Button00" taborder="0" text="alert" left="139" top="127" width="203" height="51" onclick="Button00_onclick"/>
+        <Button id="Button01" taborder="1" text="confirm" left="421" top="122" width="278" height="58" onclick="Button01_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	arr = "안녕";
+	arrArg = [arr];
+	this.gfnAlert("msg.server.error.msg", arrArg);
+};
+
+this.Button01_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sMsgId = "confirm.approve.gym";	 	//메세지ID
+	var arrArg = "";						//메세지취환될값 배열[생략가능]
+	var sPopId = sMsgId;					//메세지팝업ID[생략가능]	*해당화면에서 메시지 중복사용시 구분되는값을 넣어줘야함
+	var sMsgCallback = "fnMsgCallback";		//메세지콜백[생략가능] 		* confirm성 메시지를 사용 시 반드시 필요
+	
+	// 변경된 내역을 저장 하시겠습니까?
+	//this.gfnAlert(sMsgId, arrArg, sPopId, sMsgCallback);	
+	
+	// function 전달
+	this.gfnAlert(sMsgId, arrArg, sPopId, "fnMsgCallback");
+};
+
+this.fnMsgCallback = function(strId, strVal) {
+	if (strVal == true) {
+		alert("확인 선택");
+	}
+	else {
+		alert("취소 선택");
+	}
+};]]></Script>
+  </Form>
+</FDL>

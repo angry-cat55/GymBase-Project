@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Timer" width="720" height="470" titletext="New Form" ontimer="Min_Timer_ontimer">
+    <Layouts>
+      <Layout height="470" mobileorientation="landscape" width="720">
+        <Button id="Button00" taborder="0" text="시작" left="33" top="22" width="157" height="37" onclick="Button00_onclick"/>
+        <Button id="Button01" taborder="1" text="종료" left="208" top="22" width="164" height="41" onclick="Button01_onclick"/>
+        <Edit id="Edit00" taborder="2" left="34" top="110" width="116" height="38" value="3" text="3"/>
+        <Static id="Static00" taborder="3" text="시간 설정 (분)" left="36" top="80" width="192" height="26"/>
+        <Radio id="Radio00" taborder="4" left="31" top="171" width="293" height="41" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" columncount="2" index="0" text="순방향" value="0">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">0</Col>
+                <Col id="datacolumn">역방향</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">1</Col>
+                <Col id="datacolumn">순방향</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Radio>
+        <Static id="Static01" taborder="5" text="00 : 00" left="214" top="105" width="150" height="41"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.firstTime;
+this.totalMin = 0;
+this.curMin = 0;
+
+this.Button00_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	this.firstTime = this.Edit00.value;
+	this.totalMin = nexacro.toNumber(this.firstTime) * 60;
+	this.curMin = 0;
+	this.Radio00.set_enable(false);
+	this.Button00.set_enable(false);
+	this.setTimer(1, 1000);
+}
+
+this.Button01_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	this.killTimer(1);
+	this.Static01.set_text("00:00");	
+	this.Radio00.set_enable(true);
+	this.Button00.set_enable(true);
+}
+
+this.Min_Timer_ontimer = function(obj:Form, e:nexacro.TimerEventInfo)
+{
+	if(e.timerid == 1)
+	{  
+		if(this.Radio00.index == 0)
+		{
+			this.fn_reverse_Timer();
+		}
+		else 
+		{
+			this.fn_Timer();
+		}		
+	}
+}
+
+this.fn_reverse_Timer = function()
+{	
+	var min = (nexacro.floor(this.totalMin / 60)).toString();
+	var sec = this.totalMin%60;	
+	this.Static01.set_text(min.padLeft(2, "0") +" : " + (sec.toString()).padLeft(2, "0"));	
+	
+	if(this.totalMin == 0)
+	{
+		this.killTimer(1);
+		this.Radio00.set_enable(true);
+		this.Button00.set_enable(true);
+		alert("시간 초과");
+	}	
+	this.totalMin--;
+}
+
+this.fn_Timer = function()
+{
+	var min = (nexacro.floor(this.curMin / 60)).toString();
+	var sec = (this.curMin % 60).toString();
+	this.Static01.set_text(min.padLeft(2, "0") + " : " + (sec.padLeft(2, "0")));
+	if(this.curMin == this.totalMin)
+	{
+		this.killTimer(1);
+		this.Radio00.set_enable(true);
+		this.Button00.set_enable(true);
+		this.curMin = 0;
+		alert("시간 완료");
+	}
+	this.curMin++;
+}
+]]></Script>
+  </Form>
+</FDL>

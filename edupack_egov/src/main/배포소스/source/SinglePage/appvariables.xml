@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AppVariables version="2.0">
+  <Datasets>
+    <Dataset id="Dataset0">
+      <ColumnInfo>
+        <Column id="Column0" type="STRING" size="256"/>
+        <Column id="Column1" type="STRING" size="256"/>
+        <Column id="Column2" type="STRING" size="256"/>
+      </ColumnInfo>
+      <Rows>
+        <Row>
+          <Col id="Column0">1</Col>
+          <Col id="Column1">2</Col>
+          <Col id="Column2">3</Col>
+        </Row>
+      </Rows>
+    </Dataset>
+  </Datasets>
+  <Variables>
+    <Variable id="App_TargetForm" initval=""/>
+  </Variables>
+</AppVariables>

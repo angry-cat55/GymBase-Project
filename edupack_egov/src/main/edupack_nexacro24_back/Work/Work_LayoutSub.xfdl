@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Work_LayoutSub" width="190" height="260" titletext="New Form" onload="Work_LayoutSub_onload">
+    <Layouts>
+      <Layout height="260" mobileorientation="landscape" width="190">
+        <ImageViewer id="img00" taborder="0" text="" left="10" top="10" height="150" right="10" onclick="Common_onclick"/>
+        <Static id="staTeam" taborder="1" text="두산베어스" left="100" top="170" width="80" height="26" cssclass="sta_WF_Title3" onclick="Common_onclick"/>
+        <Static id="staWin" taborder="2" text="1" left="10" top="173" width="44" height="21" cssclass="sta_WF_Title1" onclick="Common_onclick"/>
+        <Static id="staAddr" taborder="3" text="서울 잠실" left="10" top="217" width="90" height="26" onclick="Common_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects/>
+    <Script type="xscript5.1"><![CDATA[
+this.Work_LayoutSub_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var objParam = this.parent.param;
+	
+	this.img00.image = objParam.imgPath;
+	this.staTeam.text = objParam.team;
+	this.staWin.text = objParam.win;
+	this.staAddr.text = objParam.addr;
+};
+
+this.Common_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	alert(this.staTeam.text);
+};
+]]></Script>
+  </Form>
+</FDL>

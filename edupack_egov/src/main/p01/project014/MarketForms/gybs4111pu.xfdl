@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="gybs4111pu" width="720" height="800" titletext="정기권 등록 팝업" background="RGBA(196,196,196,0.02)" onload="gybs4111pu_onload">
+    <Layouts>
+      <Layout height="800" width="720">
+        <Div id="div_upload" taborder="0" left="0" top="0" background="#efefef" text="" height="800" width="720" borderRadius="20px" border="1px solid #000000">
+          <Layouts>
+            <Layout>
+              <Static id="sta_background" taborder="15" left="20" top="20" background="#ffffff" borderRadius="10px" border="1px solid #d4d4d4" right="20" bottom="20"/>
+              <Static id="sta_content" taborder="11" left="63" top="389" width="80" height="40" text="정기권 설명" font="normal bold 11pt/normal &quot;Arial&quot;" color="#000000"/>
+              <TextArea id="txtArea_content" taborder="1" left="63" width="595" border="1px solid #d5d5d5" font="normal 600 11pt/normal &quot;Arial&quot;" borderRadius="10px" letterSpacing="1px" padding="20px" textAlign="left" wordWrap="english" displaynulltext="내용을 입력하세요." scrollbartype="none none" bottom="160" top="sta_content:10"/>
+              <Button id="btn_upload" taborder="3" text="등록" top="710" width="120" height="50" background="#000000" color="#ffffff" borderRadius="15px" font="normal 600 13pt/normal &quot;Arial&quot;" right="62" onclick="div_upload_btn_upload_onclick"/>
+              <Button id="btn_cancel" taborder="2" text="취소" top="710" height="50" background="#ffffff" color="#000000" borderRadius="15px" font="normal 600 13pt/normal &quot;Arial&quot;" right="btn_upload:30" width="120" onclick="div_upload_btn_cancel_onclick"/>
+              <Static id="sta_gym" taborder="13" left="63" top="105" width="50" height="40" text="헬스장" font="normal bold 11pt/normal &quot;Arial&quot;" color="#000000"/>
+              <Static id="sta_gymName" taborder="4" top="105" height="40" background="#ffffff" borderRadius="10px" verticalAlign="middle" font="normal 600 10pt/normal &quot;Arial&quot;" textAlign="left" width="206" color="#000000" left="sta_gym:10" padding="0px 60px 0px 30px" border="1px solid #d5d5d5" wordWrap="english" fittocontents="width"/>
+              <ImageViewer id="btn_search" taborder="5" top="113" width="25" height="25" image="url('imagerc::form/search.png')" stretch="fixaspectratio" border="0px none" borderRadius="20px" text="" left="sta_gymName:-35" background="transparent" onclick="div_upload_btn_search_onclick"/>
+              <Static id="sta_startDate" taborder="8" left="63" top="190" width="50" height="40" text="시작일" font="normal bold 11pt/normal &quot;Arial&quot;" color="#000000"/>
+              <DateField id="df_startDate" taborder="6" left="sta_startDate:10" top="190" width="125" height="40" border="1px solid #d5d5d5" borderRadius="10px"/>
+              <Static id="sta_endDate" taborder="9" left="df_startDate:20" top="190" width="50" height="40" text="만료일" font="normal bold 11pt/normal &quot;Arial&quot;" color="#000000"/>
+              <DateField id="df_endDate" taborder="7" left="sta_endDate:10" top="190" width="125" height="40" border="1px solid #d5d5d5" borderRadius="10px"/>
+              <Static id="sta_price" taborder="10" left="df_endDate:20" top="190" width="50" height="40" text="가격" font="normal bold 11pt/normal &quot;Arial&quot;" color="#000000" padding="0px 0px 0px 10px" letterSpacing="2px"/>
+              <MaskEdit id="msk_price" taborder="16" left="533" top="190" width="125" height="40" format="#,#" borderRadius="10px" border="1px solid #d5d5d5" color="#000000" font="normal bold 10pt/normal &quot;Arial&quot;" letterSpacing="1px" padding="0px 20px 0px 10px" textAlign="right"/>
+              <Static id="sta_won" taborder="12" text="원" left="msk_price:-24" top="msk_price:-30" width="20" height="20" font="normal bold 10pt/normal &quot;Arial&quot;" color="#000000" textAlign="center" verticalAlign="middle"/>
+              <Static id="sta_title" taborder="14" left="63" top="269" width="80" height="40" text="제목" font="normal bold 11pt/normal &quot;Arial&quot;" color="#000000"/>
+              <Edit id="edt_title" taborder="0" left="63" top="sta_title:10" width="595" height="40" border="1px solid #d4d4d4" borderRadius="10px" padding="0px 20px" textAlign="left" letterSpacing="1px" font="normal 700 11pt/normal &quot;Arial&quot;" displaynulltext="내용을 입력하세요."/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <PopupDiv id="pdiv_gymList" visible="false" left="760" top="105" width="390" height="370" background="#ffffff" border="1px solid #d4d4d4" borderRadius="20px" onkillfocus="pdiv_gymList_btn_cancel_onclick" onpopup="pdiv_gymList_onpopup">
+          <Layouts>
+            <Layout>
+              <Button id="btn_ok" taborder="0" text="확인" top="314" width="59" height="40" background="#000000" color="#ffffff" borderRadius="10px" font="normal 600 10pt/normal &quot;Arial&quot;" right="20" onclick="pdiv_gymList_btn_ok_onclick"/>
+              <Button id="btn_cancel" taborder="1" text="취소" top="314" height="40" background="#ffffff" color="#000000" borderRadius="10px" font="normal 600 10pt/normal &quot;Arial&quot;" width="59" onclick="pdiv_gymList_btn_cancel_onclick" right="btn_ok:5"/>
+              <Grid id="grd_gymList" taborder="2" left="20" top="20" right="20" bottom="70" border="2px solid #d4d4d4" binddataset="ds_gymList" autofittype="col" borderRadius="10px" autosizingtype="row" extendsizetype="row">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="80"/>
+                      <Column size="160"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="30" band="head"/>
+                      <Row size="24"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="헬스장 이름" font="normal 600 13px/normal &quot;Arial&quot;" background="#efefef"/>
+                      <Cell col="1" text="주소" font="normal 600 13px/normal &quot;Arial&quot;" background="#efefef"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:GYM_NAME" border="1px solid #efefef,1px solid #c4c4c4,1px solid #efefef,1px solid #efefef" textAlign="center" displaytype="text" padding="8px 5px" wordWrap="english" color="#000000"/>
+                      <Cell col="1" text="bind:ADDRESS" border="1px solid #efefef,1px solid #efefef,1px solid #efefef,1px solid #c4c4c4" displaytype="text" padding="8px 5px" color="#000000"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Edit id="edt_searchTerm" taborder="3" left="20" top="314" width="219" height="40" borderRadius="5px" displaynulltext="이름 혹은 주소를 검색하세요" font="normal 10pt/normal &quot;Arial&quot;" padding="0px 10px" onchanged="pdiv_gymList_edt_searchTerm_onchanged"/>
+            </Layout>
+          </Layouts>
+        </PopupDiv>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_marketInfo">
+        <ColumnInfo>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="CONTENT" type="STRING" size="256"/>
+          <Column id="GYM_CODE" type="STRING" size="256"/>
+          <Column id="GYM_NAME" type="STRING" size="256"/>
+          <Column id="SELLER_ID" type="STRING" size="256"/>
+          <Column id="PRICE" type="STRING" size="256"/>
+          <Column id="START_DATE" type="STRING" size="256"/>
+          <Column id="END_DATE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_gymList">
+        <ColumnInfo>
+          <Column id="GYM_CODE" type="STRING" size="256"/>
+          <Column id="GYM_NAME" type="STRING" size="256"/>
+          <Column id="ADDRESS" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[this.fvApp = nexacro.getApplication();
+
+this.gybs4111pu_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.ds_marketInfo.setColumn(0, "SELLER_ID", this.fvApp.gds_accountInfo.getColumn(0, "ID"));
+	var strSvcUrl = "p014/getGymList.do";
+	var inData    = "";
+	var outData   = "ds_gymList=ds_gymList";
+	var strArg    = "";
+
+	this.gfnTransaction("getGymList", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+};
+
+this.div_upload_btn_cancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close();
+};
+
+this.div_upload_btn_upload_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 빈 항목이 있을 경우 리턴
+	if (this.gfnIsNull(this.div_upload.form.sta_gymName.text)
+	 || this.gfnIsNull(this.div_upload.form.df_startDate.value)
+	 || this.gfnIsNull(this.div_upload.form.df_endDate.value)
+	 || this.gfnIsNull(this.div_upload.form.msk_price.value)
+	 || this.gfnIsNull(this.div_upload.form.txtArea_content.value)
+	 || this.gfnIsNull(this.div_upload.form.edt_title.value)) {
+		this.gfnAlert("msg.err.enter.alldata", "", "msg.err.enter.alldata", "fnMsgCallback");	
+		return;
+	}
+	
+	// 기간 형식이 옳지 않을 경우
+	else if (this.div_upload.form.df_endDate.value < this.div_upload.form.df_startDate.value) {
+		this.gfnAlert("msg.err.wrong.date", "", "msg.err.wrong.date", "fnMsgCallback");
+		return;
+	}
+	
+	// 서버로 게시글 데이터 전송
+	var sPrice = this.div_upload.form.msk_price.value.toString();
+	this.ds_marketInfo.setColumn(0, "PRICE", sPrice)
+	
+	var strSvcUrl = "p014/setNewMarket.do";
+	var inData    = "ds_marketInfo=ds_marketInfo";
+	var outData   = "";
+	var strArg    = "";
+
+	this.gfnTransaction("setNewMarket", strSvcUrl, inData, outData, strArg, "fnCallback", true);	
+};
+this.div_upload_btn_search_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	this.pdiv_gymList.trackPopupByComponent(this.div_upload.form.sta_gymName, 0, 50);
+};
+
+this.pdiv_gymList_btn_cancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.pdiv_gymList.closePopup();
+	this.pdiv_gymList.form.edt_searchTerm.value = null;
+	this.ds_gymList.filter("");
+	// 헬스장 이름에 따라 static의 길이 변경 적용
+	this.div_upload.form.resetScroll();
+};
+
+this.pdiv_gymList_btn_ok_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var nGymCode = this.ds_gymList.getColumn(this.ds_gymList.rowposition, "GYM_CODE");
+	var nGymName = this.ds_gymList.getColumn(this.ds_gymList.rowposition, "GYM_NAME");;
+	this.ds_marketInfo.setColumn(0, "GYM_CODE", nGymCode);
+	this.ds_marketInfo.setColumn(0, "GYM_NAME", nGymName);
+	
+	this.div_upload.form.sta_gymName.text = this.ds_marketInfo.getColumn(0, "GYM_NAME");
+	this.pdiv_gymList_btn_cancel_onclick();
+};
+
+this.pdiv_gymList_edt_searchTerm_onchanged = function(obj:nexacro.Edit,e:nexacro.ChangeEventInfo)
+{
+	// 검색어
+	var sSearchTerm = this.pdiv_gymList.form.edt_searchTerm.value;
+	
+	// 검색어가 없을 경우 필터 해제
+	if (sSearchTerm == "" || sSearchTerm == null) 
+    {
+        this.ds_gymList.filter("");
+        return;
+    }
+	
+	// 검색어가 있을 경우 필터
+	var sFilterExpr = "GYM_NAME.indexOf('" + sSearchTerm + "') > -1"
+                    + " || " 
+                    + "ADDRESS.indexOf('" + sSearchTerm + "') > -1";
+    this.ds_gymList.filter(sFilterExpr);
+};
+
+this.fnCallback = function(svcId, errCd, errMsg) {
+	if (errCd < 0) {
+		arrArg = [errMsg];
+		this.gfnAlert("msg.server.error.msg", arrArg, "msg.server.error.msg", "fnMsgCallback");	
+	}
+	if (svcId == "setNewMarket") {
+		// 팝업으로 성공 확인
+		var objChildFrame = new ChildFrame("popupSuccessUpload", 0, 0, 280, 270);
+		objChildFrame.formurl = "MarketForms::gybs4212pu.xfdl";
+		objChildFrame.openalign = "center middle";
+		objChildFrame.overlaycolor = "RGBA(196,196,196,0.5)";
+		objChildFrame.dragmovetype = "none";
+		objChildFrame.showtitlebar = false;
+		objChildFrame.border = "0px none";
+		
+		objChildFrame.showModal(this.getOwnerFrame(), "", this, "fn_popupCallback");
+	}
+};
+
+this.fn_popupCallback = function(sPopupId, sReturn) {
+	if (sPopupId == "popupSuccessUpload") {
+		// 부모창의 div 삭제, 새로고침 진행 후 닫기
+		this.opener.fnDeleteDiv();
+		this.opener.fnSearch();
+		this.close();
+	}
+}
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="div_upload.form.df_startDate" propid="value" datasetid="ds_marketInfo" columnid="START_DATE"/>
+      <BindItem id="item1" compid="div_upload.form.df_endDate" propid="value" datasetid="ds_marketInfo" columnid="END_DATE"/>
+      <BindItem id="item2" compid="div_upload.form.sta_gymName" propid="text" datasetid="ds_marketInfo" columnid="GYM_NAME"/>
+      <BindItem id="item4" compid="div_upload.form.edt_title" propid="value" datasetid="ds_marketInfo" columnid="TITLE"/>
+      <BindItem id="item5" compid="div_upload.form.txtArea_content" propid="value" datasetid="ds_marketInfo" columnid="CONTENT"/>
+      <BindItem id="item6" compid="div_upload.form.msk_price" propid="value" datasetid="ds_emp" columnid="SALARY"/>
+      <BindItem id="item3" compid="div_upload.form.msk_price" propid="accessibilityaction" datasetid="ds_marketInfo" columnid="PRICE"/>
+    </Bind>
+  </Form>
+</FDL>

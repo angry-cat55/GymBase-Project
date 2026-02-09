@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="gybs2014fm" width="1280" height="920" titletext="마이페이지" onload="gybs2014fm_onload">
+    <Layouts>
+      <Layout height="920" width="1280">
+        <Div id="div_info" taborder="1" left="60" top="175" height="570" background="#ffffff" right="60" border="1px solid #000000" borderRadius="20px">
+          <Layouts>
+            <Layout>
+              <Div id="div_accountInfo" taborder="1" left="20" top="20" background="#ffffff" border="1px solid #d4d4d4" borderRadius="10px" bottom="20" width="600" text="" onkillfocus="div_info_div_accountInfo_onkillfocus">
+                <Layouts>
+                  <Layout>
+                    <Edit id="edt_name" taborder="0" left="218" top="262" width="350" height="50" borderRadius="10px" border="1px solid #d4d4d4" enable="false" padding="0px 20px" textAlign="left" color="#000000" font="normal 13pt/normal &quot;Arial&quot;" letterSpacing="1px"/>
+                    <Edit id="edt_ID" taborder="1" left="218" top="62" width="350" height="50" borderRadius="10px" border="1px solid #d4d4d4" enable="false" padding="0px 20px" textAlign="left" color="#000000" font="normal 13pt/normal &quot;Arial&quot;" letterSpacing="1px" tooltiptype="hover,mouseleave" tooltiptext="아이디는 변경할 수 없습니다."/>
+                    <Edit id="edt_PW" taborder="2" left="218" top="162" width="350" height="50" borderRadius="10px" border="1px solid #d4d4d4" enable="false" padding="0px 50px 0px 20px" textAlign="left" color="#000000" font="normal 13pt/normal &quot;Arial&quot;" password="true" letterSpacing="1px"/>
+                    <Static id="sta_names" taborder="4" text="이름" left="218" top="222" width="120" font="normal 600 14pt/normal &quot;Arial&quot;" padding="0px 0px 0px 10px" bottom="edt_name:0" color="#000000"/>
+                    <Static id="sta_IDs" taborder="5" text="아이디" left="218" top="22" width="120" font="normal 600 14pt/normal &quot;Arial&quot;" padding="0px 0px 0px 10px" bottom="edt_ID:0" color="#000000"/>
+                    <Static id="sta_PWs" taborder="6" text="비밀번호" left="218" top="122" width="120" font="normal 600 14pt/normal &quot;Arial&quot;" padding="0px 0px 0px 10px" bottom="edt_PW:0" color="#000000"/>
+                    <Static id="sta_phoneNos" taborder="7" text="전화번호" left="218" top="322" width="120" font="normal 600 14pt/normal &quot;Arial&quot;" padding="0px 0px 0px 10px" bottom="164" color="#000000"/>
+                    <ImageViewer id="img_profile" taborder="8" left="30" top="141" width="150" height="150" background="transparent" image="url('imagerc::form/profileIcon.png')" stretch="fixaspectratio" borderRadius="500px" border="1px solid black" text=""/>
+                    <Button id="btn_cancel" taborder="9" text="취소" top="453" width="80" background="#ffffff" color="#000000" borderRadius="10px" font="normal 600 11pt/normal &quot;Arial&quot;" right="120" height="45" visible="false" enable="false" onclick="div_info_div_accountInfo_btn_cancel_onclick"/>
+                    <Button id="btn_saveInfo" taborder="10" text="저장" top="453" width="80" background="#000000" color="#ffffff" borderRadius="10px" font="normal 600 11pt/normal &quot;Arial&quot;" right="30" height="45" visible="false" enable="false" onclick="div_info_div_accountInfo_btn_saveInfo_onclick"/>
+                    <Button id="btn_rewrite" taborder="11" text="수정" top="453" width="128" background="#ffffff" color="#000000" borderRadius="10px" right="30" height="45" edge="" font="normal 600 11pt/normal &quot;Arial&quot;" padding="0px 0px 0px 25px" onclick="div_info_div_accountInfo_btn_rewrite_onclick"/>
+                    <ImageViewer id="img_rewrite" taborder="12" top="btn_rewrite:-40" height="35" border="0px none" image="url('imagerc::form/rewrite.png')" stretch="fixaspectratio" right="btn_rewrite:-42" width="35" onclick="div_info_div_accountInfo_btn_rewrite_onclick"/>
+                    <Button id="btn_showPW" taborder="13" left="edt_PW:-50" top="edt_PW:-40" width="30" height="30" cssclass="rememberPW" text="" onclick="div_info_div_accountInfo_btn_showPW_onclick" enable="false" visible="false" background="transparent"/>
+                    <MaskEdit id="edt_phoneNo" taborder="3" left="218" top="362" width="350" height="50" letterSpacing="2px" border="1px solid #d4d4d4" borderRadius="10px" color="#000000" font="normal 13pt/normal &quot;Arial&quot;" padding="0px 20px" textAlign="left" enable="false" format="###-####-####" type="string" trimtype="both"/>
+                    <Button id="btn_changeProfile" taborder="14" left="img_profile:-42" top="img_profile:-39" width="40" height="40" background="url('imagerc::form/editProfile.png') no-repeat right center /contain #ffffff" border="0px none" borderRadius="20px" enable="false" onclick="div_info_div_accountInfo_btn_changeProfile_onclick" text=""/>
+                    <Static id="sta_defaultProfile" taborder="15" text="기본 프로필로 변경" left="45" top="img_profile:10" width="120" height="23" color="#000cac" textAlign="center" onclick="div_info_div_accountInfo_sta_defaultProfile_onclick" enable="false"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="div_membership" taborder="1" top="20" background="#ffffff" border="1px solid #d4d4d4" borderRadius="10px" bottom="20" right="20" left="div_accountInfo:20" url="UserForms::gybs2412fm.xfdl"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.fvApp = nexacro.getApplication();
+this.sUploadUrl = this.gfnGetServerUrl() + "upload/p01/p014/";
+this.isChangedProfile = false;
+this.isImgSelected = false;
+
+this.gybs2014fm_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.fnGetDefaultInfo();
+};
+
+// 수정모드 활성화
+this.div_info_div_accountInfo_btn_rewrite_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// edit 활성화
+	this.fnEditActivate();
+};
+
+// 저장
+this.div_info_div_accountInfo_btn_saveInfo_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 빈 항목이 있을 시 반환
+	if (this.checkNull()) {
+		return;
+	}
+	else {
+		// 새로운 정보로 전역 데이터셋, 서버에 저장
+		this.fnSetNewInfo();
+		// edit 비활성화
+		this.fnEditUnActivate();
+	}
+};
+
+// 취소
+this.div_info_div_accountInfo_btn_cancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 기존 변경되지 않은 전역데이터셋 정보로 다시 덮어쓰기
+	this.fnGetDefaultInfo();
+	// edit 비활성화
+	this.fnEditUnActivate();
+	// 사진 변경 여부 false로 변경
+	this.isChangedProfile = false;
+};
+
+this.div_info_div_accountInfo_btn_changeProfile_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsUser.clearData();
+	this.FileDialog00.open("프로필 사진 선택", 1, "%DOCUMENT%");
+};
+
+this.FileDialog00_onclose = function(obj:nexacro.FileDialog,e:nexacro.FileDialogEventInfo)
+{
+	this.isChangedProfile = true;
+	var objFile = e.virtualfiles[0];
+	var sFileName = objFile.filename;
+	
+	if (!/\.(jpe?g|png|gif)$/i.test(sFileName)) // 정규식으로 파일 유형 체크
+	{
+		this.isImgSelected = true;
+		trace("이미지를 안 골랐을 때 >>>>>>> " + this.isImgSelected);
+		this.gfnAlert("msg.err.no.img.select", "", "msg.err.no.img.select", "fnMsgCallback");
+		return;
+	}
+	
+	this.FileUpTransfer00.clearFileList();
+	this.FileUpTransfer00.addFile(sFileName, objFile);
+	var nRow = this.dsUser.addRow();
+	this.dsUser.setColumn(nRow, "IMAGE_ID", sFileName);
+	this.dsUser.setColumn(nRow, "IMAGE_NAME", sFileName);
+	
+	if (nexacro._Browser == "Runtime") {
+		// NRE
+		this.div_info.form.div_accountInfo.form.img_profile.image = "URL('file://" + objFile.fullpath + "')";
+	}
+	else {
+		// NRE 아닐 때 (웹 브라우저)
+		var reader = new FileReader();
+		reader.targetForm = this;
+		reader.addEventListener("load"
+								,function() {
+									this.targetForm.div_info.form.div_accountInfo.form.img_profile.image = this.result;
+								}
+								,false);
+		reader.readAsDataURL(objFile._handle);
+		// 파일을 base64 형태로 읽기
+	}
+	var sUrl = "SvcUrl::edu/uploadFile.do";
+	this.FileUpTransfer00.setPostData("userDir", "");
+	this.FileUpTransfer00.upload(sUrl);
+	
+	this.isImgSelected = false;
+	trace("FileDialog 닫을 때 >>>>>>> " + this.isImgSelected);
+};
+
+this.FileUpTransfer00_onsuccess = function(obj:nexacro.FileUpTransfer,e:nexacro.FileUpTransferEventInfo)
+{
+	var objDs = e.datasets[0];
+	this.dsUser.setColumn(0,"IMAGE_ID", objDs.getColumn(0, "file_id"));
+};
+
+
+/////////////////////////////[함수]/////////////////////////////////
+
+// 비어있는/옳지않은 항목 체크
+this.checkNull = function ()
+{
+	var sPhoneNo = this.div_info.form.div_accountInfo.form.edt_phoneNo.value;
+	
+	if (this.gfnIsNull(this.div_info.form.div_accountInfo.form.edt_name.value) ||
+		this.gfnIsNull(this.div_info.form.div_accountInfo.form.edt_PW.value) ||
+		this.gfnIsNull(this.div_info.form.div_accountInfo.form.edt_phoneNo.value)) {
+		this.gfnAlert("msg.err.enter.alldata", "", "msg.err.enter.alldata", "fnMsgCallback");	
+		return true
+	}
+	else if (sPhoneNo.length < 11) {
+		this.gfnAlert("msg.err.wrong.phone", "", "msg.err.wrong.phone", "fnMsgCallback");	
+		return true;
+	}
+	else return false;
+};
+
+// 새로운 정보 전역 데이터 셋에 저장 후 트래잭션으로 정보 업데이트
+this.fnSetNewInfo = function ()
+{
+	this.fvApp.gds_accountInfo.setColumn(0, "NAME", this.div_info.form.div_accountInfo.form.edt_name.value);
+	this.fvApp.gds_accountInfo.setColumn(0, "PW", this.div_info.form.div_accountInfo.form.edt_PW.value);
+	this.fvApp.gds_accountInfo.setColumn(0, "PHONE_NO", this.div_info.form.div_accountInfo.form.edt_phoneNo.value);
+	
+	// 프로필 변경됐으면 이 정보도 전송
+	if (this.isChangedProfile == true && this.dsUser.rowcount == 1) { // 사진이 변경되고 등록까지 된 경우
+		
+		// 번경된 사진을 전역 데이터셋과 서버에 전송
+		var sImg = this.sUploadUrl + this.dsUser.getColumn(0, "IMAGE_ID");
+		this.fvApp.gds_accountInfo.setColumn(0, "PROFILE_PATH", sImg);
+	
+		this.isChangedProfile = false;
+		this.dsUser.clearData();
+	}
+	// 기본 프로필로 변경됐으면 기본 프로필 적용
+	else if (this.isChangedProfile == true && this.dsUser.rowcount == 0) {
+		this.fvApp.gds_accountInfo.setColumn(0, "PROFILE_PATH", "imagerc::form/profileIcon.png");
+		this.isChangedProfile = false;
+	}
+	
+	// 변경사항 div_haeder에도 적용
+	this.parent.parent.fnResetInfo();
+	
+	this.ds_accountInfo.copyData(this.fvApp.gds_accountInfo);
+	
+	var strSvcUrl = "p014/updateAccountInfo.do";
+	var inData    = "ds_accountInfo=ds_accountInfo";
+	var outData   = "";
+	var strArg    = "";
+
+	this.gfnTransaction("updateAccountInfo", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+};
+
+// 기존 데이터로 복구
+this.fnGetDefaultInfo = function ()
+{
+	this.div_info.form.div_accountInfo.form.edt_ID.value = this.fvApp.gds_accountInfo.getColumn(0, "ID");
+	this.div_info.form.div_accountInfo.form.edt_name.value = this.fvApp.gds_accountInfo.getColumn(0, "NAME");
+	this.div_info.form.div_accountInfo.form.edt_PW.value = this.fvApp.gds_accountInfo.getColumn(0, "PW");
+	this.div_info.form.div_accountInfo.form.edt_phoneNo.value = this.fvApp.gds_accountInfo.getColumn(0, "PHONE_NO");
+	this.div_info.form.div_accountInfo.form.img_profile.image = this.fvApp.gds_accountInfo.getColumn(0, "PROFILE_PATH");
+};
+
+// 수정모드
+this.fnEditActivate = function()
+{
+	this.div_info.form.div_accountInfo.form.btn_changeProfile.backgroun
+	this.div_info.form.div_accountInfo.form.btn_saveInfo.visible = true;
+	this.div_info.form.div_accountInfo.form.btn_saveInfo.enable = true;
+	this.div_info.form.div_accountInfo.form.btn_cancel.visible = true;
+	this.div_info.form.div_accountInfo.form.btn_cancel.enable = true;
+	this.div_info.form.div_accountInfo.form.btn_rewrite.visible = false;
+	this.div_info.form.div_accountInfo.form.btn_rewrite.enable = false;
+	this.div_info.form.div_accountInfo.form.img_rewrite.visible = false;
+	this.div_info.form.div_accountInfo.form.btn_showPW.visible = true;
+	this.div_info.form.div_accountInfo.form.btn_showPW.enable = true;
+	this.div_info.form.div_accountInfo.form.sta_defaultProfile.enable = true;
+	
+	this.div_info.form.div_accountInfo.form.edt_name.enable = true;
+	this.div_info.form.div_accountInfo.form.edt_PW.enable = true;
+	this.div_info.form.div_accountInfo.form.edt_phoneNo.enable = true;
+	this.div_info.form.div_accountInfo.form.btn_changeProfile.enable = true;
+}
+
+// 수정모드 해제
+this.fnEditUnActivate = function ()
+{
+	this.div_info.form.div_accountInfo.form.btn_saveInfo.visible = false;
+	this.div_info.form.div_accountInfo.form.btn_saveInfo.enable = false;
+	this.div_info.form.div_accountInfo.form.btn_cancel.visible = false;
+	this.div_info.form.div_accountInfo.form.btn_cancel.enable = false;
+	this.div_info.form.div_accountInfo.form.btn_rewrite.visible = true;
+	this.div_info.form.div_accountInfo.form.btn_rewrite.enable = true;
+	this.div_info.form.div_accountInfo.form.img_rewrite.visible = true;
+	this.div_info.form.div_accountInfo.form.btn_showPW.visible = false;
+	this.div_info.form.div_accountInfo.form.btn_showPW.enable = false;
+	this.div_info.form.div_accountInfo.form.btn_showPW.cssclass = "rememberPW";
+	this.div_info.form.div_accountInfo.form.sta_defaultProfile.enable = false;
+	
+	this.div_info.form.div_accountInfo.form.edt_name.enable = false;
+	this.div_info.form.div_accountInfo.form.edt_PW.enable = false;
+	this.div_info.form.div_accountInfo.form.edt_phoneNo.enable = false;
+	this.div_info.form.div_accountInfo.form.edt_PW.password = true;
+	this.div_info.form.div_accountInfo.form.btn_changeProfile.enable = false;
+};
+
+// 비밀번호 보기 활성화/비활성화
+this.div_info_div_accountInfo_btn_showPW_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var btnClass = obj.cssclass == "rememberPW" ? "rememberPW_S" : "rememberPW";
+	obj.cssclass = btnClass;
+	var showPW = (obj.cssclass == "rememberPW" ? true : false);
+	this.div_info.form.div_accountInfo.form.edt_PW.password = showPW;
+};
+
+
+this.div_info_div_accountInfo_onkillfocus = function(obj:nexacro.Div,e:nexacro.KillFocusEventInfo)
+{
+	trace("onkillfocus 실행될 때 >>>>>>> " + this.isImgSelected);
+	if (this.isImgSelected == true) {
+		return;
+	}
+	// 수정 모드가 활성화 되어있는 상태라면
+	if (this.div_info.form.div_accountInfo.form.btn_rewrite.visible == false) {
+		this.gfnAlert("confirm.save.current", "", "confirm.save.current", "fnMsgCallback");
+	}
+};
+
+this.fnMsgCallback = function (strId, strVal)
+{
+	if (strId == "confirm.save.current") {
+		if (strVal == true) {
+			this.div_info_div_accountInfo_btn_saveInfo_onclick();
+		}
+		else {
+			this.div_info_div_accountInfo_btn_cancel_onclick();
+		}
+	}
+	else if (strId == "msg.err.no.img.select") {
+		this.isImgSelected = false;
+	}
+};
+
+this.div_info_div_accountInfo_sta_defaultProfile_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	this.div_info.form.div_accountInfo.form.img_profile.image = "imagerc::form/profileIcon.png";
+	this.isChangedProfile = true;
+};]]></Script>
+    <Bind>
+      <BindItem id="item4" compid="div_info.form.div_accountInfo.form.img_profile" propid="image" datasetid="gds_accountInfo" columnid="PROFILE_PATH"/>
+    </Bind>
+    <Objects>
+      <Dataset id="ds_accountInfo">
+        <ColumnInfo>
+          <Column id="ID" type="STRING" size="256"/>
+          <Column id="PW" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+          <Column id="PHONE_NO" type="STRING" size="256"/>
+          <Column id="ROLE_TYPE" type="STRING" size="256"/>
+          <Column id="GYM_CODE" type="STRING" size="256"/>
+          <Column id="PROFILE_PATH" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <FileDialog id="FileDialog00" onclose="FileDialog00_onclose"/>
+      <FileUpTransfer id="FileUpTransfer00" onsuccess="FileUpTransfer00_onsuccess"/>
+      <Dataset id="dsUser" onrowposchanged="dsUser_onrowposchanged">
+        <ColumnInfo>
+          <Column id="IMAGE_ID" type="STRING" size="256"/>
+          <Column id="IMAGE_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

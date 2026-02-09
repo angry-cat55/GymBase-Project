@@ -1,0 +1,78 @@
+﻿{
+    "version" : "24.0.0.1",
+    "runtime" :
+    {
+        "target" :
+        {
+            "os" : "windows"
+        },
+        "framework" :
+        [    
+        "./nexacrolib/framework/Framework.js"
+        ],
+        "component" :
+        [    
+        "./nexacrolib/component/CompBase.js",
+        "./nexacrolib/component/ComComp.js",
+        "./nexacrolib/component/Grid.js",
+        "./nexacrolib/component/ListView.js",
+        "./nexacrolib/component/DeviceAPI.js",
+        "./nexacrolib/component/MobileComp.js",
+        "./nexacrolib/component/rMateChartH5/JS/editablegrid-2.0.1.js",
+        "./nexacrolib/component/rMateChartH5/JS/rMateChartH5.js",
+        "./nexacrolib/component/rMateChartH5/LicenseKey/rMateChartH5License.js",
+        "./nexacrolib/component/ExtJs/ExtFrame.js",
+        "./nexacrolib/component/ExtJs/ExtUtil.js",
+        "./nexacrolib/component/ExtJs/ExtTransaction.js",
+        "./nexacrolib/component/ExtJs/ExtValidation.js",
+        "./nexacrolib/component/ExtJs/ExtPopup.js",
+        "./nexacrolib/component/ExtJs/ExtMultiLanguage.js",
+        "./nexacrolib/component/ExtJs/ExtFile.js",
+        "./nexacrolib/component/ExtJs/ExtMessage.js",
+        "./nexacrolib/component/ExtJs/ExtGrid.js",
+        "./nexacrolib/component/ExtJs/ExtExcel.js",
+        "./nexacrolib/component/ExtJs/ExtComp.js",
+        "./nexacrolib/component/ExtJs/ExtPivotGrid.js",
+        "./nexacrolib/component/ExtJs/ExtrMateChartH5.js"
+        ],
+        "environment" :
+        [    
+        {
+        "file":"./environment.xml.js"
+        }
+        ],
+        "screen" :
+        [    
+        {"id":"Desktop_screen","type":"desktop","themeid":"theme::blue"},
+        {"id":"screen00","type":"desktop","themeid":"theme::blue"}
+        ],
+        "xadl" :
+        [
+        {
+        	"screenid":"Desktop_screen",
+        	"launch":"./Application_Desktop.xadl.js",
+        	"quickview":"./Application_Desktop.xadl.quickview.js",
+        	"form":[
+        				"./AboutAccount/gybs1010fm.xfdl.js"
+        	]
+        }
+        ],  
+        "protocol" :
+        {
+            "adaptors" :
+            []
+        },
+        "resource" :
+        {
+
+        },
+		"deploy" :
+        {
+
+        },
+        "userfont" :
+        [
+
+        ]
+    }
+}

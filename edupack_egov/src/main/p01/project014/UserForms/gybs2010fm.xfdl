@@ -1,0 +1,413 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Main" width="1600" height="1000" titletext="메인 화면" onsize="Main_onsize" background="#ffffff" onload="Main_onload" border="0px none,0px none,1px solid gray" visible="true">
+    <Layouts>
+      <Layout height="1000" mobileorientation="landscape" width="1600">
+        <Div id="div_header" taborder="0" text="div_header" left="0" top="0" height="80" background="#ffffff" width="100%" border="0px none,0px none,1px solid #000000">
+          <Layouts>
+            <Layout>
+              <Button id="btn_market" taborder="0" text="MARKET" left="830" top="0" width="102" height="79" cssclass="menu" font="normal 600 16pt/normal &quot;Arial&quot;" padding="20px 0px 0px" onclick="div_header_btn_market_onclick"/>
+              <Button id="btn_gyms" taborder="1" text="GYMS" left="698" top="0" width="74" height="79" cssclass="menu" font="normal 600 16pt/normal &quot;Arial&quot;" padding="20px 0px 0px" onclick="div_header_btn_gyms_onclick"/>
+              <Button id="btn_myGym" taborder="2" text="MY GYM" left="543" top="0" width="97" height="79" cssclass="menu" font="normal 600 16pt/normal &quot;Arial&quot;" padding="20px 0px 0px" onclick="div_header_btn_myGym_onclick"/>
+              <Button id="btn_home" taborder="3" text="HOME" left="410" top="0" cssclass="menu" font="normal 600 16pt/normal &quot;Arial&quot;" width="75" padding="20px 0px 0px" onclick="div_header_btn_home_onclick" height="79"/>
+              <ImageViewer id="img_logo" taborder="4" left="20" top="0" width="260" border="0px none" image="url('imagerc::form/Logo_r.png')" stretch="fixaspectratio" background="transparent" bottom="1" onclick="div_header_img_logo_onclick"/>
+              <Static id="sta_userName" taborder="6" text="default" height="35" textAlign="left" top="23" font="normal 300 11pt/normal &quot;Arial&quot;" right="0" width="120" padding="0px 0px 0px 10px" verticalAlign="middle" onclick="Profile_onclick" color="black" wordWrap="char"/>
+              <ImageViewer id="img_profile" taborder="5" top="23" width="35" height="35" border="1px solid black" background="white" image="url('imagerc::form/profileIcon.png')" stretch="fixaspectratio" right="sta_userName:0" borderRadius="17px" onclick="Profile_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta_divWorkPos" taborder="2" left="0" top="180" width="50%" height="10"/>
+        <Div id="div_work" taborder="1" text="div_work" left="sta_divWorkPos:-640" top="div_header:0" url="UserForms::gybs2011fm.xfdl" width="1280" border="0px none,1px solid #000000" background="#ffffff" bottom="0">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <PopupDiv id="pdiv_notification" visible="false" left="2000" top="45" width="340" height="505" background="#ffffff" border="1px solid gray" borderRadius="5px" onpopup="pdiv_notification_onpopup" onkillfocus="pdiv_notification_onkillfocus">
+          <Layouts>
+            <Layout>
+              <Div id="Div00" taborder="0" left="0" top="0" height="220" right="0">
+                <Layouts>
+                  <Layout>
+                    <Div id="div_account" taborder="0" left="0" top="0" height="220" right="0">
+                      <Layouts>
+                        <Layout>
+                          <ImageViewer id="img_cancel" taborder="0" top="15" width="30" height="30" background="transparent" border="0px none" image="url('imagerc::form/cancel.png')" stretch="fixaspectratio" right="20" onclick="pdiv_notification_Div00_div_account_img_cancel_onclick"/>
+                        </Layout>
+                      </Layouts>
+                    </Div>
+                    <Button id="btn_logout" taborder="1" text="로그아웃" bottom="2" right="0" width="170" height="50" font="normal 600 10pt/normal &quot;Arial&quot;" color="black" cssclass="account" border="1px solid #c2c2c2,0px none,1px solid #c2c2c2,1px solid #c2c2c2" onclick="pdiv_account_btn_logout_onclick"/>
+                    <Button id="btn_myPage" taborder="2" text="마이페이지" left="0" width="170" bottom="2" height="50" font="normal 600 10pt/normal &quot;Arial&quot;" color="black" cssclass="account" border="1px solid #c2c2c2,1px solid #c2c2c2,1px solid #c2c2c2,0px none" onclick="pdiv_account_btn_myPage_onclick"/>
+                    <Static id="sta_userName" taborder="3" text="" left="0" top="119" height="30" textAlign="center" verticalAlign="middle" font="normal 500 16pt/normal &quot;Arial&quot;" right="0" color="black"/>
+                    <ImageViewer id="img_profile" taborder="4" left="131" top="22" width="80" height="80" background="white" image="url('imagerc::form/profileIcon.png')" stretch="fixaspectratio" borderRadius="40px" border="1px solid black"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Grid id="grid_notiList" taborder="1" left="10" top="Div00:10" border="1px solid #d4d4d4" borderRadius="5px" autofittype="col" right="10" bottom="10" binddataset="ds_notification" autosizingtype="row" oncellclick="pdiv_notification_grid_notiList_oncellclick" extendsizetype="row" scrollbartype="autoindicator autoindicator">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="20"/>
+                      <Column size="203"/>
+                      <Column size="94"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="25" band="head"/>
+                      <Row size="25"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell colspan="3" border="1px solid #cacaca" background="#efefef" color="#000000" text="알림 내용"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell color="#000000" border="1px solid #d4d4d4,0px none,1px solid #d4d4d4,1px solid #d4d4d4" textAlign="center" displaytype="imagecontrol" imagestretch="fixaspectratio" expr="(IS_READ == 'N') ? &quot;imagerc::form/unreadNoti.png&quot; : &quot;&quot;" text="expr:(IS_READ == 'N') ? &quot;imagerc::form/unreadNoti.png&quot; : &quot;&quot;" padding="0px 6px"/>
+                      <Cell col="1" color="#000000" wordWrap="english" padding="8px 4px" expr="comp.parent.parent.parent.fnSetMessage(NOTI_TYPE)" border="1px solid #d4d4d4,0px none" font="normal 11px/normal &quot;Malgun Gothic&quot;" verticalAlign="middle" autosizerow="default" autosizecol="default" textAlign="center"/>
+                      <Cell col="2" text="bind:REG_DATE_STRING" color="#000000" padding="8px 0px" textAlign="center" border="1px solid #d4d4d4,1px solid #d4d4d4,1px solid #d4d4d4,0px none" font="normal 12px/normal &quot;Malgun Gothic&quot;" verticalAlign="middle" autosizerow="default" autosizecol="default"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </PopupDiv>
+        <PopupDiv id="pdiv_account" visible="false" left="1630" top="44" width="340" height="220" background="#ffffff" border="1px solid gray" borderRadius="5px" onpopup="pdiv_account_onpopup" onkillfocus="pdiv_account_onkillfocus">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="img_bell" taborder="0" top="15" width="30" height="30" background="transparent" border="0px none" image="url('imagerc::form/bellIcon2.png')" stretch="fixaspectratio" right="20" onclick="notification_onclick"/>
+              <Static id="staPushCount" taborder="1" text="0" top="7" width="20" height="20" cssclass="sta_TF_PushCount" right="12" font="normal 600 11pt/normal &quot;Malgun Gothic&quot;" borderRadius="10px" visible="false" onclick="notification_onclick"/>
+              <Static id="sta_userName" taborder="2" text="" left="0" top="119" height="30" textAlign="center" verticalAlign="middle" font="normal 500 16pt/normal &quot;Arial&quot;" right="0" color="black"/>
+              <Button id="btn_logout" taborder="3" text="로그아웃" bottom="0" right="0" width="170" height="50" font="normal 600 10pt/normal &quot;Arial&quot;" color="black" cssclass="account" border="1px solid #c2c2c2,0px none,0px none,1px solid #c2c2c2" onclick="pdiv_account_btn_logout_onclick"/>
+              <Button id="btn_myPage" taborder="4" text="마이페이지" left="0" width="170" bottom="0" height="50" font="normal 600 10pt/normal &quot;Arial&quot;" color="black" cssclass="account" border="1px solid #c2c2c2,1px solid #c2c2c2,0px none,0px none" onclick="pdiv_account_btn_myPage_onclick"/>
+              <ImageViewer id="img_profile" taborder="5" left="131" top="22" width="80" height="80" background="white" image="url('imagerc::form/profileIcon.png')" stretch="fixaspectratio" borderRadius="40px" border="1px solid black"/>
+            </Layout>
+          </Layouts>
+        </PopupDiv>
+        <Div id="div_bottom" taborder="3" text="Div00" left="0" top="div_work:0" height="120" right="0" background="#222426">
+          <Layouts>
+            <Layout>
+              <Static id="sta_copyright2" taborder="1" text="고객센터: 010-9551-6850 | E-mail: applewlghks321@gmail.com" left="50" top="50" width="500" height="20" color="#d4d4d4" font="normal 10pt/normal &quot;맑은 고딕&quot;"/>
+              <Static id="sta_copyright1" taborder="0" text="㈜GYMBASE | 대표이사: 유지환 | 주소: 서울특별시 강남구 봉은사로 617 3F" left="50" width="500" color="#d4d4d4" font="normal 10pt/normal &quot;맑은 고딕&quot;" bottom="sta_copyright2:3" height="20"/>
+              <Static id="sta_copyright3" taborder="2" text="COPYRIGHT © GYMBASE Corp. ALL RIGHTS RESERVED." left="50" top="sta_copyright2:3" width="500" height="20" color="#d4d4d4" font="normal 10pt/normal &quot;맑은 고딕&quot;"/>
+              <ImageViewer id="img_instagram" taborder="4" top="21" width="32" height="32" stretch="fixaspectratio" background="transparent" border="0px none" image="url('imagerc::form/insta.png')" onclick="div_bottom_img_instagram_onclick" right="50"/>
+              <ImageViewer id="img_youbute" taborder="3" top="23" width="40" height="40" stretch="fixaspectratio" background="transparent" border="0px none" image="url('imagerc::form/youtube.png')" onclick="div_bottom_img_youbute_onclick" right="img_instagram:25"/>
+              <ImageViewer id="img_tobe" taborder="5" top="21" width="32" height="32" stretch="fixaspectratio" background="transparent" border="0px none" image="url('imagerc::form/tobe.png')" right="img_youbute:25" onclick="div_bottom_img_tobe_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.fvApp = nexacro.getApplication();
+this.notiCnt = 0;
+
+this.Main_onsize = function(obj:nexacro.Form,e:nexacro.SizeEventInfo)
+{
+	obj.resetScroll();
+	this.fvApp.gds_search.copyData(this.ds_search);
+};
+
+this.fnMainPageOnLoad = function(height)
+{
+	this.div_work.height = height;
+	this.div_work.form.resetScroll();
+	this.resetScroll();
+};
+this.Profile_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	this.pdiv_account.trackPopupByComponent(this.div_header.form.sta_userName, -250, 45);
+};
+
+this.pdiv_account_onkillfocus = function(obj:nexacro.PopupDiv,e:nexacro.KillFocusEventInfo)
+{
+	this.pdiv_account.closePopup();
+};
+
+this.Main_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 글로벌 데이터셋 정보 복사해오기
+	this.ds_accountInfo.copyData(this.fvApp.gds_accountInfo);
+	
+	// 이름 설정
+	this.div_header.form.sta_userName.text = this.ds_accountInfo.getColumn(0, "NAME");
+	
+	// 프로필 사진 설정
+	// 1. 사진이 없다면 => 기본 프로필로 설정
+	if (this.ds_accountInfo.getColumn(0, "PROFILE_PATH") == null || this.ds_accountInfo.getColumn(0, "PROFILE_PATH") == "") {
+		this.div_header.form.img_profile.image = "imagerc::profileIcon.png";
+	}
+	// 2. 사진이 있다면 => 사용자 사진으로 설정
+	else {
+		var nPath = this.ds_accountInfo.getColumn(0, "PROFILE_PATH");
+		this.div_header.form.img_profile.image = nPath;
+	}
+};
+
+this.pdiv_account_onpopup = function(obj:nexacro.PopupDiv,e:nexacro.EventInfo)
+{
+	// 계정 정보 팝업 시 프로필과 이름 동기화
+	this.pdiv_account.form.img_profile.image = this.div_header.form.img_profile.image;
+	this.pdiv_account.form.sta_userName.text = this.div_header.form.sta_userName.text;
+	// 열때마다 계정 미확인 알림 개수 가져오기
+	var strSvcUrl = "p014/getNotificationCount.do";
+	var inData    = "";
+	var outData   = "";
+	var strArg    = "paramID=" + this.fvApp.gds_accountInfo.getColumn(0, "ID");
+
+	this.gfnTransaction("getNotificationCount", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+};
+
+this.div_header_btn_home_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.div_work.url = "UserForms::gybs2011fm.xfdl";
+};
+
+this.div_header_btn_myGym_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fvApp.gds_search.setColumn(0, "typeSearch", "RECENT");
+	this.fvApp.gds_search.setColumn(0, "searchTerm", "");
+	this.fvApp.gds_search.setColumn(0, "offset", "0");
+	this.fvApp.gv_scrollPos = 0;
+	this.div_work.url = "UserForms::gybs2012fm.xfdl";
+};
+
+this.div_header_btn_gyms_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fvApp.gds_search.copyData(this.ds_search);
+	this.fvApp.gds_search.setColumn(0, "typeSearch", "RECENT");
+	this.fvApp.gds_search.setColumn(0, "searchTerm", "");
+	this.fvApp.gds_search.setColumn(0, "offset", "0");
+	this.fvApp.gv_scrollPos = 0;
+	this.div_work.url = "UserForms::gybs2013fm.xfdl";
+};
+
+this.pdiv_account_btn_myPage_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objChildFrame = new ChildFrame("popupPasswordCheck", 0, 0, 330, 300);
+	objChildFrame.formurl = "UserForms::gybs2015pu.xfdl";
+ 	objChildFrame.openalign = "center middle";
+ 	objChildFrame.overlaycolor = "RGBA(196,196,196,0.5)";
+	objChildFrame.dragmovetype = "none";
+	objChildFrame.showtitlebar = false;
+ 	objChildFrame.border = "0px none";
+	
+	var objParam = "";
+	objChildFrame.showModal(this.getOwnerFrame(), objParam, this.parent.parent.parent.parent, "fn_popupCallback");
+};
+
+this.fnCorrectPassword = function ()
+{
+	this.div_work.url = "UserForms::gybs2014fm.xfdl";
+	this.pdiv_account.closePopup();
+};
+
+this.pdiv_account_btn_logout_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fvApp.gds_accountInfo.clearData();
+	this.fvApp.mainframe.Main.formurl = "AboutAccount::gybs1010fm.xfdl";
+};
+
+this.div_header_img_logo_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	this.div_work.url = "UserForms::gybs2011fm.xfdl";
+};
+
+this.div_header_btn_market_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.div_work.url = "MarketForms::gybs4010fm.xfdl";
+	this.fvApp.gds_search.setColumn(0, "typeSearch", "RECENT");
+	this.fvApp.gds_search.setColumn(0, "searchTerm", "");
+	this.fvApp.gds_search.setColumn(0, "offset", "0");
+	this.fvApp.gv_scrollPos = 0;
+};
+
+this.fnResetInfo = function ()
+{
+	this.div_header.form.img_profile.image = this.fvApp.gds_accountInfo.getColumn(0, "PROFILE_PATH");
+	this.pdiv_account.form.img_profile.image = this.fvApp.gds_accountInfo.getColumn(0, "PROFILE_PATH");
+	this.div_header.form.sta_userName.text = this.fvApp.gds_accountInfo.getColumn(0, "NAME");
+	this.pdiv_account.form.sta_userName.text = this.fvApp.gds_accountInfo.getColumn(0, "NAME");
+};
+this.notification_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	this.pdiv_account.closePopup();
+	this.pdiv_notification.trackPopupByComponent(this.div_header.form.sta_userName, -250, 45);
+	// 알림 데이터 가져오기
+	var strSvcUrl = "p014/getNotifications.do";
+	var inData    = "";
+	var outData   = "ds_notification=ds_notification";
+	var strArg    = "paramID=" + this.fvApp.gds_accountInfo.getColumn(0, "ID");
+
+	this.gfnTransaction("getNotifications", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+};
+this.pdiv_notification_onpopup = function(obj:nexacro.PopupDiv,e:nexacro.EventInfo)
+{
+	// 계정 정보 팝업 시 프로필과 이름 동기화
+	this.pdiv_notification.form.Div00.form.img_profile.image = this.div_header.form.img_profile.image;
+	this.pdiv_notification.form.Div00.form.sta_userName.text = this.div_header.form.sta_userName.text;
+};
+
+this.pdiv_notification_Div00_div_account_img_cancel_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	this.pdiv_notification.closePopup();
+	this.pdiv_account.trackPopupByComponent(this.div_header.form.sta_userName, -250, 45);
+};
+
+this.pdiv_notification_onkillfocus = function(obj:nexacro.PopupDiv,e:nexacro.KillFocusEventInfo)
+{
+	this.pdiv_notification.closePopup();
+};
+
+this.fnSetMessage = function(param_notiType) {
+	var sMessage = "";
+	switch(param_notiType) {
+	case "SALE_COMPLETED":
+		sMessage = "상품 판매가 완료되었습니다."
+		break;
+	case "BUY_COMPLETED":
+		sMessage = "상품 구매가 완료되었습니다."
+		break;
+	case "NEW_COMMENT":
+		sMessage = "게시글에 새로운 댓글이 달렸습니다."
+		break;
+	case "NEW_REPLY":
+		sMessage = "회원님의 댓글에 새로운 답글이\n달렸습니다."
+		break;
+	case "TRANSFER_REJECTED":
+		sMessage = "양도 신청이 반려되었습니다.\n내용을 보려면 클릭하세요.";
+		break;
+	case "TRANSFER_APPROVED":
+		sMessage = "양도 신청이 승인되었습니다.";
+		break;
+	default:
+		sMessage = "ERROR"
+		break;
+	}
+	return sMessage;
+};
+
+this.pdiv_notification_grid_notiList_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	// 반려 알림 클릭 시 관리자가 보낸 반려 사유 보여주기 -> 해당 알림만 IS_READ => Y로 변경
+	if (this.ds_notification.getColumn(e.row, "NOTI_TYPE") == "TRANSFER_REJECTED" || this.ds_notification.getColumn(e.row, "NOTI_TYPE") == "TRANSFER_APPROVED") {
+		trace("승인/반려 알림");
+		this.fvApp.gv_marketNo = this.ds_notification.getColumn(e.row, "TARGET_NO");
+		this.pdiv_notification.closePopup();
+		
+		var sUserID = this.fvApp.gds_accountInfo.getColumn(0, "ID");
+		var sMarketNo = this.ds_notification.getColumn(e.row, "TARGET_NO");
+		var sNotiType = this.ds_notification.getColumn(e.row, "NOTI_TYPE");
+		
+		trace(">>>>> 전달되는 USER_ID: " + sUserID);
+		trace(">>>>> 전달되는 MARKET_NO: " + sMarketNo);
+		trace(">>>>> 전달되는 NOTI_TYPE: " + sNotiType);
+		
+		if (this.ds_notification.getColumn(e.row, "NOTI_TYPE") == "TRANSFER_REJECTED") {
+			this.fvApp.gds_rejectNoti.setColumn(0, "IS_FROM_REJECT","Y");
+			this.fvApp.gds_rejectNoti.setColumn(0, "MESSAGE", this.ds_notification.getColumn(e.row, "MESSAGE"));
+		}
+		
+		this.div_work.url = "MarketForms::gybs4011fm.xfdl";
+		
+		var strSvcUrl = "p014/updateSingleNotiIsRead.do";
+		var inData    = "";
+		var outData   = "";
+		var strArg    = "paramID=" + sUserID + " paramMarketNo=" + sMarketNo + " paramNotiType=" + sNotiType;
+
+		this.gfnTransaction("updateSingleNotiIsRead", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+	}
+	// 그 외 알림은 클릭 시 해당 정기권 게시글 관련 알림(양도 반려 알림 제외) 모두 IS_READ => Y로 변경
+	else {
+		trace("반려 외의 알림");
+		this.fvApp.gv_marketNo = this.ds_notification.getColumn(e.row, "TARGET_NO");
+		this.pdiv_notification.closePopup();
+		
+		var sUserID = this.fvApp.gds_accountInfo.getColumn(0, "ID");
+		var sMarketNo = this.ds_notification.getColumn(e.row, "TARGET_NO");
+
+		trace(">>>>> 전달되는 USER_ID: " + sUserID);
+		trace(">>>>> 전달되는 MARKET_NO: " + sMarketNo);
+		
+		this.div_work.url = "MarketForms::gybs4011fm.xfdl";
+		
+		var strSvcUrl = "p014/updateIsRead.do";
+		var inData    = "";
+		var outData   = "";
+		var strArg    = "paramID=" + sUserID + " paramMarketNo=" + sMarketNo;
+
+		this.gfnTransaction("updateIsRead", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+	}
+};
+
+this.fnCallback = function (svcId, errCd, errMsg)
+{
+	if (svcId == "getNotificationCount") {
+		var nUnreadCount = this.notiCnt;
+		this.fvApp.gds_accountInfo.setColumn(0, "NOTI_COUNT", nUnreadCount);
+		if (nUnreadCount == 0) { // 미확인 알림이 없다면 빨간 Static 안 보이게 설정
+			this.pdiv_account.form.staPushCount.visible = false;
+		}
+		else {
+			this.pdiv_account.form.staPushCount.visible = true;
+		}
+	}
+};
+
+this.div_bottom_img_instagram_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	system.execBrowser("https://www.instagram.com/u_jh03?igsh=MXMycWI0ZHhjcGd2eA%3D%3D&utm_source=qr");
+};
+
+this.div_bottom_img_youbute_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	system.execBrowser("https://youtube.com/channel/UCtyOyW-RaT0sPkZk5rDhQ1w?si=gmANe4szALDwm-mJ");
+};
+
+this.div_bottom_img_tobe_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	system.execBrowser("https://www.tobesoft.com");
+};
+]]></Script>
+    <Objects>
+      <Dataset id="ds_accountInfo">
+        <ColumnInfo>
+          <Column id="ID" type="STRING" size="256"/>
+          <Column id="PW" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+          <Column id="PHONE_NO" type="STRING" size="256"/>
+          <Column id="ROLE_TYPE" type="STRING" size="256"/>
+          <Column id="GYM_CODE" type="STRING" size="256"/>
+          <Column id="PROFILE_PATH" type="STRING" size="256"/>
+          <Column id="NOTI_COUNT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_search">
+        <ColumnInfo>
+          <Column id="cnt" type="INT" size="256"/>
+          <Column id="offset" type="INT" size="256"/>
+          <Column id="searchTerm" type="STRING" size="256"/>
+          <Column id="gotoMain" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="cnt">5</Col>
+            <Col id="offset">0</Col>
+            <Col id="gotoMain">1</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_notification">
+        <ColumnInfo>
+          <Column id="NO" type="STRING" size="256"/>
+          <Column id="NOTI_TYPE" type="STRING" size="256"/>
+          <Column id="TARGET_NO" type="STRING" size="256"/>
+          <Column id="MESSAGE" type="STRING" size="256"/>
+          <Column id="IS_READ" type="STRING" size="256"/>
+          <Column id="REG_DATE_STRING" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="pdiv_account.form.staPushCount" propid="text" datasetid="gds_accountInfo" columnid="NOTI_COUNT"/>
+    </Bind>
+  </Form>
+</FDL>

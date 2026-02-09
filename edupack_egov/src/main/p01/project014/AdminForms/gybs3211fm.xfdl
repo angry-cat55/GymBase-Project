@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="gybs3211fm" width="1280" height="720" titletext="헬스장 승인 대기" onload="gybs3211fm_onload">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Static id="Static00" taborder="1" left="0" top="0" width="50%" height="50%" text="" visible="false" background="#ffe5fe"/>
+        <Div id="div_successMachine" taborder="1" background="#efefef" border="1px solid #000000" borderRadius="20px" width="530" height="700" boxShadow="0px 0px 15px 0px rgba(0,0,0,0.41)" top="Static00:-350" left="Static00:-265" visible="true" text="">
+          <Layouts>
+            <Layout>
+              <Static id="sta_background" taborder="0" left="10" top="10" background="#ffffff" borderRadius="10px" right="10" bottom="10" text="" onclick="div_machine_sta_background_onclick"/>
+              <Button id="btn_gotoLogin" taborder="1" text="로그인 화면으로" width="140" borderRadius="10px" right="193" visible="true" enable="true" height="50" bottom="40" cssclass="GB_Login" font="normal 600 13pt/normal &quot;Arial&quot;" onclick="div_successMachine_btn_gotoLogin_onclick"/>
+              <ImageViewer id="img_success" taborder="2" left="190" top="80" width="150" height="150" stretch="fixaspectratio" image="url('imagerc::form/wait.png')" background="transparent" border="0px none"/>
+              <Static id="sta_text1" taborder="3" text="" left="10" top="256" height="130" right="10" textAlign="center" font="normal 600 14pt/normal &quot;맑은 고딕&quot;" color="#000000"/>
+              <Static id="sta_text2" taborder="4" text="" left="10" top="sta_text1:5" height="198" textAlign="center" verticalAlign="middle" font="normal 500 11pt/normal &quot;맑은 고딕&quot;" color="#000000" right="10"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.fvApp = nexacro.getApplication();
+this.fvGymName = "";
+
+this.gybs3211fm_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var strSvcUrl = "p014/getGymName.do";
+	var inData    = "";
+	var outData   = "";
+	var strArg    = "paramCode=" + this.fvApp.gds_accountInfo.getColumn(0, "GYM_CODE");
+
+	this.gfnTransaction("getGymName", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+};
+
+this.fnCallback = function(svcId, errCd, errMsg) {
+	if (svcId == "getGymName") {
+		this.div_successMachine.form.sta_text1.text = "[" + this.fvGymName + "]의\n\n등록 신청이 정상적으로 접수되어,\n\n운영팀에서 내용을 신중하게 검토하고 있습니다.";
+		this.div_successMachine.form.sta_text2.text = "이 과정은 관리자님의 헬스장이 잠재 회원들에게\n\n가장 정확하고 매력적인 모습으로 소개될 수 있도록 돕기 위함입니다.\n\n\n승인이 완료되면 즉시 모든 관리자 기능을 이용하실 수 있습니다.\n\n저희와 함께해주셔서 진심으로 감사합니다.";
+	}
+}
+
+this.div_successMachine_btn_gotoLogin_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fvApp.mainframe.Main.formurl = "AboutAccount::gybs1010fm.xfdl";
+};
+]]></Script>
+  </Form>
+</FDL>

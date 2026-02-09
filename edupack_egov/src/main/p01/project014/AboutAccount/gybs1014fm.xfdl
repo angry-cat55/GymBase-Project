@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="FindID" width="270" height="215" titletext="비밀번호">
+    <Layouts>
+      <Layout height="215" mobileorientation="landscape" width="270">
+        <Static id="sta_name" taborder="3" text="이름" left="25" top="77" width="30" height="20" font="normal 11pt/normal &quot;Arial&quot;"/>
+        <Edit id="edt_name" taborder="1" left="0" top="99" width="270" height="36" password="false" borderRadius="10px" displaynulltext="ex ) 홍길동" border="1px solid gray" padding="0px 0px 0px 15px"/>
+        <Static id="sta_phoneNo" taborder="4" text="전화번호" left="25" top="143" width="60" height="20" font="normal 11pt/normal &quot;Arial&quot;"/>
+        <MaskEdit id="msk_phoneNo" taborder="2" left="0" top="165" width="270" height="36" border="1px solid gray" borderRadius="10px" format="###-####-####" type="string" autoselect="true"/>
+        <Static id="sta_ID" taborder="5" text="아이디" left="25" top="11" width="45" height="20" font="normal 11pt/normal &quot;Arial&quot;"/>
+        <Edit id="edt_ID" taborder="0" left="0" top="33" height="36" password="false" borderRadius="10px" displaynulltext="ex ) nexacro123" border="1px solid gray" padding="0px 0px 0px 15px" right="0"/>
+      </Layout>
+    </Layouts>
+    <Objects/>
+    <Bind>
+      <BindItem id="item0" compid="edt_ID" propid="value" datasetid="ds_info" columnid="ID"/>
+      <BindItem id="item1" compid="edt_name" propid="value" datasetid="ds_info" columnid="NAME"/>
+      <BindItem id="item2" compid="msk_phoneNo" propid="value" datasetid="ds_info" columnid="PHONE_NO"/>
+    </Bind>
+  </Form>
+</FDL>

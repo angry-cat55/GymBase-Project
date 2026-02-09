@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ADL version="2.0">
+  <Application id="Application_Desktop" screenid="Desktop_screen" licenseurl="NexacroN_client_license.xml">
+    <Layout>
+      <MainFrame id="mainframe" showtitlebar="true" showstatusbar="false" left="0" top="0" width="1600" height="1000" titletext="GymBase">
+        <ChildFrame id="Main" showtitlebar="false" showtitleicon="false" formurl="AboutAccount::gybs1010fm.xfdl"/>
+      </MainFrame>
+    </Layout>
+  </Application>
+</ADL>

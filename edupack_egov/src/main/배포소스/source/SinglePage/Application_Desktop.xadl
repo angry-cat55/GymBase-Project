@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ADL version="2.0">
+  <Application id="Application_Desktop" screenid="Desktop_screen" onload="Application_onload">
+    <Layout>
+      <MainFrame id="mainframe" showtitlebar="true" showstatusbar="true" width="1280" height="720" titletext="FullFrame">
+        <ChildFrame id="WorkFrame" showtitlebar="false" showstatusbar="false"/>
+      </MainFrame>
+    </Layout>
+  </Application>
+  <Script type="xscript5.1"><![CDATA[
+this.Application_onload = function(obj:nexacro.Application,e:nexacro.LoadEventInfo)
+{
+	//var sTargetForm = nexacro.getEnvironmentVariable("Env_TargetForm");	
+	var sTargetForm = nexacro.getApplication().App_TargetForm;	
+	if((sTargetForm == null) || (sTargetForm.length == 0))   
+	{		    
+
+		nexacro.getApplication().mainframe.WorkFrame.set_formurl("FrameBase::Form_Work.xfdl");
+	} else {
+		nexacro.getApplication().mainframe.WorkFrame.set_formurl(sTargetForm);
+	}	
+};
+   ]]></Script>
+</ADL>

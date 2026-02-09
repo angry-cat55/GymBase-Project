@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Tranaction" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Grid id="GridSearch" taborder="0" left="180" top="291" width="890" height="269" binddataset="ds_sample" autofittype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row band="head" size="24"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="ID"/>
+                <Cell col="1" text="NAME"/>
+                <Cell col="2" text="DESCRIPTION"/>
+                <Cell col="3" text="USE_YN"/>
+                <Cell col="4" text="REG_USER"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:ID"/>
+                <Cell col="1" text="bind:NAME"/>
+                <Cell col="2" text="bind:DESCRIPTION"/>
+                <Cell col="3" text="bind:USE_YN"/>
+                <Cell col="4" text="bind:REG_USER"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="BtnSearch" taborder="1" text="조회" left="373" top="117" width="156" height="59" onclick="BtnSearch_onclick"/>
+        <Static id="Static00" taborder="2" text="찐이야" left="51" top="73" width="263" height="71"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_sample">
+        <ColumnInfo>
+          <Column id="ID" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+          <Column id="DESCRIPTION" type="STRING" size="256"/>
+          <Column id="USE_YN" type="STRING" size="256"/>
+          <Column id="REG_USER" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[
+this.BtnSearch_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var strSvcUrl = "SvcUrl::edu/getSampleList.do";
+	var inData    = "";
+	var outData   = "ds_sample=dsSample";
+	var strArg    = "";
+
+	this.transaction("getSampleList", strSvcUrl, inData, outData, strArg, "fnCallback");
+};
+]]></Script>
+  </Form>
+</FDL>

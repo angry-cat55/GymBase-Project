@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Work_PopupDept" width="400" height="500" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout height="500" width="400">
+        <Static id="staTitle" taborder="0" text="         부서 검색" left="-1" top="0" width="404" height="60" background="#f0fa28" font="normal bold 30pt/normal &quot;Arial&quot;" onclick="sta00_onclick" color="black"/>
+        <Grid id="grd00" taborder="1" left="34" top="101" width="316" height="304" binddataset="ds_dept" autofittype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="부서 코드"/>
+                <Cell col="1" text="부서 이름"/>
+                <Cell col="2" text="부서장 이름"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:DEPT_CODE"/>
+                <Cell col="1" text="bind:DEPT_NAME"/>
+                <Cell col="2" text="bind:DEPT_EMP"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnok" taborder="2" text="확인" left="168" top="437" width="91" height="36" borderRadius="30px" background="#f0fa28" onclick="btnok_onclick"/>
+        <Button id="btnClose" taborder="3" text="취소" left="268" top="437" width="91" height="36" border="1px solid crimson" onclick="btnClose_onclick" borderRadius="30px" color="crimson"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_dept">
+        <ColumnInfo>
+          <Column id="DEPT_CODE" type="string" size="255"/>
+          <Column id="DEPT_NAME" type="string" size="255"/>
+          <Column id="DEPT_EMP" type="string" size="255"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="DEPT_CODE">10</Col>
+            <Col id="DEPT_NAME">Accounting Team</Col>
+            <Col id="DEPT_EMP">Kate</Col>
+          </Row>
+          <Row>
+            <Col id="DEPT_CODE">20</Col>
+            <Col id="DEPT_NAME">Finances Team</Col>
+            <Col id="DEPT_EMP">Dennis</Col>
+          </Row>
+          <Row>
+            <Col id="DEPT_CODE">30</Col>
+            <Col id="DEPT_NAME">Human Resource Team</Col>
+            <Col id="DEPT_EMP">Adam</Col>
+          </Row>
+          <Row>
+            <Col id="DEPT_CODE">40</Col>
+            <Col id="DEPT_NAME">Support Team</Col>
+            <Col id="DEPT_EMP">Jackson</Col>
+          </Row>
+          <Row>
+            <Col id="DEPT_CODE">50</Col>
+            <Col id="DEPT_NAME">Sales Team</Col>
+            <Col id="DEPT_EMP">Belle</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[
+
+
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close();
+};
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var sTitle=this.getOwnerFrame().pTitle;
+	var sValue=this.getOwnerFrame().pValue;
+	
+	var sTitle2=this.parent.pTitle;
+	var sValue2=this.parent.pValue;
+	
+	this.staTitle.text=sTitle;
+// 	trace(sTitle+":"+sTitle2);
+// 	trace(sValue+":"+sValue2); //같다
+
+	
+	this.transaction("svcGetDept"//아이디
+					 ,"SvcUrl::edu/edupack24_jsp/select_code_dept.jsp"// EduUrlLocal::selecr_emp.jsp
+					 ,""//화면 데이터-->서버 전달 저장 처리 할 때 사용
+					 ,"ds_dept=out_dept"//서버에서 전달되는 데이터를 화면에서 받을때 사용 조화사용
+				 	 ,""//서버로 전달한 변수
+					 ,"");
+
+};
+
+this.btnok_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sDeptCode=this.ds_dept.getColumn(this.ds_dept.rowposition,"DEPT_CODE");//인자가 2개지요
+	var sDeptName=this.ds_dept.getColumn(this.ds_dept.rowposition,"DEPT_NAME");//밑에도 2개지요
+	
+	this.opener.fnReturn(this.ds_dept);
+	this.close();//특수한 구분값을 이용해서 하나의 문자열로 보냄..? close 함수에는 string만전달가능
+	//this.close(sDeptCode+":"+sDeptName);	
+};
+
+]]></Script>
+  </Form>
+</FDL>

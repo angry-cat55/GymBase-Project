@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AppVariables version="2.0">
+  <Datasets>
+    <Dataset id="gds_accountInfo">
+      <ColumnInfo>
+        <Column id="ID" type="STRING" size="256"/>
+        <Column id="PW" type="STRING" size="256"/>
+        <Column id="NAME" type="STRING" size="256"/>
+        <Column id="PHONE_NO" type="STRING" size="256"/>
+        <Column id="ROLE_TYPE" type="STRING" size="256"/>
+        <Column id="GYM_CODE" type="INT" size="256"/>
+        <Column id="PROFILE_PATH" type="STRING" size="256"/>
+        <Column id="NOTI_COUNT" type="STRING" size="256"/>
+        <Column id="GYM_STATUS" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gds_search" useclientlayout="false">
+      <ColumnInfo>
+        <Column id="cnt" type="INT" size="256"/>
+        <Column id="offset" type="INT" size="256"/>
+        <Column id="searchTerm" type="STRING" size="256"/>
+        <Column id="gotoMain" type="STRING" size="256"/>
+        <Column id="typeSearch" type="STRING" size="256"/>
+        <Column id="isShowSold" type="STRING" size="256"/>
+      </ColumnInfo>
+      <Rows>
+        <Row>
+          <Col id="cnt">10</Col>
+          <Col id="offset">0</Col>
+          <Col id="gotoMain">1</Col>
+        </Row>
+      </Rows>
+    </Dataset>
+    <Dataset id="gds_rejectNoti">
+      <ColumnInfo>
+        <Column id="IS_FROM_REJECT" type="STRING" size="256"/>
+        <Column id="MESSAGE" type="STRING" size="1024"/>
+      </ColumnInfo>
+      <Rows>
+        <Row/>
+      </Rows>
+    </Dataset>
+    <Dataset id="gdsMessage">
+      <ColumnInfo>
+        <Column id="MSG_ID" type="STRING" size="256"/>
+        <Column id="MSG_TEXT" type="STRING" size="256"/>
+        <Column id="MSG_TEXT_EN" type="STRING" size="256"/>
+        <Column id="MSG_TYPE" type="STRING" size="2"/>
+        <Column id="MSG_ICON" type="STRING" size="256"/>
+      </ColumnInfo>
+      <Rows>
+        <Row>
+          <Col id="MSG_ID">msg.server.error.msg</Col>
+          <Col id="MSG_TYPE">A</Col>
+          <Col id="MSG_ICON">INF</Col>
+          <Col id="MSG_TEXT">서버에서 다음과 같은 에러가 발생했습니다.\n\n{0}</Col>
+        </Row>
+        <Row>
+          <Col id="MSG_ID">msg.err.login.fail</Col>
+          <Col id="MSG_TYPE">A</Col>
+          <Col id="MSG_ICON">INF</Col>
+          <Col id="MSG_TEXT">아이디 또는 비밀번호가 일치하지 않습니다.</Col>
+        </Row>
+        <Row>
+          <Col id="MSG_ID">msg.err.wrong.password</Col>
+          <Col id="MSG_TEXT">비밀번호가 일치하지 않습니다.</Col>
+          <Col id="MSG_TYPE">A</Col>
+          <Col id="MSG_ICON">INF</Col>
+        </Row>
+        <Row>
+          <Col id="MSG_ID">msg.err.signup.fail.IDcheck</Col>
+          <Col id="MSG_TYPE">A</Col>
+          <Col id="MSG_ICON">INF</Col>
+          <Col id="MSG_TEXT">이미 사용 중인 아이디입니다.</Col>
+        </Row>
+        <Row>
+          <Col id="MSG_ID">msg.signup.IDcheck</Col>
+          <Col id="MSG_TYPE">A</Col>
+          <Col id="MSG_ICON">INF</Col>
+          <Col id="MSG_TEXT">사용 가능한 아이디입니다.\n\n(가입 후 변경 불가)</Col>
+        </Row>
+        <Row>
+          <Col id="MSG_ID">msg.err.enter.alldata</Col>
+          <Col id="MSG_TYPE">A</Col>
+          <Col id="MSG_ICON">INF</Col>
+          <Col id="MSG_TEXT"> 모든 항목을 입력해 주십시오.</Col>
+        </Row>
+        <Row>
+          <Col id="MSG_ID">msg.err.wrong.phone</Col>
+          <Col id="MSG_TYPE">A</Col>
+          <Col id="MSG_ICON">INF</Col>
+          <Col id="MSG_TEXT">올바른 전화번호 형식이 아닙니다.</Col>
+        </Row>
+        <Row>
+          <Col id="MSG_ID">msg.err.no.img.select</Col>
+          <Col id="MSG_TYPE">A</Col>
+          <Col id="MSG_ICON">INF</Col>
+          <Col id="MSG_TEXT">이미지 파일을 선택해 주십시오.</Col>
+        </Row>
+        <Row>
+          <Col id="MSG_ID">msg.err.no.reject.reason</Col>
+          <Col id="MSG_TYPE">A</Col>
+          <Col id="MSG_ICON">INF</Col>
+          <Col id="MSG_TEXT">반려 사유가 작성되지 않았습니다.</Col>
+        </Row>
+        <Row>
+          <Col id="MSG_ID">msg.err.no.gymImg.select</Col>
+          <Col id="MSG_TYPE">A</Col>
+          <Col id="MSG_ICON">INF</Col>
+          <Col id="MSG_TEXT">헬스장 대표 이미지를 등록해야 합니다.</Col>
+        </Row>
+        <Row>
+          <Col id="MSG_ID">msg.err.wrong.date</Col>
+          <Col id="MSG_TYPE">A</Col>
+          <Col id="MSG_ICON">INF</Col>
+          <Col id="MSG_TEXT">날짜 형식이 올바르지 않습니다.</Col>
+        </Row>
+        <Row>
+          <Col id="MSG_ID">msg.err.wrong.password</Col>
+          <Col id="MSG_TYPE">A</Col>
+          <Col id="MSG_ICON">INF</Col>
+          <Col id="MSG_TEXT">비밀번호가 일치하지 않습니다.</Col>
+        </Row>
+        <Row>
+          <Col id="MSG_TYPE">C</Col>
+          <Col id="MSG_ICON">CFN</Col>
+          <Col id="MSG_ID">confirm.save.current</Col>
+          <Col id="MSG_TEXT">현재 정보 수정 중입니다.\n\n입력된 내용으로 저장하시겠습니까?</Col>
+        </Row>
+        <Row>
+          <Col id="MSG_TYPE">C</Col>
+          <Col id="MSG_ICON">CFN</Col>
+          <Col id="MSG_ID">confirm.approve.transfer</Col>
+          <Col id="MSG_TEXT">양도 요청을 승인하시겠습니까? \n\n(처리 후에는 수정할 수 없습니다.)</Col>
+        </Row>
+        <Row>
+          <Col id="MSG_TYPE">C</Col>
+          <Col id="MSG_ICON">CFN</Col>
+          <Col id="MSG_ID">confirm.reject.transfer</Col>
+          <Col id="MSG_TEXT">양도 요청을 반려하시겠습니까? \n\n(처리 후에는 수정할 수 없습니다.)</Col>
+        </Row>
+        <Row>
+          <Col id="MSG_TYPE">C</Col>
+          <Col id="MSG_ICON">CFN</Col>
+          <Col id="MSG_ID">confirm.upload.gym</Col>
+          <Col id="MSG_TEXT"> 작성한 내용으로 헬스장을 등록하시겠습니까? \n\n(정보는 승인 후 변경 가능합니다.)</Col>
+        </Row>
+        <Row>
+          <Col id="MSG_TYPE">C</Col>
+          <Col id="MSG_ICON">CFN</Col>
+          <Col id="MSG_ID">confirm.approve.gym</Col>
+          <Col id="MSG_TEXT">해당 헬스장의 등록을 승인하시겠습니까?</Col>
+        </Row>
+        <Row>
+          <Col id="MSG_TYPE">C</Col>
+          <Col id="MSG_ICON">CFN</Col>
+          <Col id="MSG_ID">confirm.reject.gym</Col>
+          <Col id="MSG_TEXT">해당 헬스장의 등록을 반려하시겠습니까?</Col>
+        </Row>
+      </Rows>
+    </Dataset>
+  </Datasets>
+  <Variables>
+    <Variable id="gv_gymCode"/>
+    <Variable id="gv_marketNo"/>
+    <Variable id="gv_tempGotoMainType"/>
+    <Variable id="gv_expiryDate"/>
+    <Variable id="gv_isFromRejectNoti" initval=""/>
+    <Variable id="gv_scrollPos" initval="0"/>
+  </Variables>
+  <DataObjects/>
+</AppVariables>

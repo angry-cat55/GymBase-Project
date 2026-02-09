@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Home" width="1280" height="1770" titletext="홈 화면" onload="Home_onload">
+    <Layouts>
+      <Layout height="1770" mobileorientation="landscape" width="1280">
+        <Div id="div_imgStep" taborder="0" left="20" top="60" width="910" height="490" background="white" url="UserForms::gybs2110fm.xfdl" borderRadius="20px" border="1px solid #d5d5d5" boxShadow="0px 0px 5px 0px RGBA(0,0,0,0.25)"/>
+        <Div id="div_welcome" taborder="1" left="div_imgStep:20" top="60" height="60" right="20" text="Div00" background="#efefef" borderRadius="20px" border="1px solid #d5d5d5" boxShadow="0px 0px 5px 0px RGBA(0,0,0,0.25)">
+          <Layouts>
+            <Layout>
+              <Static id="sta_welcome" taborder="0" text="default님 환영합니다!" left="0" top="20" height="25" font="normal 600 13pt/normal &quot;Arial&quot;" right="0" padding="0px 0px 0px 20px" color="#000000" verticalAlign="middle"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div_goMyGym" taborder="2" left="950" top="div_welcome:25" height="190" right="20" text="Div00" background="#efefef" borderRadius="20px" border="1px solid #d5d5d5" boxShadow="0px 0px 5px 0px RGBA(0,0,0,0.25)">
+          <Layouts>
+            <Layout>
+              <Static id="sta_myGym" taborder="0" text="내 헬스장" left="0" top="20" height="20" padding="0px 0px 0px 20px" right="0" color="#de1821" font="normal 600 10pt/normal &quot;Arial&quot;"/>
+              <Static id="sta_goMyGymNotice" taborder="1" text="즐겨찾기한 헬스장" left="0" top="134" height="25" font="normal 600 14pt/normal &quot;Arial&quot;" right="70" padding="0px 0px 0px 20px" color="#000000" verticalAlign="middle"/>
+              <ImageViewer id="btn_goNotice" taborder="2" width="35" height="35" image="url('imagerc::form/btn.png')" stretch="fixaspectratio" border="0px none" borderRadius="25px" right="20" bottom="27" onclick="div_goMyGym_btn_goNotice_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div_goMarket" taborder="3" left="950" top="div_goMyGym:25" height="190" right="20" text="Div00" background="#efefef" borderRadius="20px" border="1px solid #d5d5d5" boxShadow="0px 0px 5px 0px RGBA(0,0,0,0.25)">
+          <Layouts>
+            <Layout>
+              <Static id="sta_market" taborder="0" text="정기권 마켓" left="0" top="20" height="20" padding="0px 0px 0px 20px" right="0" color="#de1821" font="normal 600 10pt/normal &quot;Arial&quot;"/>
+              <Static id="sta_goMarketList" taborder="1" text="정기권 게시글" left="0" top="134" height="25" font="normal 600 14pt/normal &quot;Arial&quot;" right="70" padding="0px 0px 0px 20px" color="#000000" verticalAlign="middle"/>
+              <ImageViewer id="btn_goMarket" taborder="2" width="35" height="35" image="url('imagerc::form/btn.png')" stretch="fixaspectratio" border="0px none" borderRadius="25px" right="20" bottom="27" onclick="sta_goWhole02_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta_recentGyms" taborder="6" text="최근 등록된 헬스장" left="20" top="div_imgStep:95" height="30" font="normal 600 16pt/normal &quot;Arial&quot;" color="#000000" verticalAlign="middle" width="240"/>
+        <Div id="div_layoutRecentGyms" taborder="4" left="20" top="sta_recentGyms:35" height="360" borderRadius="10px" right="20" text="" formscrollbartype="none none" formscrolltype="both" background="transparent">
+          <Layouts>
+            <Layout type="horizontal" flexwrap="nowrap" horizontalgap="50"/>
+          </Layouts>
+        </Div>
+        <Static id="sta_recentMembership" taborder="7" text="최근 등록된 정기권" left="20" top="div_layoutRecentGyms:100" height="30" font="normal 600 16pt/normal &quot;Arial&quot;" color="#000000" verticalAlign="middle" width="240"/>
+        <Div id="div_layoutRecentMembership" taborder="5" left="20" top="sta_recentMembership:35" width="1240" height="360" background="transparent" borderRadius="10px" formscrollbartype="none none" formscrolltype="both">
+          <Layouts>
+            <Layout type="horizontal" horizontalgap="50"/>
+          </Layouts>
+        </Div>
+        <Static id="sta_goWhole01" taborder="8" text="전체 보기" left="1191" top="648" height="25" font="normal 600 12pt/normal &quot;Arial&quot;" color="#000000" verticalAlign="middle" width="69" onclick="sta_goWhole01_onclick"/>
+        <Static id="sta_goWhole02" taborder="9" text="전체 보기" left="1191" top="1173" height="25" font="normal 600 12pt/normal &quot;Arial&quot;" color="#000000" verticalAlign="middle" width="69" onclick="sta_goWhole02_onclick"/>
+        <ImageViewer id="img_rightArrow" taborder="11" left="1235" top="680" width="25" height="25" stretch="fixaspectratio" border="0px none" image="url('imagerc::form/rightArrow.png')" background="transparent" onclick="img_rightArrow_onclick"/>
+        <ImageViewer id="img_leftArrow" taborder="10" left="1198" top="680" height="25" stretch="fixaspectratio" border="0px none" image="url('imagerc::form/leftArrow.png')" background="transparent" text="" onclick="img_leftArrow_onclick" right="img_rightArrow:12"/>
+        <ImageViewer id="img_rightArrow1" taborder="13" left="1235" top="1202" width="25" height="25" stretch="fixaspectratio" border="0px none" background="transparent" onclick="img_rightArrow1_onclick" image="url('imagerc::form/rightArrow.png')"/>
+        <ImageViewer id="img_leftArrow1" taborder="12" left="1196" top="1202" height="25" stretch="fixaspectratio" border="0px none" image="url('imagerc::form/leftArrow.png')" background="transparent" text="" right="img_rightArrow1:12" onclick="img_leftArrow1_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_recentGymList">
+        <ColumnInfo>
+          <Column id="GYM_CODE" type="STRING" size="256"/>
+          <Column id="GYM_NAME" type="STRING" size="256"/>
+          <Column id="ADDRESS" type="STRING" size="256"/>
+          <Column id="IMG_PATH" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_recentMarketList">
+        <ColumnInfo>
+          <Column id="MARKET_NO" type="STRING" size="256"/>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="PRICE" type="STRING" size="256"/>
+          <Column id="START_DATE" type="STRING" size="256"/>
+          <Column id="END_DATE" type="STRING" size="256"/>
+          <Column id="GYM_NAME" type="STRING" size="256"/>
+          <Column id="ADDRESS" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_search">
+        <ColumnInfo>
+          <Column id="cnt" type="INT" size="256"/>
+          <Column id="offset" type="INT" size="256"/>
+          <Column id="searchTerm" type="STRING" size="256"/>
+          <Column id="gotoMain" type="INT" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="cnt">5</Col>
+            <Col id="offset">0</Col>
+            <Col id="gotoMain">1</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[this.fvApp = nexacro.getApplication();
+
+this.Home_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.fvApp.gds_search.copyData(this.ds_search);
+	// 크기 설정
+	var nHeight = this.getLayoutInfo(this.getCurrentLayoutID(), "height");
+ 	this.parent.parent.fnMainPageOnLoad(nHeight);
+	// 이 폼의 크기 밑으로 컨텐츠가 더 늘어나면, 그 크기에 맞춰서 폼의 크기도 늘려야함 여기에서
+	
+	// 이름 설정
+	var nName = this.fvApp.gds_accountInfo.getColumn(0, "NAME");
+	this.div_welcome.form.sta_welcome.text = nName + "님 환영합니다!";
+	
+	// 최근 등록된 4개의 헬스장 데이터 바인딩
+	this.setRecentInfo();
+	
+};
+
+this.setRecentInfo = function()
+{
+	 var strSvcUrl = "p014/getRecentInfo.do";
+	 var inData    = "";
+	 var outData   = "ds_recentGymList=ds_recentGymList ds_recentMarketList=ds_recentMarketList";
+	 var strArg    = "";
+
+	 this.gfnTransaction("getRecentInfo", strSvcUrl, inData, outData, strArg, "fnCallback");
+}
+
+this.fnCallback = function(svcId, errCd, errMsg) {
+	if (errCd < 0) {
+		arrArg = [errMsg];
+		this.gfnAlert("msg.server.error.msg", arrArg, "msg.server.error.msg", "fnMsgCallback");	
+	}
+	if (svcId == "getRecentInfo") {
+		if (errCd == -1) {
+			arrArg = [errMsg];
+			this.gfnAlert("msg.server.error.msg", arrArg, "msg.server.error.msg", "fnMsgCallback");	
+			return;
+		}
+		// 최근 등록 헬스장 동적 div 생성
+		{
+		 var nLeft = 0;
+		 var nTop = 0;
+		 var nWidth = 290;
+		 var nHeight = 360;
+		 
+		 var objParam = {name : ""
+						,address : ""
+						,imgPath : ""};
+		 
+		 var objDiv;
+		 var nCntRow = this.ds_recentGymList.getCount();
+		 for (var i = 0; i < nCntRow; i++) {
+			objParam.code = this.ds_recentGymList.getColumn(i, "GYM_CODE");
+			objParam.name = this.ds_recentGymList.getColumn(i, "GYM_NAME");
+			objParam.address = this.ds_recentGymList.getColumn(i, "ADDRESS");
+			objParam.imgPath = this.ds_recentGymList.getColumn(i, "IMG_PATH");
+			
+			objDiv = new Div("divGym"+i, nLeft, nTop, nWidth, nHeight);
+			objDiv.url = "UserForms::gybs2111fm.xfdl";
+			objDiv.param = JSON.parse(JSON.stringify(objParam)); // 깊은 복사
+			objDiv.flexshrink = 0;
+			this.div_layoutRecentGyms.addChild(objDiv.id, objDiv);
+			
+			objDiv.show();
+		 }
+		 this.div_layoutRecentGyms.form.resetScroll();
+		 }
+		 
+		 {
+		 // 최근 등록 정기권 동적 div 생성
+		 var nLeft = 0;
+		 var nTop = 0;
+		 var nWidth = 290;
+		 var nHeight = 360;
+		 
+		 var objParam = {title : ""
+						,price : ""
+						,startDate : ""
+						,endDate : ""
+						,gymName : ""
+						,gymAddr : ""};
+		 
+		 var objDiv;
+		 var nCntRow = this.ds_recentMarketList.getCount();
+		 for (var i = 0; i < nCntRow; i++) {
+			objParam.marketNo = this.ds_recentMarketList.getColumn(i, "MARKET_NO");
+			objParam.title = this.ds_recentMarketList.getColumn(i, "TITLE");
+			objParam.price = this.ds_recentMarketList.getColumn(i, "PRICE");
+			objParam.startDate = this.ds_recentMarketList.getColumn(i, "START_DATE");
+			objParam.endDate = this.ds_recentMarketList.getColumn(i, "END_DATE");
+			objParam.gymName = this.ds_recentMarketList.getColumn(i, "GYM_NAME");
+			objParam.gymAddr = this.ds_recentMarketList.getColumn(i, "ADDRESS");
+			
+			objDiv = new Div("divMarket"+i, nLeft, nTop, nWidth, nHeight);
+			objDiv.url = "UserForms::gybs2112fm.xfdl";
+			objDiv.param = JSON.parse(JSON.stringify(objParam)); // 깊은 복사
+			objDiv.flexshrink = 0;
+			this.div_layoutRecentMembership.addChild(objDiv.id, objDiv);
+			
+			objDiv.show();
+		 }
+		 this.div_layoutRecentMembership.form.resetScroll();
+		 }
+	}
+}
+this.img_leftArrow_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	this.div_layoutRecentGyms.form.scrollBy(-250,0);
+	this.div_layoutRecentGyms.form.resetScroll();
+};
+
+this.img_rightArrow_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	this.div_layoutRecentGyms.form.scrollBy(250,0);
+	this.div_layoutRecentGyms.form.resetScroll();
+};
+
+this.img_leftArrow1_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	this.div_layoutRecentMembership.form.scrollBy(-250,0);
+	this.div_layoutRecentMembership.form.resetScroll();
+};
+
+this.img_rightArrow1_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	this.div_layoutRecentMembership.form.scrollBy(250,0);
+	this.div_layoutRecentMembership.form.resetScroll();
+};
+
+this.sta_goWhole01_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	this.fvApp.gds_search.copyData(this.ds_search);
+	
+	this.parent.url = "UserForms::gybs2013fm.xfdl";
+};
+
+this.sta_goWhole02_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	this.fvApp.gds_search.copyData(this.ds_search);
+	
+	this.parent.url = "MarketForms::gybs4010fm.xfdl";
+};
+
+this.div_goMyGym_btn_goNotice_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	this.fvApp.gds_search.copyData(this.ds_search);
+	
+	this.parent.url = "UserForms::gybs2012fm.xfdl";
+};
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,380 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="SampleRmateChartAll" left="0" top="0" width="1020" height="1430" titletext="rMate 챠트(공통화면 방식)" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <TextArea id="txtDesc" taborder="11" left="20" top="60" height="80" cssclass="txt_WF_Desc" value="브라우져에 따라 rMateChart를 실행 한다.&#10;   웹브라우져 - Div 컴포넌트에 직접 rMateChart를 실행.&#10;   넥사크로브라우져 : 웹 브라우져로 rMateChart를 실행." right="20" onchanged="txtDesc_onchanged"/>
+        <Static id="Static00" taborder="4" text="1) Line " left="20" top="txtDesc:20" width="168" height="26" cssclass="sta_WF_Title3" padding="5px 0px 0px"/>
+        <Div id="Div00" taborder="0" left="20" top="Static00:0" height="350" url="Cmm::CmmRmateChartAll.xfdl" cssclass="div_WF_Area" width="486" text=""/>
+        <Static id="Static01" taborder="5" text="2) Bar" left="515" top="txtDesc:20" width="168" height="26" cssclass="sta_WF_Title3"/>
+        <Div id="Div01" taborder="1" left="515" top="Static01:0" height="350" url="Cmm::CmmRmateChartAll.xfdl" cssclass="div_WF_Area" width="486"/>
+        <Static id="Static02" taborder="6" text="3) Column" left="20" top="Div00:20" width="168" height="26" cssclass="sta_WF_Title3"/>
+        <Div id="Div02" taborder="2" left="20" top="Static02:5" height="350" url="Cmm::CmmRmateChartAll.xfdl" cssclass="div_WF_Area" width="486"/>
+        <Static id="Static03" taborder="7" text="4) Pie" left="515" top="Div01:20" width="168" height="26" cssclass="sta_WF_Title3"/>
+        <Div id="Div03" taborder="3" left="515" top="Static03:5" height="350" url="Cmm::CmmRmateChartAll.xfdl" cssclass="div_WF_Area" width="486"/>
+        <Button id="btnChangData" taborder="8" text="Data 변경" top="Div01:20" width="110" height="26" onclick="btnChangData_onclick" left="889"/>
+        <Button id="btnChangLayout" taborder="9" text="Layout 변경" top="Div01:20" width="110" height="26" onclick="btnChangLayout_onclick" left="774"/>
+        <Static id="staTitle" taborder="10" text="rMate 챠트(공통화면 방식)" left="20" top="0" width="281" height="60" cssclass="sta_WF_Title1"/>
+        <Button id="Button00" taborder="12" text="새로고침" left="675" top="9" width="223" height="40" onclick="Button00_onclick"/>
+        <Div id="Div04" taborder="13" left="24" top="1035" height="350" url="Cmm::CmmRmateChartAll.xfdl" cssclass="div_WF_Area" width="486"/>
+        <Static id="Static04" taborder="14" text="5) 퍼센트 차트 체크" left="40" top="960" width="325" height="77"/>
+        <Button id="Button00_00" taborder="15" text="새로고침" left="560" top="1100" width="223" height="40" onclick="Button00_onclick"/>
+        <Button id="btnChangLayout00" taborder="16" text="Layout 변경" top="557" width="110" height="26" left="993"/>
+        <Static id="sta" taborder="17" text="Static05" left="228" top="1347" width="79" height="63" textAlign="center" color="#1e90f2" font="normal 700 16pt/normal &quot;맑은 고딕&quot;"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  Nexacro Professional Training Couse
+*  @MenuPath   개발가이드 > 컴포넌트 및 연동 > rMate 챠트(공통화면 방식)
+*  @FileName 	SampleRmateChartAll.xfdl 
+*  @Creator 	TOBESOFT Education
+*  @CreateDate 	2025/01/03
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2025/01/03      		 TOBESOFT Education	 	  	최초 생성 
+*******************************************************************************
+*/
+
+
+/************************************************************************************************
+ * include 영역(업무화면에서 꼭 필요한 경우에만 사용하세요)
+ ************************************************************************************************/
+include "Lib::rMateChartH5.xjs";
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.layoutStr1;
+this.layoutStr2;
+this.layoutStr3;
+this.layoutStr4;
+
+this.layoutStr5;
+
+this.chartData1;
+this.chartData2;
+this.chartData3;
+this.chartData4;
+
+this.chartData5;
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+ this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 스트링 형식으로 레이아웃 정의.
+	this.layoutStr1 = '<rMateChart backgroundColor="#FFFFFF"  borderThickness="1" borderStyle="none">'
+		 +'<Options>'
+			  +'<Caption text="Rainfall" textAlign="center" />'
+				+'<SubCaption text="( mm )" textAlign="right" />'
+			 +'<Legend />'
+		 +'</Options>'
+		 +'<NumberFormatter id="numFmt" precision="0"/>'
+		   +'<Line2DChart showDataTips="true" dataTipDisplayMode="axis" paddingTop="0">'
+			 +'<horizontalAxis>'
+				   +'<CategoryAxis categoryField="Month"/>'
+			  +'</horizontalAxis>'
+			  +'<verticalAxis>'
+				 +'<LinearAxis minimum="0" maximum="100" interval="10" />' // <-- 여기 조절해서 좌측 수치 최대값, 간격 조절
+			 +'</verticalAxis>'
+				+'<series>'
+				   +'<Line2DSeries yField="Vancouver" displayName="Vancouver">'
+				  +'</Line2DSeries>'
+				+'</series>'   
+			  +'<annotationElements>'
+				   +'<CrossRangeZoomer enableZooming="false" horizontalLabelFormatter="{numFmt}" horizontalStrokeEnable="false"/>'
+			   +'</annotationElements>'
+		  +'</Line2DChart>'
+	 +'</rMateChart>';
+	 
+	// 차트 데이터
+	this.chartData1 = [  {"Month":"Jan","Vancouver":40},
+						{"Month":"Feb","Vancouver":50},
+						{"Month":"Mar","Vancouver":47},
+						{"Month":"Apr","Vancouver":57},
+						{"Month":"May","Vancouver":68},
+						{"Month":"Jun","Vancouver":52},
+						{"Month":"Jul","Vancouver":36},
+						{"Month":"Aug","Vancouver":42},
+						{"Month":"Sep","Vancouver":33},
+						{"Month":"Oct","Vancouver":39},
+						{"Month":"Nov","Vancouver":45},
+						{"Month":"Dec","Vancouver":40}];
+
+	// 스트링 형식으로 레이아웃 정의.
+	this.layoutStr2 = 
+					'<rMateChart backgroundColor="#FFFFFF"  borderStyle="none">'
+					  +'<Options>'
+						  +'<Caption text="Rainfall" textAlign="center" />'
+							+'<SubCaption text="( mm )" textAlign="right" />'
+						 +'<Legend />'
+					 +'</Options>'
+					 +'<Bar2DChart showDataTips="true">'
+						   +'<horizontalAxis>'
+							   +'<LinearAxis maximum="100"/>'
+							+'</horizontalAxis>'
+						  +'<verticalAxis>'
+							 +'<CategoryAxis categoryField="Month"/>'
+						 +'</verticalAxis>'
+							+'<series>'
+							   +'<Bar2DSeries labelPosition="inside" xField="Vancouver" displayName="Vancouver" showValueLabels="[6,7]" color="#ffffff" insideLabelYOffset="-2">'
+									+'<showDataEffect>'
+									   +'<SeriesInterpolate/>'
+								  +'</showDataEffect>'
+							  +'</Bar2DSeries>'
+						 +'</series>'
+					  +'</Bar2DChart>'
+				  +'</rMateChart>';
+	 
+	// 차트 데이터
+	this.chartData2 = [  {"Month":"Jan", "Vancouver":21},
+						{"Month":"Feb", "Vancouver":29},
+						{"Month":"Mar", "Vancouver":48},
+						{"Month":"Apr", "Vancouver":38},
+						{"Month":"May", "Vancouver":59},
+						{"Month":"Jun", "Vancouver":77.2},
+						{"Month":"Jul", "Vancouver":68},
+						{"Month":"Aug", "Vancouver":58},
+						{"Month":"Sep", "Vancouver":44},
+						{"Month":"Oct", "Vancouver":23}];
+					
+
+	// 스트링 형식으로 레이아웃 정의.
+	this.layoutStr3 = 
+					'<rMateChart backgroundColor="#FFFFFF"  borderStyle="none">'
+					  +'<Options>'
+						  +'<Caption text="World Top 10 - Fastest Growing Economies (2017)" textAlign="center" />'
+						 +'<SubCaption text="GDP Growth (In %)" textAlign="center" />'
+					 +'</Options>'
+					 +'<SeriesInterpolate id="ss"/>'
+					   +'<Column2DChart showDataTips="true" selectionMode="multiple" columnWidthRatio="0.48">'
+						   +'<horizontalAxis>'
+							   +'<CategoryAxis categoryField="Country"/>'
+							+'</horizontalAxis>'
+						  +'<verticalAxis>'
+							 +'<LinearAxis maximum="100" interval="10"/>'
+						  +'</verticalAxis>'
+							+'<series>'
+							   +'<Column2DSeries labelPosition="outside" yField="GDP" displayName="GDP Growth (In %)" showDataEffect="{ss}" showValueLabels="[4]">'
+							  +'</Column2DSeries>'
+						  +'</series>'
+					  +'</Column2DChart>'
+				   +'</rMateChart>';
+	 
+	// 차트 데이터
+	this.chartData3 = [  {"Country":"SouthSudan", "GDP":20},
+						{"Country":"Libya", "GDP":30},
+						{"Country":"SierraLeone", "GDP":51.2},
+						{"Country":"Mongolia", "GDP":44.5},
+						{"Country":"Paraguay", "GDP":62.35},
+						{"Country":"TimorLeste", "GDP":84.46},
+						{"Country":"Iraq", "GDP":48.9},
+						{"Country":"Panama", "GDP":38},
+						{"Country":"Gambia", "GDP":60.5},
+						{"Country":"Mozam-bique", "GDP":40.1}];
+
+	this.layoutStr4 = '<rMateChart backgroundColor="#FFFFFF" borderStyle="none" >'
+					  +'<Options>'
+						  +'<Caption text="Annual Report" textAlign="center" />'
+							+'<SubCaption text="2013"/>'
+						  +'<Legend useVisibleCheck="true"/>'
+					   +'</Options>'
+					 +'<Pie2DChart showDataTips="true">'
+				   /* Pie2D 차트 생성시에 필요한 Pie2DChart 정의합니다. */
+				   /* showDataTips : 데이터에 마우스를 가져갔을 때 나오는 Tip을 보이기/안보이기 속성입니다. */
+						  +'<series>'
+							   +'<Pie2DSeries nameField="Month" field="Profit" labelPosition="inside" color="#ffffff" startAngle="136">'
+							 /* Pie2DChart 정의 후 Pie2DSeries labelPosition="inside"정의합니다 */
+								   +'<showDataEffect>'
+								   /* 차트 생성시에 Effect를 주고 싶을 때 shoDataEffect정의합니다 */
+// 얘 지우면 애니메이션 X					+'<SeriesSlide duration="1000"/>'
+				 /* SeriesSlide 효과는 시리즈 데이터가 데이터로 표시될 때 한쪽에서 미끄러지듯 나타나는 효과를 적용합니다. */
+					/* elementOffset : effect를 지연시키는 시간을 지정합니다 default:20 */
+					/* minimumElementDuration : 각 엘리먼트의 최소 지속 시간을 설정합니다 default:0 */
+								 /* 이 값보다 짧은 시간에 effect가 실행되지 않습니다. */
+				  /* offset : effect개시의 지연시간을 설정합니다 default:0 */
+				  /* perElementOffset : 각 엘리먼트의 개시 지연시간을 설정합니다. */
+					/* direction : left:왼쪽, right:오른쪽, up:위, down:아래 default는 left입니다. */
+								   +'</showDataEffect>'
+							  +'</Pie2DSeries>'
+						 +'</series>'
+					  +'</Pie2DChart>'
+				  +'</rMateChart>';
+	 
+	// 차트 데이터
+	this.chartData4 = [ {"Month":"Jan", "Profit":350},
+						{"Month":"Feb", "Profit":80},
+						{"Month":"Mar", "Profit":60},
+						{"Month":"Apr", "Profit":170},
+						{"Month":"May", "Profit":280}];
+						
+	this.chartData5 = [65];	
+	this.sta.text = this.chartData5[0] + "%";
+	   
+	this.layoutStr5 =    
+    '<rMateChart paddingBottom="50">'
+        +'<Options>'
+            +'<Caption text="Gauge Sample" paddingBottom="95" />'
+        +'</Options>'
+        /**
+         * showDataTip : 툴팁 출력 설정
+         * minimum : 게이지 최소 값
+         * maximum : 게이지 최대 값
+         * startAngle : 시작 각도
+         * minimumAngle : 게이지 최소 각도
+         * maximumAngle : 게이지 최대 각도
+         * gaugeWidth : 게이지 가로 크기
+         * gaugeHeight : 게이지 세로 크기
+         * innerRatio : 안쪽 영역 비율 값, 유효 값 0 ~ 1
+         * outerRatio : 바깥쪽 영역 비율 값, 유효 값 0 ~ 1
+         * circleOffset : 값이 여러개일 경우 원 형태 간의 여백을 설정합니다.
+         * horizontalOriginRatio : 게이지 출력 수평위치를 설정합니다.
+         * verticalOriginRatio : 게이지 출력 수직위치를 설정합니다.
+         * valueChangeFunction : 데이터가 변경 될 경우 호출될 사용자 정의 함수를 설정합니다
+         * fillJsFunction : 데이터의 값에 따른 색상 값을 설정하는 사용자 정의 함수를 설정합니다.
+         * duration : 이펙트 출력시간을 설정합니다. default 800
+         * bounceAnimating : 튕김 이펙트를 설정합니다. deafult true
+         * showValueLabel : 수치 라벨을 출력할지 설정합니다. default true
+         * valueField : 여러 데이터를 출력 할 경우 차트 데이터의 필드 명을 설정합니다.
+         * nameField : 여러 데이터 출력 시 해당 데이터에 대한 이름을 출력할 필드 명을 설정합니다.
+         * backgroundColors : 게이지가 출력되는 영역의 배경 색상을 설정합니다. default [#e2eaf3]
+         * backgroundStrokes : 게이지가 출력되는 영역의 배경 테두리 색상을 설정합니다. 
+         * foregroundColors : 게이지가 출력되는 영역의 색상을 설정합니다. default [#51c0ee]
+         * foregroundStrokes : 게이지가 출력되는 영역의 테두리 색상을 설정합니다.
+         */
+        +'<Gauge minimum="0" maximum="100" minimumAngle="0" maximumAngle="360" innerRatio="0.85" fontSize="53" labelJsFunction="valueFunc" dataTipJsFunction="dataTipFunc" valueChangeFunction="changeFunction" labelXOffset="3" labelYOffset="-20" foregroundColors="[#1e90f2]" backgroundColors="[#afcdff]" color="#1e90f2" labelClickJsFunction="labelClickFunc" bounceAnimating="false" easingFunction="EaseInOutCirc" roundedCorners="true">'
+            +'<backgroundElements>'
+                +'<CanvasElement>'
+                    +'<CanvasLabel fontWeight="bold" height="23" fontSize="23" horizontalCenter="3" verticalCenter="30" text="텍스트" color="#afcdff"/>'
+                +'</CanvasElement>'
+            +'</backgroundElements>'
+        +'</Gauge>'  
+    +'</rMateChart>';
+	
+	
+
+
+	this.Div00.form.fnSetChart("chart1", this.layoutStr1, this.rMateChartDataSetToXml(this.dsData));
+ 	this.Div01.form.fnSetChart("chart2", this.layoutStr2, this.rMateChartDataSetToXml(this.dsData));
+ 	this.Div02.form.fnSetChart("chart3", this.layoutStr3, this.chartData3);
+ 	this.Div03.form.fnSetChart("chart4", this.layoutStr4, this.chartData4);
+	this.Div04.form.fnSetChart("chart5", this.layoutStr5, this.chartData5);
+ }
+
+/************************************************************************************************
+ * CALLBACK 콜백 처리부분(Transaction, Popup)
+ ************************************************************************************************/
+ 
+/************************************************************************************************
+ * CRUD 및 TRANSACTION 서비스 호출 처리
+ ************************************************************************************************/
+
+/************************************************************************************************
+ * 사용자 FUNCTION 영역
+ ************************************************************************************************/ 
+this.btnChangData_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{ 
+	// 차트 데이터
+	this.chartData4 = [ {"Month":"Jan", "Profit":350},
+						{"Month":"Feb", "Profit":80},
+						{"Month":"Mar", "Profit":60},
+						{"Month":"Apr", "Profit":170},
+						{"Month":"May", "Profit":100}];
+
+	this.Div03.form.fnSetData(this.chartData4);
+};
+
+this.btnChangLayout_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 스트링 형식으로 레이아웃 정의.
+	this.layoutStr4 = '<rMateChart backgroundColor="#FFFFFF" borderStyle="none" >'
+					  +'<Options>'
+						  +'<Caption text="Annual Report"/>'
+							+'<SubCaption text="2015"/>'
+						  +'<Legend useVisibleCheck="true"/>'
+					   +'</Options>'
+					 +'<Pie2DChart showDataTips="true">'
+				   /* Pie2D 차트 생성시에 필요한 Pie2DChart 정의합니다. */
+				   /* showDataTips : 데이터에 마우스를 가져갔을 때 나오는 Tip을 보이기/안보이기 속성입니다. */
+						  +'<series>'
+							   +'<Pie2DSeries nameField="Month" field="Profit" labelPosition="inside" color="#ffffff" startAngle="136">'
+							 /* Pie2DChart 정의 후 Pie2DSeries labelPosition="inside"정의합니다 */
+								   +'<showDataEffect>'
+								   /* 차트 생성시에 Effect를 주고 싶을 때 shoDataEffect정의합니다 */
+										+'<SeriesSlide duration="1000"/>'
+				 /* SeriesSlide 효과는 시리즈 데이터가 데이터로 표시될 때 한쪽에서 미끄러지듯 나타나는 효과를 적용합니다. */
+					/* elementOffset : effect를 지연시키는 시간을 지정합니다 default:20 */
+					/* minimumElementDuration : 각 엘리먼트의 최소 지속 시간을 설정합니다 default:0 */
+								 /* 이 값보다 짧은 시간에 effect가 실행되지 않습니다. */
+				  /* offset : effect개시의 지연시간을 설정합니다 default:0 */
+				  /* perElementOffset : 각 엘리먼트의 개시 지연시간을 설정합니다. */
+					/* direction : left:왼쪽, right:오른쪽, up:위, down:아래 default는 left입니다. */
+								   +'</showDataEffect>'
+							  +'</Pie2DSeries>'
+						 +'</series>'
+					  +'</Pie2DChart>'
+				  +'</rMateChart>';
+				  
+	this.Div03.form.fnSetLayout(this.layoutStr4);
+};
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsData.setColumn(0, "Vancouver", this.dsData.getColumn(0, "Vancouver") - 1);
+	this.Div00.form.fnSetData(this.rMateChartDataSetToXml(this.dsData));
+	
+	this.chartDataNew = [50];  
+	this.sta.text = this.chartDataNew[0] + "%";
+	this.Div04.form.fnSetData(this.chartDataNew);
+};
+
+// 라벨 클릭 함수
+this.labelClickFunc = function(value){
+    alert(value);
+}
+ 
+// 수치 라벨 사용자 정의 함수
+window.valueFunc = function(value){
+
+   return value.toFixed(0) + "%";   
+}    
+ 
+// 데이터 팁 사용자 정의 함수
+this.dataTipFunc = function(value){
+    return value + "%";
+}
+ 
+//게이지 값 랜덤 변경 함수
+this.changeValue = function()
+{
+    // 게이지의 값을 변경할려면 setData 함수를 사용하세요.
+    document.getElementById("chart1").setData([parseInt(Math.random()*100)]);
+}
+ 
+// 게이지 값 보관.
+this.gaugeValue;
+ 
+// 게이지 value change 이벤트 핸들러 함수.
+this.changeFunction = function(value)
+{
+    this.gaugeValue = value;
+}
+ 
+// 확인
+this.commitValue = function()
+{
+    alert(this.gaugeValue);
+}]]></Script>
+    <Objects>
+      <Dataset id="dsData">
+        <ColumnInfo>
+          <Column id="GYM_NAME" type="STRING" size="256"/>
+          <Column id="COUNT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

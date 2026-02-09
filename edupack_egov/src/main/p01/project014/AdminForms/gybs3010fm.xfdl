@@ -1,0 +1,362 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Admin_MainFrame" width="1600" height="1000" titletext="메인 화면" onload="Admin_MainFrame_onload" ontimer="Admin_MainFrame_ontimer">
+    <Layouts>
+      <Layout height="1000" mobileorientation="landscape" width="1600" stepcount="0">
+        <Static id="Static00" taborder="0" text="" left="0" top="0" width="50%" height="50%"/>
+        <Div id="div_main" taborder="1" left="Static00:-720" top="Static00:-405" width="1440" height="810" background="#efefef" border="1px solid #000000" borderRadius="20px" boxShadow="inset 0px 0px 10px 0px rgba(0,0,0,0.25)">
+          <Layouts>
+            <Layout>
+              <Div id="div_top" taborder="0" left="0" top="0" background="#ffffff" right="0" border="1px solid #d4d4d4" height="90" boxShadow="0px 0px 10px 0px rgba(0,0,0,0.25)">
+                <Layouts>
+                  <Layout>
+                    <Button id="btn_logout" taborder="0" text="로그아웃" right="15" top="21" padding="0px 0px 0px 40px" cssclass="GB_Button" onclick="div_main_div_top_btn_logout_onclick" width="140" bottom="19"/>
+                    <ImageViewer id="img_logo" taborder="1" left="20" top="16" width="238" image="url('imagerc::form/Logo_r.png')" stretch="fixaspectratio" background="transparent" border="0px none" onclick="div_main_div_menu_btn_dashBoard_onclick" height="58"/>
+                    <ImageViewer id="ImageViewer00" taborder="2" left="btn_logout:-128" top="btn_logout:-41" width="35" height="35" image="url('imagerc::form/logout.png')" background="transparent" border="0px none" stretch="fixaspectratio" onclick="div_main_div_top_btn_logout_onclick"/>
+                    <Static id="sta_name" taborder="4" top="21" height="48" textAlign="left" padding="5px 10px" wordWrap="english" verticalAlign="middle" font="normal 600 13pt/normal &quot;맑은 고딕&quot;" text="default" color="#000000" right="btn_logout:0" width="100" onclick="Common_onclick"/>
+                    <ImageViewer id="img_profile" taborder="3" background="transparent" border="1px solid #000000" image="url('imagerc::form/profileIcon.png')" stretch="fixaspectratio" borderRadius="24px" right="sta_name:0" bottom="23" width="40" height="40" onclick="Common_onclick"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="div_notice" taborder="2" left="10" width="280" background="#ffffff" bottom="10" height="150" border="1px solid #d4d4d4" borderRadius="10px" text="" boxShadow="0px 0px 5px 0px rgba(0,0,0,0.25)">
+                <Layouts>
+                  <Layout>
+                    <Static id="sta_pendingUserCount" taborder="0" text="처리 대기 정기권 건수 : N개" left="0" top="37" height="23" font="normal 600 13pt/normal &quot;맑은 고딕&quot;" right="0" textAlign="center" color="#000000"/>
+                    <Static id="sta_saledMarketCount" taborder="1" text="판매 중인 정기권 수 : N개" top="88" height="23" font="normal 600 13pt/normal &quot;맑은 고딕&quot;" right="0" left="0" textAlign="center" color="#000000"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="div_menu" taborder="1" left="10" top="div_top:10" width="280" background="#ffffff" bottom="div_notice:10" border="1px solid #d4d4d4" borderRadius="10px" boxShadow="0px 0px 5px 0px rgba(0,0,0,0.25)">
+                <Layouts>
+                  <Layout>
+                    <Button id="btn_manageGymInfo" taborder="0" text="헬스장 정보 관리" left="65" width="150" height="70" top="235" cssclass="GB_Button" onclick="div_main_div_menu_btn_manageGymInfo_onclick"/>
+                    <Button id="btn_manageMembership" taborder="1" text="정기권 양도 관리" left="65" width="150" height="70" top="btn_manageGymInfo:80" cssclass="GB_Button" onclick="div_main_div_menu_btn_manageMembership_onclick"/>
+                    <Button id="btn_dashBoard" taborder="2" text="대시보드" left="65" width="150" bottom="381" height="70" cssclass="GB_Button" onclick="div_main_div_menu_btn_dashBoard_onclick"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="div_work" taborder="3" left="div_menu:10" top="div_top:10" url="AdminForms::gybs3011fm.xfdl" background="#ffffff" border="1px solid #d4d4d4" bottom="10" right="10" borderRadius="10px" text="" boxShadow="0px 0px 5px 0px rgba(0,0,0,0.25)">
+                <Layouts>
+                  <Layout/>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="pdiv_accountInfo" taborder="2" top="div_main:-728" height="432" background="#ffffff" border="1px solid gray" borderRadius="5px" visible="false" right="div_main:-1310" width="242">
+          <Layouts>
+            <Layout>
+              <Static id="sta_names" taborder="0" text="이름" left="20" top="245" width="120" font="normal 600 11pt/normal &quot;맑은 고딕&quot;" padding="0px 0px 0px 10px" color="#000000" height="20"/>
+              <Edit id="edt_name" taborder="1" left="20" top="270" height="30" borderRadius="5px" border="1px solid #d4d4d4" enable="false" padding="0px 10px" textAlign="left" color="#000000" font="normal 10pt/normal &quot;맑은 고딕&quot;" letterSpacing="1px" width="200"/>
+              <ImageViewer id="img_profile" taborder="2" left="85" top="15" width="70" height="70" background="transparent" image="url('imagerc::form/profileIcon.png')" stretch="fixaspectratio" borderRadius="500px" border="1px solid black" text=""/>
+              <Static id="sta_IDs" taborder="3" text="아이디" left="20" top="115" width="120" font="normal 600 11pt/normal &quot;맑은 고딕&quot;" padding="0px 0px 0px 10px" color="#000000" height="20"/>
+              <Edit id="edt_ID" taborder="4" left="20" top="140" width="200" height="30" borderRadius="5px" border="1px solid #d4d4d4" enable="false" padding="0px 10px" textAlign="left" color="#000000" font="normal 10pt/normal &quot;맑은 고딕&quot;" letterSpacing="1px" tooltiptype="hover,mouseleave" tooltiptext="아이디는 변경할 수 없습니다."/>
+              <Static id="sta_PWs" taborder="5" text="비밀번호" left="20" top="180" width="120" font="normal 600 11pt/normal &quot;맑은 고딕&quot;" padding="0px 0px 0px 10px" color="#000000" height="20"/>
+              <Edit id="edt_PW" taborder="6" left="20" top="205" height="30" borderRadius="5px" border="1px solid #d4d4d4" enable="false" padding="0px 10px" textAlign="left" color="#000000" font="normal 10pt/normal &quot;맑은 고딕&quot;" password="true" letterSpacing="1px" width="200"/>
+              <Static id="sta_phoneNos" taborder="7" text="전화번호" left="20" top="310" width="120" font="normal 600 11pt/normal &quot;맑은 고딕&quot;" padding="0px 0px 0px 10px" color="#000000" height="20"/>
+              <Button id="btn_cancel" taborder="8" text="취소" width="60" background="#ffffff" color="#000000" borderRadius="10px" font="normal 600 10pt/normal &quot;맑은 고딕&quot;" right="91" height="30" visible="false" enable="false" bottom="15" onclick="pdiv_accountInfo_btn_cancel_onclick"/>
+              <Button id="btn_saveInfo" taborder="9" text="저장" top="385" width="60" background="#000000" color="#ffffff" borderRadius="10px" font="normal 600 10pt/normal &quot;맑은 고딕&quot;" right="21" height="30" visible="false" enable="false" onclick="pdiv_accountInfo_btn_saveInfo_onclick"/>
+              <Button id="btn_rewrite" taborder="10" text="수정" top="385" width="100" background="#ffffff" color="#000000" borderRadius="10px" right="20" height="30" edge="" font="normal 600 10pt/normal &quot;맑은 고딕&quot;" padding="0px 0px 0px 25px" onclick="Common1_onclick"/>
+              <ImageViewer id="img_rewrite" taborder="11" top="388" height="25" border="0px none" image="url('imagerc::form/rewrite.png')" stretch="fixaspectratio" right="80" width="25" onclick="Common1_onclick"/>
+              <Button id="btn_showPW" taborder="12" left="180" top="205" width="30" height="30" cssclass="rememberPW" text="" enable="false" visible="false" onclick="pdiv_accountInfo_btn_showPW_onclick"/>
+              <MaskEdit id="edt_phoneNo" taborder="13" left="20" top="335" width="200" height="30" letterSpacing="2px" border="1px solid #d4d4d4" borderRadius="5px" color="#000000" font="normal 10pt/normal &quot;맑은 고딕&quot;" padding="0px 10px" textAlign="left" enable="false" format="###-####-####" type="string" trimtype="both"/>
+              <Button id="btn_changeProfile" taborder="14" left="133" top="60" width="25" height="25" background="url('imagerc::form/editProfile.png') no-repeat right center /contain #ffffff" border="0px none" borderRadius="20px" enable="false" onclick="pdiv_accountInfo_btn_changeProfile_onclick"/>
+              <ImageViewer id="img_cancel" taborder="15" top="5" width="30" height="30" background="transparent" border="0px none" image="url('imagerc::form/cancel.png')" stretch="fixaspectratio" right="5" onclick="pdiv_accountInfo_img_cancel_onclick"/>
+              <Static id="sta_defaultProfile" taborder="16" text="기본 프로필로 변경" left="60" top="img_profile:3" width="120" height="20" color="#000cac" textAlign="center" enable="false" font="normal 8pt/normal &quot;맑은 고딕&quot;" onclick="pdiv_accountInfo_sta_defaultProfile_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.fvApp = nexacro.getApplication();
+
+this.countDown = 1000; // 1초마다 버튼 숫자 변경
+this.refresh = 15;
+this.sUploadUrl = this.gfnGetServerUrl() + "upload/p01/p014/";
+
+this.div_main_div_top_btn_logout_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fvApp.gds_accountInfo.clearData();
+	this.fvApp.mainframe.Main.formurl = "AboutAccount::gybs1010fm.xfdl";
+};
+
+this.div_main_div_menu_btn_dashBoard_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.div_main.form.div_work.url = "AdminForms::gybs3011fm.xfdl";
+};
+
+this.div_main_div_menu_btn_manageGymInfo_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.div_main.form.div_work.url = "AdminForms::gybs3012fm.xfdl";
+};
+
+this.div_main_div_menu_btn_manageMembership_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.div_main.form.div_work.url = "AdminForms::gybs3013fm.xfdl";
+};
+
+this.Admin_MainFrame_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.fnGetDefaultInfo();
+	this.setTimer(0, this.countDown);
+	this.resetCount();
+};
+
+this.resetCount = function ()
+{
+	var strSvcUrl = "p014/getMarketCountsInfo.do";
+	var inData    = "";
+	var outData   = "ds_marketCountsInfo=ds_marketCountsInfo";
+	var strArg    = "paramCode=" + this.fvApp.gds_accountInfo.getColumn(0, "GYM_CODE");
+	
+	this.gfnTransaction("getMarketCountsInfo", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+};
+
+this.fnCallback = function(svcId, errCd, errMsg) {
+	if (svcId == "getMarketCountsInfo") {
+		this.div_main.form.div_notice.form.sta_pendingUserCount.text = "처리 대기 정기권 건수 : " + this.ds_marketCountsInfo.getColumn(0, "PENDING_COUNT") + "건";
+		this.div_main.form.div_notice.form.sta_saledMarketCount.text = "판매 중인 정기권 수 : " + this.ds_marketCountsInfo.getColumn(0, "SALE_COUNT") + "개";
+	}
+}
+this.Admin_MainFrame_ontimer = function(obj:nexacro.Form,e:nexacro.TimerEventInfo)
+{
+	if (e.timerid == 0) { // 1초가 지났을 경우
+		if (this.refresh == 0) { // 카운트가 0일 경우 새로고침
+			this.refresh = 15;
+			trace("좌측 하단 정보 새로고침 완료");
+			this.resetCount();
+			// div_work 화면이 대시보드일 경우, 대시보드의 정보도 새로고침 (대시보드 화면의 초기화 함수 호출)
+			if(this.div_main.form.div_work.url == "AdminForms::gybs3011fm.xfdl") {
+				this.div_main.form.div_work.form.fnResetDashBoardInfo();
+			}
+		}
+		else { // 카운트다운
+			this.refresh -= 1;
+		}
+		this.setTimer(0, this.countDown);
+	}
+};
+this.Common_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+//	this.pdiv_accountInfo.trackPopupByComponent(this.div_main.form.div_top.form.img_profile, -30, 49);
+	this.pdiv_accountInfo.visible = true;
+};
+
+this.Common1_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	this.fnEditActivate();
+};
+
+this.pdiv_accountInfo_btn_cancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnGetDefaultInfo();
+	this.fnEditUnActivate();
+};
+
+this.pdiv_accountInfo_img_cancel_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	this.pdiv_accountInfo_btn_cancel_onclick();
+	this.pdiv_accountInfo.visible = false;
+};
+
+this.pdiv_accountInfo_btn_saveInfo_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 빈 항목이 있을 시 반환
+	if (this.checkNull()) {
+		return;
+	}
+	else {
+		// 새로운 정보로 전역 데이터셋, 서버에 저장
+		this.fnSetNewInfo();
+		// edit 비활성화
+		this.fnEditUnActivate();
+	}
+};
+
+this.checkNull = function ()
+{
+	var sPhoneNo = this.pdiv_accountInfo.form.edt_phoneNo.value;
+	
+	if (this.gfnIsNull(this.pdiv_accountInfo.form.edt_name.value) ||
+		this.gfnIsNull(this.pdiv_accountInfo.form.edt_PW.value) ||
+		this.gfnIsNull(this.pdiv_accountInfo.form.edt_phoneNo.value)) {
+		this.gfnAlert("msg.err.enter.alldata", "", "msg.err.enter.alldata", "fnMsgCallback");	
+		return true
+	}
+	else if (sPhoneNo.length < 11) {
+		this.gfnAlert("msg.err.wrong.phone", "", "msg.err.wrong.phone", "fnMsgCallback");	
+		return true;
+	}
+	else return false;
+};
+
+this.fnSetNewInfo = function ()
+{
+	this.fvApp.gds_accountInfo.setColumn(0, "PW", this.pdiv_accountInfo.form.edt_PW.value);
+	this.fvApp.gds_accountInfo.setColumn(0, "NAME", this.pdiv_accountInfo.form.edt_name.value);
+	this.fvApp.gds_accountInfo.setColumn(0, "PHONE_NO", this.pdiv_accountInfo.form.edt_phoneNo.value);
+	this.fvApp.gds_accountInfo.setColumn(0, "PROFILE_PATH", this.pdiv_accountInfo.form.img_profile.image);
+	
+	this.ds_tempInfo.copyData(this.fvApp.gds_accountInfo);
+	
+	var strSvcUrl = "p014/updateAccountInfo.do";
+	var inData    = "ds_accountInfo=ds_tempInfo";
+	var outData   = "";
+	var strArg    = "";
+
+	this.gfnTransaction("updateAccountInfo", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+};
+
+// 수정모드
+this.fnEditActivate = function()
+{
+	this.pdiv_accountInfo.form.btn_changeProfile.backgroun
+	this.pdiv_accountInfo.form.btn_saveInfo.visible = true;
+	this.pdiv_accountInfo.form.btn_saveInfo.enable = true;
+	this.pdiv_accountInfo.form.btn_cancel.visible = true;
+	this.pdiv_accountInfo.form.btn_cancel.enable = true;
+	this.pdiv_accountInfo.form.btn_rewrite.visible = false;
+	this.pdiv_accountInfo.form.btn_rewrite.enable = false;
+	this.pdiv_accountInfo.form.img_rewrite.visible = false;
+	this.pdiv_accountInfo.form.btn_showPW.visible = true;
+	this.pdiv_accountInfo.form.btn_showPW.enable = true;
+	this.pdiv_accountInfo.form.sta_defaultProfile.enable = true;
+	
+	this.pdiv_accountInfo.form.edt_name.enable = true;
+	this.pdiv_accountInfo.form.edt_PW.enable = true;
+	this.pdiv_accountInfo.form.edt_phoneNo.enable = true;
+	this.pdiv_accountInfo.form.btn_changeProfile.enable = true;
+}
+
+// 수정모드 해제
+this.fnEditUnActivate = function ()
+{
+	this.pdiv_accountInfo.form.btn_saveInfo.visible = false;
+	this.pdiv_accountInfo.form.btn_saveInfo.enable = false;
+	this.pdiv_accountInfo.form.btn_cancel.visible = false;
+	this.pdiv_accountInfo.form.btn_cancel.enable = false;
+	this.pdiv_accountInfo.form.btn_rewrite.visible = true;
+	this.pdiv_accountInfo.form.btn_rewrite.enable = true;
+	this.pdiv_accountInfo.form.img_rewrite.visible = true;
+	this.pdiv_accountInfo.form.btn_showPW.visible = false;
+	this.pdiv_accountInfo.form.btn_showPW.enable = false;
+	this.pdiv_accountInfo.form.btn_showPW.cssclass = "rememberPW";
+	this.pdiv_accountInfo.form.sta_defaultProfile.enable = false;
+	
+	this.pdiv_accountInfo.form.edt_name.enable = false;
+	this.pdiv_accountInfo.form.edt_PW.enable = false;
+	this.pdiv_accountInfo.form.edt_phoneNo.enable = false;
+	this.pdiv_accountInfo.form.edt_PW.password = true;
+	this.pdiv_accountInfo.form.btn_changeProfile.enable = false;
+};
+
+// 기존 데이터로 복구
+this.fnGetDefaultInfo = function ()
+{
+	this.pdiv_accountInfo.form.edt_ID.value = this.fvApp.gds_accountInfo.getColumn(0, "ID");
+	this.pdiv_accountInfo.form.edt_name.value = this.fvApp.gds_accountInfo.getColumn(0, "NAME");
+	this.pdiv_accountInfo.form.edt_PW.value = this.fvApp.gds_accountInfo.getColumn(0, "PW");
+	this.pdiv_accountInfo.form.edt_phoneNo.value = this.fvApp.gds_accountInfo.getColumn(0, "PHONE_NO");
+	this.pdiv_accountInfo.form.img_profile.image = this.fvApp.gds_accountInfo.getColumn(0, "PROFILE_PATH");
+};
+
+this.pdiv_accountInfo_btn_showPW_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var btnClass = obj.cssclass == "rememberPW" ? "rememberPW_S" : "rememberPW";
+	obj.cssclass = btnClass;
+	var showPW = (obj.cssclass == "rememberPW" ? true : false);
+	this.pdiv_accountInfo.form.edt_PW.password = showPW;
+};
+
+this.pdiv_accountInfo_btn_changeProfile_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsUser.clearData();
+	this.FileDialog00.open("프로필 사진 선택", 1, "%DOCUMENT%");
+};
+
+this.FileDialog00_onclose = function(obj:nexacro.FileDialog,e:nexacro.FileDialogEventInfo)
+{
+	var objFile = e.virtualfiles[0];
+	var sFileName = objFile.filename;
+	
+	if (!/\.(jpe?g|png|gif)$/i.test(sFileName)) // 정규식으로 파일 유형 체크
+	{
+		this.gfnAlert("msg.err.no.img.select", "", "msg.err.no.img.select", "fnMsgCallback");	
+		return;
+	}
+	
+	this.FileUpTransfer00.clearFileList();
+	this.FileUpTransfer00.addFile(sFileName, objFile);
+	var nRow = this.dsUser.addRow();
+	this.dsUser.setColumn(nRow, "IMAGE_ID", sFileName);
+	this.dsUser.setColumn(nRow, "IMAGE_NAME", sFileName);
+	
+	if (nexacro._Browser == "Runtime") {
+		// NRE
+		this.pdiv_accountInfo.form.img_profile.image = "URL('file://" + objFile.fullpath + "')";
+	}
+	else {
+		// NRE 아닐 때 (웹 브라우저)
+		var reader = new FileReader();
+		reader.targetForm = this;
+		reader.addEventListener("load"
+								,function() {
+									this.targetForm.pdiv_accountInfo.form.img_profile.image = this.result;
+								}
+								,false);
+		reader.readAsDataURL(objFile._handle);
+		// 파일을 base64 형태로 읽기
+	}
+	var sUrl = "SvcUrl::edu/uploadFile.do";
+	this.FileUpTransfer00.setPostData("userDir", "");
+	this.FileUpTransfer00.upload(sUrl);
+};
+
+this.FileUpTransfer00_onsuccess = function(obj:nexacro.FileUpTransfer,e:nexacro.FileUpTransferEventInfo)
+{
+	var objDs = e.datasets[0];
+	this.dsUser.setColumn(0,"IMAGE_ID", objDs.getColumn(0, "file_id"));
+	
+	var sImg = this.sUploadUrl + this.dsUser.getColumn(0, "IMAGE_ID");
+	this.pdiv_accountInfo.form.img_profile.image = sImg;
+	this.ds_gymInfo.setColumn(0, "IMG_PATH", sImg);
+};
+
+this.pdiv_accountInfo_sta_defaultProfile_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	this.pdiv_accountInfo.form.img_profile.image = "imagerc::form/profileIcon.png";
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="div_main.form.div_top.form.sta_name" propid="text" datasetid="gds_accountInfo" columnid="NAME"/>
+      <BindItem id="item1" compid="div_main.form.div_top.form.img_profile" propid="image" datasetid="gds_accountInfo" columnid="PROFILE_PATH"/>
+    </Bind>
+    <Objects>
+      <Dataset id="ds_marketCountsInfo">
+        <ColumnInfo>
+          <Column id="PENDING_COUNT" type="STRING" size="256"/>
+          <Column id="SALE_COUNT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_tempInfo">
+        <ColumnInfo>
+          <Column id="PW" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+          <Column id="PHONE_NO" type="STRING" size="256"/>
+          <Column id="PROFILE_PATH" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <FileDialog id="FileDialog00" onclose="FileDialog00_onclose"/>
+      <FileUpTransfer id="FileUpTransfer00" onsuccess="FileUpTransfer00_onsuccess"/>
+      <Dataset id="dsUser" onrowposchanged="dsUser_onrowposchanged">
+        <ColumnInfo>
+          <Column id="IMAGE_ID" type="STRING" size="256"/>
+          <Column id="IMAGE_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

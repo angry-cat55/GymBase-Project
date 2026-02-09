@@ -1,0 +1,124 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("Form_playerIntro");
+            this.set_titletext("선수소개");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(480,696);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("ds_KBO", this);
+            obj._setContents({"ColumnInfo" : {"Column" : [ {"id" : "Code","type" : "STRING","size" : "256"},{"id" : "Name","type" : "STRING","size" : "256"},{"id" : "Foundyear","type" : "STRING","size" : "256"},{"id" : "Hometown","type" : "STRING","size" : "256"},{"id" : "KoreanSeriesTitles","type" : "STRING","size" : "256"},{"id" : "emblem","type" : "STRING","size" : "256"},{"id" : "TeamTel","type" : "STRING","size" : "256"},{"id" : "TeamPostcode","type" : "STRING","size" : "256"},{"id" : "TeamAddress","type" : "STRING","size" : "256"},{"id" : "TeamDetailAdd","type" : "STRING","size" : "256"},{"id" : "TeamHomepage","type" : "STRING","size" : "256"},{"id" : "TeamOwner","type" : "STRING","size" : "256"},{"id" : "TeamCoach","type" : "STRING","size" : "256"}]},"Rows" : [{"Name" : "KIA Tigers","Foundyear" : "2001","Hometown" : "광주광역시","KoreanSeriesTitles" : "11","emblem" : "imagerc::emblem_KIA.png","TeamTel" : "070) 7686-8000","TeamAddress" : "광주광역시 북구 서림로 10","TeamHomepage" : "www.kiatigers.co.kr","TeamOwner" : "정몽구","TeamPostcode" : "[61255]","TeamDetailAdd" : "챔피언스필드 내 ","Code" : "B01","TeamCoach" : "김기태"},{"Name" : "Doosan Bears","Foundyear" : "1982","Hometown" : "서울특별시","KoreanSeriesTitles" : "5","emblem" : "imagerc::emblem_Doosan.png","TeamTel" : "02) 2240-1777 ","TeamAddress" : "서울특별시 송파구 올림픽로 25 ","TeamHomepage" : "www.doosanbears.com","TeamOwner" : "박정원","TeamPostcode" : "[05500]","TeamDetailAdd" : "잠실야구장 내","Code" : "B02","TeamCoach" : "김태형"},{"Name" : "LOTTE Giants","Foundyear" : "1982","Hometown" : "부산광역시","KoreanSeriesTitles" : "2","emblem" : "imagerc::emblem_LOTTE.png","TeamAddress" : "부산광역시 동래구 사직로 45 ","TeamHomepage" : "www.giantsclub.com","TeamTel" : "051) 590-9000","TeamOwner" : "신격호","TeamPostcode" : "[47874]","TeamDetailAdd" : "사직야구장 내","Code" : "B03","TeamCoach" : "조원우"},{"Name" : "NC Dinos","Foundyear" : "2011","Hometown" : "경상남도 창원시","emblem" : "imagerc::emblem_NC.png","TeamHomepage" : "www.ncdinos.com","TeamAddress" : "경상남도 창원시 마산회원구 삼호로 63 ","TeamTel" : "1644-9112","TeamOwner" : "김택진","TeamPostcode" : "[51323]","TeamDetailAdd" : "마산야구장 내","Code" : "B04","TeamCoach" : "유영준"},{"Name" : "SK Wyverns","Foundyear" : "2000","Hometown" : "인천광역시","KoreanSeriesTitles" : "4","emblem" : "imagerc::emblem_SK.png","TeamHomepage" : "www.skwyverns.com","TeamAddress" : "인천광역시 남구 매소홀로 618 ","TeamOwner" : "최창원","TeamTel" : "032) 455-2600","TeamPostcode" : "[22234]","TeamDetailAdd" : "주경기장 내","Code" : "B05","TeamCoach" : "염경엽"},{"Name" : "LG Twins","Foundyear" : "1990","Hometown" : "서울특별시","KoreanSeriesTitles" : "2","emblem" : "imagerc::emblem_LG.png","TeamAddress" : "서울특별시 송파구 올림픽로 25 ","TeamHomepage" : "www.lgtwins.com","TeamOwner" : "구본준","TeamTel" : "-","TeamPostcode" : "[05500]","TeamDetailAdd" : "잠실야구장 내","Code" : "B06","TeamCoach" : "류중일"},{"Name" : "NEXEN Heroes","Foundyear" : "2008","Hometown" : "서울특별시","emblem" : "imagerc::emblem_Nexen.png","TeamAddress" : "서울특별시 구로구 경인로 430 ","TeamHomepage" : "www.heroesbaseball.co.kr","TeamTel" : "02) 3660-1000","TeamOwner" : "박세영","TeamPostcode" : "[08223]","TeamDetailAdd" : "고척스카이돔 내","Code" : "B07","TeamCoach" : "장정석"},{"Name" : "Hanwha Eagles","Foundyear" : "1986","Hometown" : "대전광역시","KoreanSeriesTitles" : "1","emblem" : "imagerc::emblem_Hanwha.png","TeamHomepage" : "www.hanwhaeagles.co.kr","TeamOwner" : "김승연","TeamAddress" : "대전광역시 중구 대종로 373 ","TeamTel" : "042) 630-8200","TeamPostcode" : "[35021]","TeamDetailAdd" : "한밭종합운동장 내","Code" : "B08","TeamCoach" : "한용덕"},{"Name" : "SAMSUNG Lions","Foundyear" : "1982","Hometown" : "대구광역시","KoreanSeriesTitles" : "8","emblem" : "imagerc::emblem_Samsung.png","TeamHomepage" : "www.samsunglions.com","TeamAddress" : "대구광역시 수성구 야구전설로 1 ","TeamTel" : "053) 780-3300","TeamOwner" : "임대기","TeamPostcode" : "[42250]","TeamDetailAdd" : "삼성 라이온즈 파크 내","Code" : "B09","TeamCoach" : "김한수"},{"Name" : "KT Wiz","Foundyear" : "2013","Hometown" : "경기도 수원시","emblem" : "imagerc::emblem_KT.png","TeamHomepage" : "www.ktwiz.co.kr","TeamAddress" : "경기도 수원시 장안구 경수대로 893 ","TeamTel" : "1899-5916","TeamOwner" : "황창규","TeamPostcode" : "[16308]","TeamDetailAdd" : "케이티위즈 파크 내","Code" : "B10","TeamCoach" : "김진욱"}]});
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("ds_Player", this);
+            obj._setContents({"ColumnInfo" : {"Column" : [ {"id" : "Code","type" : "STRING","size" : "256"},{"id" : "PlayerPhoto","type" : "STRING","size" : "256"},{"id" : "PlayerName","type" : "STRING","size" : "256"},{"id" : "PlayerPosition","type" : "STRING","size" : "256"},{"id" : "PlayerHW","type" : "STRING","size" : "256"},{"id" : "PlayerBackNO","type" : "STRING","size" : "256"},{"id" : "PlayerSalary","type" : "STRING","size" : "256"},{"id" : "TeamName","type" : "STRING","size" : "256"}]},"Rows" : [{"PlayerName" : "양의지","PlayerPhoto" : "imagerc::Doosan_no25.png","PlayerPosition" : "catcher","PlayerHW" : "179cm/85kg","PlayerBackNO" : "No.25","PlayerSalary" : " 60,000만원 ","Code" : "B02"},{"PlayerName" : "이용찬","PlayerPhoto" : "imagerc::Doosan_no45.png","PlayerPosition" : "pitcher","PlayerHW" : "185cm/85kg","PlayerBackNO" : "No.45","PlayerSalary" : " 23,500만원 ","Code" : "B02"},{"PlayerName" : "장원준","PlayerPhoto" : "imagerc::Doosan_no28.png","PlayerPosition" : "pitcher","PlayerHW" : "184cm/85kg","PlayerBackNO" : "No.28","PlayerSalary" : " 100,000만원 ","Code" : "B02"},{"PlayerName" : "정수빈","PlayerPhoto" : "imagerc::Doosan_no31.png","PlayerPosition" : "outfielder","PlayerHW" : "175cm/75kg","PlayerBackNO" : "No.31","PlayerSalary" : " 28,000만원 ","Code" : "B02"},{"PlayerName" : "최주환","PlayerPhoto" : "imagerc::Doosan_no53.png","PlayerPosition" : "infielder","PlayerHW" : "178cm/73kg","PlayerBackNO" : "No.53","PlayerSalary" : " 20,000만원 ","Code" : "B02"},{"PlayerName" : "김태균","PlayerPhoto" : "imagerc::Hanwha_no52.png","PlayerPosition" : "infielder","PlayerHW" : "185cm/110kg","PlayerBackNO" : "No.52","PlayerSalary" : " 140,000만원 ","Code" : "B08"},{"PlayerName" : "김회성","PlayerPhoto" : "imagerc::Hanwha_no24.png","PlayerPosition" : "infielder","PlayerHW" : "190cm/92kg","PlayerBackNO" : "No.24","PlayerSalary" : " 5,800만원 ","Code" : "B08"},{"PlayerName" : "송은범","PlayerPhoto" : "imagerc::Hanwha_no46.png","PlayerPosition" : "pitcher","PlayerHW" : "182cm/93kg","PlayerBackNO" : "No.46","PlayerSalary" : " 45,000만원 ","Code" : "B08"},{"PlayerName" : "정근우","PlayerPhoto" : "imagerc::Hanwha_no8.png","PlayerPosition" : "infielder","PlayerHW" : "172cm/80kg","PlayerBackNO" : "No.8","PlayerSalary" : " 70,000만원 ","Code" : "B08"},{"PlayerName" : "정우람","PlayerPhoto" : "imagerc::Hanwha_no57.png","PlayerPosition" : "pitcher","PlayerHW" : "181cm/82kg","PlayerBackNO" : "No.57","PlayerSalary" : " 120,000만원 ","Code" : "B08"},{"PlayerName" : "김선빈","PlayerPhoto" : "imagerc::KIA_no3.png","PlayerPosition" : "infielder","PlayerHW" : "165cm/77kg","PlayerBackNO" : "No.3","PlayerSalary" : " 28,000만원 ","Code" : "B01"},{"PlayerName" : "안치홍","PlayerPhoto" : "imagerc::KIA_no8.png","PlayerPosition" : "infielder","PlayerHW" : "178cm/90kg","PlayerBackNO" : "No.8","PlayerSalary" : " 32,000만원 ","Code" : "B01"},{"PlayerName" : "양현종","PlayerPhoto" : "imagerc::KIA_no54.png","PlayerPosition" : "pitcher","PlayerHW" : "183cm/91kg","PlayerBackNO" : "No.54","PlayerSalary" : " 230,000만원 ","Code" : "B01"},{"PlayerName" : "유민상","PlayerPhoto" : "imagerc::KIA_no30.png","PlayerPosition" : "infielder","PlayerHW" : "186cm/95kg","PlayerBackNO" : "No.30","PlayerSalary" : " 4,500만원 ","Code" : "B01"},{"PlayerName" : "이범호","PlayerPhoto" : "imagerc::KIA_no25.png","PlayerPosition" : "infielder","PlayerHW" : "183cm/96kg","PlayerBackNO" : "No.25","PlayerSalary" : " 65,000만원 ","Code" : "B01"},{"PlayerName" : "엄상백","PlayerPhoto" : "imagerc::KT_no20.png","PlayerPosition" : "pitcher","PlayerHW" : "187cm/72kg","PlayerBackNO" : "No.20","PlayerSalary" : " 7,600만원 ","Code" : "B10"},{"PlayerName" : "윤석민","PlayerPhoto" : "imagerc::KT_no13.png","PlayerPosition" : "infielder","PlayerHW" : "180cm/88kg","PlayerBackNO" : "No.13","PlayerSalary" : " 31,000만원 ","Code" : "B10"},{"PlayerName" : "정성곤","PlayerPhoto" : "imagerc::KT_no26.png","PlayerPosition" : "pitcher","PlayerHW" : "176cm/74kg","PlayerBackNO" : "No.26","PlayerSalary" : " 4,700만원 ","Code" : "B10"},{"PlayerName" : "정현","PlayerPhoto" : "imagerc::KT_no7.png","PlayerPosition" : "infielder","PlayerHW" : "181cm/80kg","PlayerBackNO" : "No.7","PlayerSalary" : " 7,800만원 ","Code" : "B10"},{"PlayerName" : "황재균","PlayerPhoto" : "imagerc::KT_no10.png","PlayerPosition" : "infielder","PlayerHW" : "183cm/89kg","PlayerBackNO" : "No.10","PlayerSalary" : " 120,000만원 ","Code" : "B10"},{"PlayerName" : "김대현","PlayerPhoto" : "imagerc::LG_no45.png","PlayerPosition" : "pitcher","PlayerHW" : "188cm/100kg","PlayerBackNO" : "No.45","PlayerSalary" : " 7,000만원 ","Code" : "B06"},{"PlayerName" : "양석환","PlayerPhoto" : "imagerc::LG_no53.png","PlayerPosition" : "infielder","PlayerHW" : "185cm/90kg","PlayerBackNO" : "No.53","PlayerSalary" : " 16,000만원 ","Code" : "B06"},{"PlayerName" : "장시윤","PlayerPhoto" : "imagerc::LG_no46.png","PlayerPosition" : "infielder","PlayerHW" : "183cm/75kg","PlayerBackNO" : "No.46","PlayerSalary" : " 3,600만원 ","Code" : "B06"},{"PlayerName" : "차우찬","PlayerPhoto" : "imagerc::LG_no23.png","PlayerPosition" : "pitcher","PlayerHW" : "185cm/80kg","PlayerBackNO" : "No.23","PlayerSalary" : " 100,000만원 ","Code" : "B06"},{"PlayerName" : "채은성","PlayerPhoto" : "imagerc::LG_no55.png","PlayerPosition" : "outfielder","PlayerHW" : "186cm/92kg","PlayerBackNO" : "No.55","PlayerSalary" : " 11,000만원 ","Code" : "B06"},{"PlayerName" : "김원중","PlayerPhoto" : "imagerc::LOTTE_no34.png","PlayerPosition" : "pitcher","PlayerHW" : "192cm/91kg","PlayerBackNO" : "No.34","PlayerSalary" : " 6,300만원 ","Code" : "B06"},{"PlayerName" : "나경민","PlayerPhoto" : "imagerc::LOTTE_no0.png","PlayerPosition" : "outfielder","PlayerHW" : "177cm/80kg","PlayerBackNO" : "No.0","PlayerSalary" : " 5,800만원 ","Code" : "B06"},{"PlayerName" : "손승락","PlayerPhoto" : "imagerc::LOTTE_no1.png","PlayerPosition" : "pitcher","PlayerHW" : "187cm/99kg","PlayerBackNO" : "No.1","PlayerSalary" : " 70,000만원 ","Code" : "B06"},{"PlayerName" : "손아섭","PlayerPhoto" : "imagerc::LOTTE_no31.png","PlayerPosition" : "outfielder","PlayerHW" : "174cm/84kg","PlayerBackNO" : "No.31","PlayerSalary" : " 150,000만원 ","Code" : "B06"},{"PlayerName" : "이대호","PlayerPhoto" : "imagerc::LOTTE_no10.png","PlayerPosition" : "infielder","PlayerHW" : "194cm/130kg","PlayerBackNO" : "No.10","PlayerSalary" : " 250,000만원 ","Code" : "B06"},{"PlayerName" : "김건태","PlayerPhoto" : "imagerc::NC_no16.png","PlayerPosition" : "pitcher","PlayerHW" : "185cm/85kg","PlayerBackNO" : "No.16","PlayerSalary" : " 4,500만원 ","Code" : "B04"},{"PlayerName" : "나성범","PlayerPhoto" : "imagerc::NC_no47.png","PlayerPosition" : "outfielder","PlayerHW" : "183cm/100kg","PlayerBackNO" : "No.47","PlayerSalary" : " 43,000만원 ","Code" : "B04"},{"PlayerName" : "손시헌","PlayerPhoto" : "imagerc::NC_no13.png","PlayerPosition" : "infielder","PlayerHW" : "172cm/73kg","PlayerBackNO" : "No.13","PlayerSalary" : " 50,000만원 ","Code" : "B04"},{"PlayerName" : "유원상","PlayerPhoto" : "imagerc::NC_no24.png","PlayerPosition" : "pitcher","PlayerHW" : "187cm/93kg","PlayerBackNO" : "No.24","PlayerSalary" : " 6,000만원 ","Code" : "B04"},{"PlayerName" : "정수민","PlayerPhoto" : "imagerc::NC_no37.png","PlayerPosition" : "pitcher","PlayerHW" : "188cm/92kg","PlayerBackNO" : "No.37","PlayerSalary" : " 4,200만원 ","Code" : "B04"},{"PlayerName" : "김재현","PlayerPhoto" : "imagerc::Nexen_no32.png","PlayerPosition" : "catcher","PlayerHW" : "178cm/80kg","PlayerBackNO" : "No.32","PlayerSalary" : " 5,000만원 ","Code" : "B07"},{"PlayerName" : "박병호","PlayerPhoto" : "imagerc::Nexen_no52.png","PlayerPosition" : "infielder","PlayerHW" : "185cm/107kg","PlayerBackNO" : "No.52","PlayerSalary" : " 150,000만원 ","Code" : "B07"},{"PlayerName" : "서건창","PlayerPhoto" : "imagerc::Nexen_no14.png","PlayerPosition" : "infielder","PlayerHW" : "176cm/84kg","PlayerBackNO" : "No.14","PlayerSalary" : " 38,000만원 ","Code" : "B07"},{"PlayerName" : "이정후","PlayerPhoto" : "imagerc::Nexen_no51.png","PlayerPosition" : "outfielder","PlayerHW" : "185cm/78kg","PlayerBackNO" : "No.51","PlayerSalary" : " 11,000만원 ","Code" : "B07"},{"PlayerName" : "한현희","PlayerPhoto" : "imagerc::Nexen_no1.png","PlayerPosition" : "pitcher","PlayerHW" : "182cm/95kg","PlayerBackNO" : "No.1","PlayerSalary" : " 23,000만원 ","Code" : "B07"},{"PlayerName" : "강민호","PlayerPhoto" : "imagerc::Samsung_no47.png","PlayerPosition" : "catcher","PlayerHW" : "185cm/100kg","PlayerBackNO" : "No.47","PlayerSalary" : " 100,000만원 ","Code" : "B09"},{"PlayerName" : "구자욱","PlayerPhoto" : "imagerc::Samsung_no65.png","PlayerPosition" : "outfielder","PlayerHW" : "189cm/75kg","PlayerBackNO" : "No.65","PlayerSalary" : " 25,000만원 ","Code" : "B09"},{"PlayerName" : "박한이","PlayerPhoto" : "imagerc::Samsung_no33.png","PlayerPosition" : "outfielder","PlayerHW" : "182cm/91kg","PlayerBackNO" : "No.33","PlayerSalary" : " 25,000만원 ","Code" : "B09"},{"PlayerName" : "윤성환","PlayerPhoto" : "imagerc::Samsung_no1.png","PlayerPosition" : "pitcher","PlayerHW" : "183cm/88kg","PlayerBackNO" : "No.1","PlayerSalary" : " 80,000만원 ","Code" : "B09"},{"PlayerName" : "장필준","PlayerPhoto" : "imagerc::Samsung_no26.png","PlayerPosition" : "pitcher","PlayerHW" : "190cm/90kg","PlayerBackNO" : "No.26","PlayerSalary" : " 14,000만원 ","Code" : "B09"},{"PlayerName" : "김강민","PlayerPhoto" : "imagerc::SK_no0.png","PlayerPosition" : "outfielder","PlayerHW" : "182cm/85kg","PlayerBackNO" : "No.0","PlayerSalary" : " 60,000만원 ","Code" : "B05"},{"PlayerName" : "박정권","PlayerPhoto" : "imagerc::SK_no36.png","PlayerPosition" : "infielder","PlayerHW" : "187cm/96kg","PlayerBackNO" : "No.36","PlayerSalary" : " 40,000만원 ","Code" : "B05"},{"PlayerName" : "박정배","PlayerPhoto" : "imagerc::SK_no32.png","PlayerPosition" : "pitcher","PlayerHW" : "180cm/85kg","PlayerBackNO" : "No.32","PlayerSalary" : " 14,000만원 ","Code" : "B05"},{"PlayerName" : "윤희상","PlayerPhoto" : "imagerc::SK_no66.png","PlayerPosition" : "pitcher","PlayerHW" : "193cm/96kg","PlayerBackNO" : "No.66","PlayerSalary" : " 13,000만원 ","Code" : "B05"},{"PlayerName" : "최정","PlayerPhoto" : "imagerc::SK_no14.png","PlayerPosition" : "infielder","PlayerHW" : "180cm/90kg","PlayerBackNO" : "No.14","PlayerSalary" : " 120,000만원 ","Code" : "B05"}]});
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Static("Static00","0","0",null,"60","0",null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_cssclass("sta_MLM_title");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static01","20","5","170","50",null,null,null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_text("선수소개");
+            obj.set_cssclass("sta_WF_MTitle");
+            this.addChild(obj.name, obj);
+
+            obj = new ListView("ListView01","0","60",null,null,"0","0",null,null,null,null,this);
+            obj.set_taborder("2");
+            obj.set_binddataset("ds_Player");
+            obj.set_bandinitstatus("collapse");
+            obj.set_scrollbardecbuttonsize("0");
+            obj.set_scrollbarincbuttonsize("0");
+            obj.set_scrollbartrackbarsize("100");
+            obj.set_scrollbarsize("17");
+            obj.set_cssclass("lstV_MLM_player");
+            obj._setContents("<Formats><Format id=\"default\"><Band id=\"body\" width=\"25%\" height=\"140\" expandbartype=\"false\"><Cell id=\"Cell00\" left=\"0\" top=\"0\" width=\"108\" height=\"120\" displaytype=\"imagecontrol\" text=\"bind:PlayerPhoto\"/></Band></Format></Formats>");
+            this.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","screen_phone",480,696,this,function(p){});
+            obj.set_mobileorientation("landscape");
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("Mobile_PlayerIntro.xfdl", function() {
+
+        this.ListView01_oncellclick = function(obj,e)
+        {
+
+        	if (e.cellid == "Cell00" )
+        	{
+        		var mainframe = nexacro.getApplication().mainframe;
+
+        		var objFrame = new ChildFrame();
+
+        		var frame_w = mainframe.getOffsetWidth();
+        		var frame_h = mainframe.getOffsetHeight();
+
+        		var modal_w = 400;
+        		var modal_h = 410;
+
+        		var nLeft = (mainframe.width  / 2) - Math.round(modal_w / 2);
+        		var nTop  = (mainframe.height / 2) - Math.round(modal_h / 2) ;
+
+        		nLeft = system.clientToScreenX(this, nLeft);
+        		nTop  = system.clientToScreenY(this, nTop-50);
+
+        		objFrame.init("Pop_LstView_player", nLeft, nTop, modal_w, modal_h, null, null);
+        		objFrame.formurl = "EduBasic::Mobile/Mobile_Pop_LstView_player.xfdl";
+        		objFrame.autosize = false;
+        		objFrame.showtitlebar = false;
+        		objFrame.openalign = "center middle";
+
+        		var param1	=   {param1: this.ds_Player,
+        						 param2: this.ds_Player.rowposition
+
+        		};
+
+        //		var Ret = objFrame.showModal("Pop_LstView_player", mainframe, param1);
+        		objFrame.showModal(this.getOwnerFrame(), param1, this, "fn_popupCallback");
+        	}
+        };
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.ListView01.addEventHandler("oncellclick",this.ListView01_oncellclick,this);
+        };
+        this.loadIncludeScript("Mobile_PlayerIntro.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="gybs2310fm" width="1280" height="940" titletext="헬스장 상세 정보" onload="gybs2310fm_onload" onclose="gybs2310fm_onclose">
+    <Layouts>
+      <Layout height="940" mobileorientation="landscape" width="1280">
+        <Div id="div_gymInfo" taborder="0" text="Div00" left="20" top="80" right="20" background="#efefef" borderRadius="20px" height="760" border="1px solid #d4d4d4">
+          <Layouts>
+            <Layout>
+              <Static id="sta_background" taborder="11" left="44" top="85" bottom="30" background="#ffffff" border="1px solid #d5d5d5" borderRadius="10px" right="44"/>
+              <ImageViewer id="img_gymImg" taborder="0" left="80" top="156" width="545" height="325" border="0px none" background="transparent" image="url('imagerc::form/imgNotFound.png')" stretch="fit" borderRadius="10px"/>
+              <Static id="sta_gymName" taborder="1" text="이름" left="80" top="560" height="60" right="613" background="#ffffff" borderRadius="10px" verticalAlign="middle" font="normal 600 16pt/normal &quot;Arial&quot;" padding="0px 0px 0px 20px" border="1px solid #d5d5d5" color="#000000"/>
+              <Static id="sta_gymAddr" taborder="2" text="주소" left="80" top="sta_gymName:10" height="40" right="613" background="#ffffff" borderRadius="10px" font="normal 600 12pt/normal &quot;Arial&quot;" verticalAlign="middle" padding="0px 0px 0px 20px" border="1px solid #d5d5d5" color="#000000"/>
+              <Grid id="grd_machineList" taborder="3" top="156" height="300" binddataset="ds_gymMachineInfo" autofittype="col" borderRadius="10px" border="1px solid #d5d5d5" right="269" width="320" fastvscrolltype="default" scrollbartype="autoindicator autoindicator" autosizingtype="row" extendsizetype="row">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="135"/>
+                      <Column size="135"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="40" band="head"/>
+                      <Row size="30" band="head"/>
+                      <Row size="30"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell colspan="2" text="기구 목록" color="#000000" font="normal 700 10pt/normal &quot;Malgun Gothic&quot;"/>
+                      <Cell row="1" text="기구 이름" color="#000000" font="normal 700 10pt/normal &quot;Malgun Gothic&quot;"/>
+                      <Cell row="1" col="1" text="타겟 부위" color="#000000" font="normal 700 10pt/normal &quot;Malgun Gothic&quot;"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:MACHINE_NAME" font="normal 500 10pt/normal &quot;Malgun Gothic&quot;" textAlign="center" wordWrap="english" padding="5px" color="#000000" border="0px none,1px solid #d4d4d4,1px solid #d4d4d4,0px none"/>
+                      <Cell col="1" text="bind:MACHINE_TARGET" font="normal 500 10pt/normal &quot;Malgun Gothic&quot;" wordWrap="english" padding="5px" color="#000000" border="0px none,0px none,1px solid #d4d4d4"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Static id="sta_gymDesc" taborder="5" text="상세 설명" height="194" right="80" background="#ffffff" borderRadius="10px" verticalAlign="top" padding="15px 20px 0px" wordWrap="english" font="normal 500 12pt/normal &quot;맑은 고딕&quot;" border="1px solid #d5d5d5" color="#000000" width="509" bottom="88" letterSpacing="1px"/>
+              <CheckBoxSet id="ckb_machineTarget" taborder="7" width="179" height="300" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" readonlycolumn="readonlycolumn" columncount="2" onitemchanged="div_gymInfo_ckb_machineTarget_onitemchanged" padding="10px" background="#ffffff" borderRadius="10px" right="80" font="normal 700 10pt/normal &quot;맑은 고딕&quot;" border="1px solid #d5d5d5" color="#000000" top="156">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                    <Column id="readonlycolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="datacolumn">가슴</Col>
+                      <Col id="codecolumn">가슴</Col>
+                      <Col id="readonlycolumn">0</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">등</Col>
+                      <Col id="codecolumn">등</Col>
+                      <Col id="readonlycolumn">0</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">어깨</Col>
+                      <Col id="codecolumn">어깨</Col>
+                      <Col id="readonlycolumn">0</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">삼두</Col>
+                      <Col id="codecolumn">삼두</Col>
+                      <Col id="readonlycolumn">0</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">이두</Col>
+                      <Col id="codecolumn">이두</Col>
+                      <Col id="readonlycolumn">0</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">승모</Col>
+                      <Col id="codecolumn">승모</Col>
+                      <Col id="readonlycolumn">0</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">대퇴사두</Col>
+                      <Col id="codecolumn">대퇴사두</Col>
+                      <Col id="readonlycolumn">0</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">햄스트링</Col>
+                      <Col id="codecolumn">햄스트링</Col>
+                      <Col id="readonlycolumn">0</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">둔근</Col>
+                      <Col id="codecolumn">둔근</Col>
+                      <Col id="readonlycolumn">0</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">종아리</Col>
+                      <Col id="codecolumn">종아리</Col>
+                      <Col id="readonlycolumn">0</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">전완</Col>
+                      <Col id="codecolumn">전완</Col>
+                      <Col id="readonlycolumn">0</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">복근</Col>
+                      <Col id="codecolumn">복근</Col>
+                      <Col id="readonlycolumn">0</Col>
+                    </Row>
+                    <Row>
+                      <Col id="datacolumn">유산소</Col>
+                      <Col id="codecolumn">유산소</Col>
+                      <Col id="readonlycolumn">0</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">전신</Col>
+                      <Col id="datacolumn">전신</Col>
+                      <Col id="readonlycolumn">0</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </CheckBoxSet>
+              <Static id="sta_gymTelNo" taborder="4" text="전화번호" top="506" height="40" right="866" background="#ffffff" borderRadius="10px" verticalAlign="middle" font="normal 600 10pt/normal &quot;Arial&quot;" textAlign="center" width="140" border="1px solid #d5d5d5" color="#000000" letterSpacing="1px"/>
+              <Static id="sta_gymOwnerID" taborder="6" text="계정주" top="506" height="40" background="#ffffff" borderRadius="10px" verticalAlign="middle" padding="0px 10px" font="normal 600 10pt/normal &quot;Arial&quot;" textAlign="center" width="134" border="1px solid #d5d5d5" color="#000000" wordWrap="english" left="80"/>
+              <Static id="sta_gymFavoriteCnt" taborder="9" text="999" top="506" height="40" right="613" background="#ffffff" borderRadius="10px" verticalAlign="middle" font="normal 600 10pt/normal &quot;Arial&quot;" textAlign="center" width="54" border="1px solid #d5d5d5" color="#000000"/>
+              <ImageViewer id="img_favorites" taborder="8" top="506" width="41" height="41" image="url('imagerc::form/unFavorite.png')" stretch="fixaspectratio" onclick="div_gymInfo_img_favorites_onclick" background="transparent" border="0px none" right="sta_gymFavoriteCnt:10"/>
+              <Button id="btn_close" taborder="10" left="54" top="30" width="45" height="45" onclick="div_gymInfo_btn_close_onclick" background="url('imagerc::form/backIcon3.png') no-repeat center center /contain" border="0px none"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_gymInfo">
+        <ColumnInfo>
+          <Column id="GYM_CODE" type="INT" size="10"/>
+          <Column id="GYM_NAME" type="STRING" size="50"/>
+          <Column id="ADDRESS" type="STRING" size="100"/>
+          <Column id="TEL_NO" type="STRING" size="20"/>
+          <Column id="DESCRIPTION" type="STRING" size="500"/>
+          <Column id="OWNER_ID" type="STRING" size="15"/>
+          <Column id="IMG_PATH" type="STRING" size="255"/>
+          <Column id="FAVORITES_COUNT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_gymMachineInfo">
+        <ColumnInfo>
+          <Column id="MACHINE_CODE" type="STRING" size="256"/>
+          <Column id="MACHINE_NAME" type="STRING" size="256"/>
+          <Column id="MACHINE_TARGET" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[this.fvApp = nexacro.getApplication();
+this.accountFavorite = 0; // 0 : 현재 서버 데이터상 즐겨찾기 아님
+this.favoriteStatus = 0; // 0 : 현재 즐겨찾기 아님
+
+this.gybs2310fm_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	
+	// 전달받은 GYM_CODE로 해당 헬스장 정보와 즐겨찾기 정보 불러오기
+	var gymCode = this.fvApp.gv_gymCode;
+	var strSvcUrl = "p014/getGymInfo.do";
+	var inData    = "";
+	var outData   = "ds_gymInfo=ds_gymInfo ds_gymMachineInfo=ds_gymMachineInfo";
+	var strArg    = "paramCode=" + gymCode + " paramID=" + this.fvApp.gds_accountInfo.getColumn(0, "ID");
+	this.gfnTransaction("getGymInfo", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+	
+	var nHeight = this.getLayoutInfo(this.getCurrentLayoutID(), "height");
+ 	this.parent.parent.fnMainPageOnLoad(nHeight);
+	this.parent.parent.scrollTo(0,0);
+};
+
+this.fnCallback = function (svcId, errCd, errMsg)
+{
+	if (svcId == "getGymInfo") {
+		this.div_gymInfo.form.sta_gymName.text = this.ds_gymInfo.getColumn(0, "GYM_NAME");
+		this.div_gymInfo.form.sta_gymAddr.text = this.ds_gymInfo.getColumn(0, "ADDRESS");
+		var nTelNo = this.ds_gymInfo.getColumn(0, "TEL_NO");
+		var nTelNo = nTelNo.substring(0, 3) + "-" + nTelNo.substring(3, 7) + "-" + nTelNo.substring(7, 11);
+		this.div_gymInfo.form.sta_gymTelNo.text = nTelNo;
+		this.div_gymInfo.form.sta_gymDesc.text = this.ds_gymInfo.getColumn(0, "DESCRIPTION");
+		this.div_gymInfo.form.sta_gymOwnerID.text = this.ds_gymInfo.getColumn(0, "OWNER_ID");
+		this.div_gymInfo.form.sta_gymFavoriteCnt.text = this.ds_gymInfo.getColumn(0, "FAVORITES_COUNT");
+		this.div_gymInfo.form.img_gymImg.image = this.ds_gymInfo.getColumn(0, "IMG_PATH");
+		
+		if (this.accountFavorite == 1) { // 계정이 즐겨찾기인 상태
+			this.div_gymInfo.form.img_favorites.image = "imagerc::form/favorite.png";
+			this.favoriteStatus = 1;
+		}
+		else { // 계정이 즐겨찾기가 아닌 상태
+			this.div_gymInfo.form.img_favorites.image = "imagerc::form/unFavorite.png";
+		}
+	}
+};
+
+
+this.div_gymInfo_img_favorites_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	if (this.favoriteStatus == 1) // 즐겨찾기 버튼이 활성화된 상태
+	{
+		this.favoriteStatus = 0;
+		var nCntFavorite = parseInt(this.div_gymInfo.form.sta_gymFavoriteCnt.text) - 1;
+		this.div_gymInfo.form.sta_gymFavoriteCnt.text = nCntFavorite.toString();
+		this.div_gymInfo.form.img_favorites.image = "imagerc::form/unFavorite.png";
+	}
+	else if (this.favoriteStatus == 0) // 즐겨찾기 버튼이 활성화가 안된 상태
+	{
+		this.favoriteStatus = 1;
+		var nCntFavorite = parseInt(this.div_gymInfo.form.sta_gymFavoriteCnt.text) + 1;
+		this.div_gymInfo.form.sta_gymFavoriteCnt.text = nCntFavorite.toString();
+		this.div_gymInfo.form.img_favorites.image = "imagerc::form/favorite.png";
+	}
+};
+
+this.gybs2310fm_onclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	// 즐겨찾기 정보 변경
+	// 즐겨찾기 상태가 동일하면 그냥 종료
+	if (this.accountFavorite == this.favoriteStatus) {
+		return;
+	}
+	// 즐겨찾기 상태가 다르면 현재 버튼 상태에 따라 gym_favorite 테이블 데이터 추가/삭제
+	else {
+		var paramID = this.fvApp.gds_accountInfo.getColumn(0, "ID");
+		var paramCode = this.fvApp.gv_gymCode;
+		var paramStatus = this.favoriteStatus;
+		var strSvcUrl = "p014/changeFavoriteInfo.do";
+		var inData    = "";
+		var outData   = "";
+		var strArg    = "paramID=" + paramID + " paramCode=" + paramCode + " paramStatus=" + paramStatus;
+		
+		this.gfnTransaction("changeFavoriteInfo", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+	}
+};
+
+this.div_gymInfo_btn_close_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.fvApp.gds_search.getColumn(0, "gotoMain") == 1) { // 메인으로
+		this.parent.url = "UserForms::gybs2011fm.xfdl";
+	}
+	else if (this.fvApp.gds_search.getColumn(0, "gotoMain") == 0) { // 헬스장 목록으로
+		this.parent.url = "UserForms::gybs2013fm.xfdl";
+	}
+	else if (this.fvApp.gds_search.getColumn(0, "gotoMain") == 2) { // 내 헬스장
+		this.parent.url = "UserForms::gybs2012fm.xfdl";
+	}
+	else if (this.fvApp.gds_search.getColumn(0, "gotoMain") == 3) { // 정기권 마켓
+		this.fvApp.gds_search.setColumn(0, "gotoMain", this.fvApp.gv_tempGotoMainType); // 저장해둔 정기권 마켓 화면에서의 전 화면의 정보 불러오기
+		this.parent.url = "MarketForms::gybs4011fm.xfdl";
+	}
+};
+
+this.div_gymInfo_ckb_machineTarget_onitemchanged = function(obj:nexacro.CheckBoxSet,e:nexacro.ItemChangeEventInfo)
+{
+	if (e.postvalue == null || e.postvalue == "") {
+		this.ds_gymMachineInfo.filter("");
+		return;
+	}
+	var arr = e.postvalue.split(",");
+	var sfilter = "";
+	
+	for (var i = 0; i < arr.length; i++) {
+		if (i == 0) {
+			sfilter = "MACHINE_TARGET.indexOf('" + arr[i] + "') > -1";
+		}
+		else {
+			sfilter += " || MACHINE_TARGET.indexOf('" + arr[i] + "') > -1";
+		}
+	}
+	trace(sfilter);
+	this.ds_gymMachineInfo.filter(sfilter);
+};
+]]></Script>
+  </Form>
+</FDL>

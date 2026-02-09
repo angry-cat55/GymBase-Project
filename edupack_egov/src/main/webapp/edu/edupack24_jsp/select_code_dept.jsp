@@ -1,0 +1,58 @@
+<%@ page contentType="text/xml; charset=UTF-8" %>
+<%@ page import="org.apache.commons.logging.*" %>
+<%@ page import = "com.nexacro.java.xapi.data.*" %>
+<%@ page import = "com.nexacro.java.xapi.tx.*" %>
+<%@ page import = "java.util.*" %>
+<%@ page import = "java.sql.*" %>
+<%@ page import = "java.io.*" %>
+<%@ include file="RsToDs.jsp" %>
+<%@ include file="../connection_edu.jsp" %>
+<%
+    // PlatformData
+    PlatformData out_PlatformData = new PlatformData();
+
+    int    nErrorCode  = 0;
+    String strErrorMsg = "START";
+
+    try {    
+        /******* JDBC Connection *******/
+        Connection conn = null;
+        Statement  stmt = null;
+        ResultSet  rs   = null;
+
+        try { 
+            conn = DriverManager.getConnection(url, id , pw);
+            stmt = conn.createStatement();
+
+            String SQL = "SELECT DEPT_CODE, DEPT_NAME, DEPT_EMP FROM TBL_DEPARTMENT ORDER BY DEPT_CODE" ;
+            rs = stmt.executeQuery(SQL);
+            out_PlatformData.addDataSet(RsToDs(rs,"out_dept"));		
+
+            nErrorCode  = 0;
+            strErrorMsg = "SUCC";
+        } 
+        catch (SQLException e) {
+            nErrorCode = -1;
+            strErrorMsg = e.getMessage();
+        }    
+
+        /******** JDBC Close ********/
+        if ( stmt != null ) try { stmt.close(); } catch (Exception e) {nErrorCode = -1; strErrorMsg = e.getMessage();}
+        if ( conn != null ) try { conn.close(); } catch (Exception e) {nErrorCode = -1; strErrorMsg = e.getMessage();}
+
+    } 
+    catch (Throwable th) {
+        nErrorCode = -1;
+        strErrorMsg = th.getMessage();
+    }
+
+    VariableList varList = out_PlatformData.getVariableList();
+    varList.add("ErrorCode", nErrorCode);
+    varList.add("ErrorMsg" , strErrorMsg);
+
+    HttpPlatformResponse pRes = new HttpPlatformResponse(response, PlatformType.CONTENT_TYPE_XML, "utf-8");
+    pRes.setData(out_PlatformData);
+
+    // Send data
+    pRes.sendData();
+%>

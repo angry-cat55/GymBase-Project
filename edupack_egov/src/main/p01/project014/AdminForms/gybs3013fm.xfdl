@@ -1,0 +1,395 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Admin_Transfer" width="1128" height="698" titletext="정기권 양도 관리" onload="Admin_Transfer_onload" ontimer="Admin_Transfer_ontimer">
+    <Layouts>
+      <Layout height="698" mobileorientation="landscape" width="1128">
+        <Div id="div_transfer_manage" taborder="0" left="20" top="20" width="580" background="#ffffff" text="" bottom="20" borderRadius="10px" border="1px solid #d4d4d4">
+          <Layouts>
+            <Layout>
+              <Combo id="cbo_selectGridType" taborder="0" left="20" top="20" width="163" height="40" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" value="ALL" index="0" text="양도 요청 관리" itemheight="30" onitemchanged="div_transfer_manage_cbo_selectGridType_onitemchanged" borderRadius="5px" font="normal 11pt/normal &quot;맑은 고딕&quot;">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">ALL</Col>
+                      <Col id="datacolumn">전체 양도 내역</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">REQUESTED</Col>
+                      <Col id="datacolumn">양도 요청 관리</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">APPROVED</Col>
+                      <Col id="datacolumn">현재 양수 회원</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Grid id="grd_tranferList" taborder="1" left="20" top="80" binddataset="ds_transferList" autofittype="col" right="20" bottom="20" border="1px solid #d4d4d4" borderRadius="5px">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="100"/>
+                      <Column size="80"/>
+                      <Column size="80"/>
+                      <Column size="60"/>
+                      <Column size="100"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="40" band="head"/>
+                      <Row size="30"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="요청 일자" background="#efefef" font="normal bold 11pt/normal &quot;맑은 고딕&quot;"/>
+                      <Cell col="1" text="양도자" background="#efefef" font="normal bold 11pt/normal &quot;맑은 고딕&quot;"/>
+                      <Cell col="2" text="양수자" background="#efefef" font="normal bold 11pt/normal &quot;맑은 고딕&quot;"/>
+                      <Cell col="3" text="상태" background="#efefef" font="normal bold 11pt/normal &quot;맑은 고딕&quot;"/>
+                      <Cell col="4" text="처리 일자" background="#efefef" font="normal bold 11pt/normal &quot;맑은 고딕&quot;"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:SOLD_DATE" textAlign="center" wordWrap="english" padding="5px" border="1px solid #e4e4e4"/>
+                      <Cell col="1" text="bind:SELLER_NAME" textAlign="center" wordWrap="english" padding="5px" border="1px solid #e4e4e4"/>
+                      <Cell col="2" text="bind:BUYER_NAME" textAlign="center" wordWrap="english" padding="5px" border="1px solid #e4e4e4"/>
+                      <Cell col="3" text="bind:STATUS_CODE" expr="(STATUS_CODE == &quot;REQUESTED&quot;) ? &quot;승인 대기&quot; : ((STATUS_CODE == &quot;APPROVED&quot;) ? &quot;등록 완료&quot; : &quot;등록 반려&quot;)" textAlign="center" wordWrap="english" padding="5px" border="1px solid #e4e4e4"/>
+                      <Cell col="4" text="bind:PROCESS_DATE" textAlign="center" wordWrap="english" padding="5px" border="1px solid #e4e4e4"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Edit id="edt_searchTerm" taborder="2" left="203" top="20" height="40" borderRadius="5px" displaynulltext="양도자 / 양수자 이름 검색" font="normal 11pt/normal &quot;Arial&quot;" padding="0px 10px" onchanged="div_transfer_manage_edt_searchTerm_onchanged" autoselect="true" right="80"/>
+              <Button id="btn_resetSearchTerm" taborder="3" left="edt_searchTerm:-32" top="edt_searchTerm:-31" width="25" height="23" background="url('imagerc::form/cancel.png') no-repeat center center /contain transparent" border="0px none" onclick="div_transfer_manage_btn_resetSearchTerm_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div_transfer_Info" taborder="1" top="20" background="#ffffff" right="20" bottom="20" width="488" border="1px solid #d4d4d4" borderRadius="10px">
+          <Layouts>
+            <Layout>
+              <TextArea id="txtArea_rejectReason" taborder="4" left="20" height="250" font="normal 500 11pt/normal &quot;맑은 고딕&quot;" letterSpacing="1px" padding="10px 0px 10px 10px" textAlign="left" wordWrap="english" scrollbartype="none none" bottom="20" enable="false" borderRadius="5px" right="20"/>
+              <Static id="sta_reject" taborder="1" text="반려" left="20" width="40" textAlign="center" bottom="txtArea_rejectReason:10" height="35" font="normal 500 11pt/normal &quot;맑은 고딕&quot;" color="#000000"/>
+              <Div id="div_toggle" taborder="0" left="sta_reject:10" width="80" url="AdminForms::gybs3110fm.xfdl" background="transparent" bottom="txtArea_rejectReason:8" height="40"/>
+              <Static id="sta_approve" taborder="2" text="승인" left="div_toggle:10" width="40" textAlign="center" bottom="txtArea_rejectReason:10" height="35" font="normal 500 11pt/normal &quot;맑은 고딕&quot;" color="#000000"/>
+              <Button id="btn_proceed" taborder="3" text="처리" width="80" cssclass="GB_Button" font="normal 11pt/normal &quot;맑은 고딕&quot;" bottom="txtArea_rejectReason:10" height="35" right="20" onclick="div_transfer_Info_btn_proceed_onclick"/>
+              <ListView id="listView_usersInfo" taborder="5" left="20" borderRadius="5px" bottom="335" right="20" binddataset="ds_detailInfo" top="20" enable="false">
+                <Formats>
+                  <Format id="default">
+                    <Band id="body" width="100%" height="50" background="#ffffff">
+                      <Cell id="Cell01" left="5" top="6" width="180" text="bind:SOLD_DATE" color="#000000" textAlign="left" height="38" border="0px none" expr="EXPR:SOLD_DATE ? (&quot;요청 일자 : &quot; + SOLD_DATE) : &quot;&quot;" font="normal 13px/normal &quot;Malgun Gothic&quot;"/>
+                      <Cell id="Cell02" top="6" width="70" right="5" text="bind:STATUS_CODE" expr="EXPR:!STATUS_CODE ? &quot;&quot; : (STATUS_CODE == &quot;REQUESTED&quot;) ? &quot;승인 대기&quot; : ((STATUS_CODE == &quot;APPROVED&quot;) ? &quot;등록 완료&quot; : &quot;등록 반려&quot;)" font="normal 13px/normal &quot;Malgun Gothic&quot;" color="#000000" textAlign="center" height="38" border="0px none"/>
+                      <Cell id="Cell03" top="6" text="bind:PROCESS_DATE" right="Cell02:5" width="120" color="#000000" textAlign="right" height="38" border="0px none"/>
+                    </Band>
+                    <Band id="detail" width="100%" height="247" background="#ffffff">
+                      <Cell id="Cell00" left="40" top="10" width="130" height="130" textAlign="center" displaytype="imagecontrol" imagestretch="fixaspectratio" text="bind:SELLER_PROFILE_PATH" borderRadius="100px" padding="0px"/>
+                      <Cell id="Cell01" left="40" top="Cell00:5" width="130" height="44" text="bind:SELLER_NAME" textAlign="center" font="normal 13px/normal &quot;Malgun Gothic&quot;" color="#000000"/>
+                      <Cell id="Cell02" left="40" width="130" color="#000000" textAlign="center" text="bind:SELLER_PHONE_NO" font="normal 13px/normal &quot;Malgun Gothic&quot;" top="Cell01:5" height="44" wordSpacing="2px"/>
+                      <Cell id="Cell03" top="11" width="130" height="130" textAlign="center" displaytype="imagecontrol" imagestretch="fixaspectratio" text="bind:BUYER_PROFILE_PATH" right="40" borderRadius="100px" padding="0px"/>
+                      <Cell id="Cell04" top="Cell03:5" width="130" height="44" text="bind:BUYER_NAME" textAlign="center" font="normal 13px/normal &quot;Malgun Gothic&quot;" right="40" color="#000000"/>
+                      <Cell id="Cell05" top="Cell04:5" width="130" height="44" color="#000000" textAlign="center" text="bind:BUYER_PHONE_NO" font="normal 13px/normal &quot;Malgun Gothic&quot;" right="40" wordSpacing="2px"/>
+                      <Cell id="Cell06" left="199" top="97" width="44" height="44" displaytype="imagecontrol" imagestretch="fixaspectratio" text="imagerc::form/arrowRight.png" border="0px none"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </ListView>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btn_refresh" taborder="2" top="44" width="35" height="35" background="url('imagerc::form/refresh.png') no-repeat center center /contain transparent" border="0px none" font="normal 700 11pt/normal &quot;맑은 고딕&quot;" text="15" onclick="div_transfer_manage_btn_refresh_onclick" right="552"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.fvApp = nexacro.getApplication();
+this.countDown = 1000; // 1초마다 버튼 숫자 변경
+this.refresh = 15;
+this.fv_sCurMarketNo = "";
+
+this.fnToggleChanged = function() {
+	var sToggleValue = this.div_transfer_Info.form.div_toggle.form.getValue();
+	trace(sToggleValue);
+	
+	if (this.ds_detailInfo.getColumn(0, "STATUS_CODE") == "REQUESTED") {
+		if (sToggleValue == "APPROVE") {
+			this.div_transfer_Info.form.txtArea_rejectReason.enable = false;
+			this.div_transfer_Info.form.txtArea_rejectReason.value = null;
+		}
+		else if (sToggleValue == "REJECT") {
+			this.div_transfer_Info.form.txtArea_rejectReason.enable = true;
+		}
+	}
+}
+
+this.Admin_Transfer_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	// 보고있던 정보가 있으면 저장
+	var nRow = this.ds_transferList.rowposition;
+	if (nRow > -1) {
+		this.fv_sCurMarketNo = this.ds_transferList.getColumn(nRow, "MARKET_NO");
+	}
+	else {
+		this.fv_sCurMarketNo = "";
+	}
+	this.setTimer(0, this.countDown);
+	trace("새로고침");
+	
+	var strSvcUrl = "p014/getTransferManagementList.do";
+	var inData    = "";
+	var outData   = "ds_transferList=ds_transferList";
+	var strArg    = "paramCode=" + this.fvApp.gds_accountInfo.getColumn(0, "GYM_CODE");
+
+	this.gfnTransaction("getTransferManagementList", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+};
+
+this.fnCallback = function(svcId, errCd, errMsg)
+{
+	if (svcId == "getTransferManagementList") {
+		// 가져온 데이터가 없으면 버튼 비활성화
+		if (this.ds_transferList.getRowCount() == 0) {
+			this.div_transfer_Info.form.div_toggle.enable = false;
+			this.div_transfer_Info.form.btn_proceed.enable = false;
+		}
+		// 로드 전 보고있던 데이터 정보 적용
+		if(this.fv_sCurMarketNo) {
+			var nFindRow = this.ds_transferList.findRow("MARKET_NO", this.fv_sCurMarketNo);
+			if(nFindRow > -1){
+				this.div_transfer_manage.form.grd_tranferList.selectRow(nFindRow);
+			}
+		}
+	}
+	else if (svcId == "transferProcess") {
+		this.Admin_Transfer_onload();
+	}
+};
+
+this.Admin_Transfer_ontimer = function(obj:nexacro.Form,e:nexacro.TimerEventInfo)
+{
+	if (e.timerid == 0) { // 1초가 지났을 경우
+		if (this.refresh == 0) { // 카운트가 0일 경우 새로고침
+			this.refresh = 15;
+			// 반려 사유 작성 중이면 새로고침 취소
+			trace(">>>>>>>>>>>>>>>" + this.gfnIsNull(this.div_transfer_Info.form.txtArea_rejectReason.value));
+			if (this.gfnIsNull(this.div_transfer_Info.form.txtArea_rejectReason.value) == true) {
+				this.Admin_Transfer_onload();
+			}
+		}
+		else { // 카운트다운
+			this.refresh -= 1;
+		}
+		this.setTimer(0, this.countDown);
+		this.btn_refresh.text = this.refresh;
+	}
+};
+
+this.div_transfer_manage_btn_refresh_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.Admin_Transfer_onload();
+	this.refresh = 15;
+	this.btn_refresh.text = this.refresh;
+};
+
+this.div_transfer_manage_edt_searchTerm_onchanged = function(obj:nexacro.Edit,e:nexacro.ChangeEventInfo)
+{
+	this.fn_applyFilters();
+};
+
+this.div_transfer_manage_btn_resetSearchTerm_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.div_transfer_manage.form.edt_searchTerm.value = null;
+	this.div_transfer_manage_edt_searchTerm_onchanged();
+};
+
+this.div_transfer_manage_cbo_selectGridType_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.fn_applyFilters();
+};
+
+this.fn_applyFilters = function()
+{
+	// 1. 각 컴포넌트에서 현재 선택된 값 가져오기
+	var sStatus = this.div_transfer_manage.form.cbo_selectGridType.value;
+	var sSearchTerm = this.div_transfer_manage.form.edt_searchTerm.value;
+	
+	// 2. 각 필터 조건을 담을 배열 생성
+	var arrConditions = [];
+	
+	// 3. 상태 필터 조건 생성
+	if (sStatus && sStatus != "ALL") {
+		var sStatusFilter = "STATUS_CODE == '" + sStatus + "'";
+		arrConditions.push(sStatusFilter);
+	}
+	
+	// 4. 검색어 필터 조건 생성 (검색어가 있을 경우에만)
+	if (sSearchTerm) {
+		var sSearchFilter = "(SELLER_NAME.indexOf('" + sSearchTerm + "') > -1 || BUYER_NAME.indexOf('" + sSearchTerm + "') > -1)";
+		arrConditions.push(sSearchFilter);
+	}
+	
+	// 5. 생성된 모든 필터 조건들을 '&&'(AND)로 연결하여 최종 필터 문자열 생성
+	var sFinalFilter = arrConditions.join(" && ");
+	
+	// 6. 데이터셋에 최종 필터 적용
+	this.ds_transferList.filter(sFinalFilter);
+}
+
+this.ds_transferList_onrowposchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSRowPosChangeEventInfo)
+{
+	this.ds_detailInfo.copyRow(0, this.ds_transferList, obj.rowposition);
+	
+	// 불러오는 정기권 STATUS_CODE에 따라 컴포넌트 설정
+	switch(this.ds_detailInfo.getColumn(0, "STATUS_CODE")) {
+	case "REQUESTED":
+		this.div_transfer_Info.form.txtArea_rejectReason.enable = false;
+		this.div_transfer_Info.form.div_toggle.form.fnOn();
+		this.div_transfer_Info.form.div_toggle.enable = true;
+		this.div_transfer_Info.form.btn_proceed.enable = true;
+		this.div_transfer_Info.form.txtArea_rejectReason.value = null;
+		break;
+	case "REJECTED":
+		this.div_transfer_Info.form.txtArea_rejectReason.enable = false;
+		this.div_transfer_Info.form.div_toggle.form.fnOff();
+		this.div_transfer_Info.form.div_toggle.enable = false;
+		this.div_transfer_Info.form.btn_proceed.enable = false;
+		this.div_transfer_Info.form.txtArea_rejectReason.value = this.ds_detailInfo.getColumn(0, "REJECT_MESSAGE");
+		break;
+	case "APPROVED":
+		this.div_transfer_Info.form.txtArea_rejectReason.enable = false;
+		this.div_transfer_Info.form.div_toggle.form.fnOn();
+		this.div_transfer_Info.form.div_toggle.enable = false;
+		this.div_transfer_Info.form.btn_proceed.enable = false;
+		this.div_transfer_Info.form.txtArea_rejectReason.value = null;
+		break;
+	}
+};
+
+this.div_transfer_Info_btn_proceed_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.div_transfer_Info.form.div_toggle.form.getValue() == "APPROVE") {
+		this.gfnAlert("confirm.approve.transfer", "", "confirm.approve.transfer", "fnMsgCallback");	
+	}
+	else {
+		if (this.div_transfer_Info.form.txtArea_rejectReason.value == null || this.div_transfer_Info.form.txtArea_rejectReason.value == "") {
+			this.gfnAlert("msg.err.no.reject.reason", "", "msg.err.no.reject.reason", "fnMsgCallback");	
+			return;
+		}
+		else {
+			this.gfnAlert("confirm.reject.transfer", "", "confirm.reject.transfer", "fnMsgCallback");	
+		}
+	}
+};
+
+this.fnMsgCallback = function(strId, strVal) {
+	if (strId == "confirm.approve.transfer") {
+		if (strVal == false) {
+			return;
+		}
+		else {
+			var MARKET_NO = this.ds_detailInfo.getColumn(0, "MARKET_NO");
+			var NEW_STATUS = "";
+			if (this.div_transfer_Info.form.div_toggle.form.getValue() == "APPROVE") {
+				NEW_STATUS = "APPROVED";
+			}
+			else if (this.div_transfer_Info.form.div_toggle.form.getValue() == "REJECT") {
+				NEW_STATUS = "REJECTED";
+			}
+			var REJECT_MESSAGE = this.div_transfer_Info.form.txtArea_rejectReason.value;
+			var SELLER_ID = this.ds_detailInfo.getColumn(0, "SELLER_ID");
+			var BUYER_ID  = this.ds_detailInfo.getColumn(0, "BUYER_ID");
+			
+			this.ds_processInfo.setColumn(0, "MARKET_NO", MARKET_NO);
+			this.ds_processInfo.setColumn(0, "NEW_STATUS", NEW_STATUS);
+			this.ds_processInfo.setColumn(0, "REJECT_MESSAGE", REJECT_MESSAGE);
+			this.ds_processInfo.setColumn(0, "SELLER_ID", SELLER_ID);
+			this.ds_processInfo.setColumn(0, "BUYER_ID", BUYER_ID);
+			
+			var strSvcUrl = "p014/transferProcess.do";
+			var inData    = "ds_processInfo=ds_processInfo";
+			var outData   = "";
+			var strArg    = "";
+
+			this.gfnTransaction("transferProcess", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+		}
+	}
+	else if (strId == "confirm.reject.transfer") {
+		if (strVal == false) {
+			return;
+		}
+		else {
+			var MARKET_NO = this.ds_detailInfo.getColumn(0, "MARKET_NO");
+			var NEW_STATUS = "";
+			if (this.div_transfer_Info.form.div_toggle.form.getValue() == "APPROVE") {
+				NEW_STATUS = "APPROVED";
+			}
+			else if (this.div_transfer_Info.form.div_toggle.form.getValue() == "REJECT") {
+				NEW_STATUS = "REJECTED";
+			}
+			var REJECT_MESSAGE = this.div_transfer_Info.form.txtArea_rejectReason.value;
+			var SELLER_ID = this.ds_detailInfo.getColumn(0, "SELLER_ID");
+			var BUYER_ID  = this.ds_detailInfo.getColumn(0, "BUYER_ID");
+			
+			this.ds_processInfo.setColumn(0, "MARKET_NO", MARKET_NO);
+			this.ds_processInfo.setColumn(0, "NEW_STATUS", NEW_STATUS);
+			this.ds_processInfo.setColumn(0, "REJECT_MESSAGE", REJECT_MESSAGE);
+			this.ds_processInfo.setColumn(0, "SELLER_ID", SELLER_ID);
+			this.ds_processInfo.setColumn(0, "BUYER_ID", BUYER_ID);
+			
+			var strSvcUrl = "p014/transferProcess.do";
+			var inData    = "ds_processInfo=ds_processInfo";
+			var outData   = "";
+			var strArg    = "";
+
+			this.gfnTransaction("transferProcess", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+		}
+	}
+};]]></Script>
+    <Objects>
+      <Dataset id="ds_transferList" onrowposchanged="ds_transferList_onrowposchanged">
+        <ColumnInfo>
+          <Column id="MARKET_NO" type="STRING" size="256"/>
+          <Column id="SOLD_DATE" type="STRING" size="256"/>
+          <Column id="STATUS_CODE" type="STRING" size="256"/>
+          <Column id="PROCESS_DATE" type="STRING" size="256"/>
+          <Column id="SELLER_ID" type="STRING" size="256"/>
+          <Column id="SELLER_NAME" type="STRING" size="256"/>
+          <Column id="SELLER_PHONE_NO" type="STRING" size="256"/>
+          <Column id="SELLER_PROFILE_PATH" type="STRING" size="256"/>
+          <Column id="BUYER_ID" type="STRING" size="256"/>
+          <Column id="BUYER_NAME" type="STRING" size="256"/>
+          <Column id="BUYER_PHONE_NO" type="STRING" size="256"/>
+          <Column id="BUYER_PROFILE_PATH" type="STRING" size="256"/>
+          <Column id="REJECT_MESSAGE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_detailInfo">
+        <ColumnInfo>
+          <Column id="MARKET_NO" type="STRING" size="256"/>
+          <Column id="SOLD_DATE" type="STRING" size="256"/>
+          <Column id="STATUS_CODE" type="STRING" size="256"/>
+          <Column id="PROCESS_DATE" type="STRING" size="256"/>
+          <Column id="SELLER_ID" type="STRING" size="256"/>
+          <Column id="SELLER_NAME" type="STRING" size="256"/>
+          <Column id="SELLER_PHONE_NO" type="STRING" size="256"/>
+          <Column id="SELLER_PROFILE_PATH" type="STRING" size="256"/>
+          <Column id="BUYER_ID" type="STRING" size="256"/>
+          <Column id="BUYER_NAME" type="STRING" size="256"/>
+          <Column id="BUYER_PHONE_NO" type="STRING" size="256"/>
+          <Column id="BUYER_PROFILE_PATH" type="STRING" size="256"/>
+          <Column id="REJECT_MESSAGE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_processInfo">
+        <ColumnInfo>
+          <Column id="MARKET_NO" type="STRING" size="256"/>
+          <Column id="SELLER_ID" type="STRING" size="256"/>
+          <Column id="BUYER_ID" type="STRING" size="256"/>
+          <Column id="NEW_STATUS" type="STRING" size="256"/>
+          <Column id="REJECT_MESSAGE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

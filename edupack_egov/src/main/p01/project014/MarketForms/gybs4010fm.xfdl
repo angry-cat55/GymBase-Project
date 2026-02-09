@@ -1,0 +1,319 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="gybs4010fm" width="1280" height="1610" titletext="홈 화면" onload="User_SearchingMarket_onload" onclose="gybs4010fm_onclose">
+    <Layouts>
+      <Layout height="1610" width="1280">
+        <Combo id="cbo_sortType" taborder="0" text="최신순" top="60" height="40" borderRadius="20px" right="390" width="170" font="normal 12pt/normal &quot;Arial&quot;" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" value="RECENT" index="0" padding="0px 0px 0px 10px" cssclass="ckb" itemheight="30" onitemchanged="cbo_sortType_onitemchanged">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">RECENT</Col>
+                <Col id="datacolumn">최신순</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">PRICE_ASC</Col>
+                <Col id="datacolumn">낮은 가격순</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">EXPIRY_DESC</Col>
+                <Col id="datacolumn">남은 기간 순</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Combo>
+        <Div id="div_marketList" taborder="1" left="20" top="160" right="20" height="1220" text="">
+          <Layouts>
+            <Layout type="horizontal" flexwrap="wrap" verticalgap="50" horizontalgap="38" tabledirection="horizontal"/>
+          </Layouts>
+        </Div>
+        <Div id="divPage" taborder="2" left="175" width="930" url="UserForms::gybs2210fm.xfdl" text="" border="1px solid #c4c4c4" borderRadius="10px" height="40" top="div_marketList:60"/>
+        <ImageViewer id="btn_search" taborder="3" top="60" width="40" height="40" image="url('imagerc::form/searchIcon.png')" stretch="fixaspectratio" background="#000000" border="0px none" borderRadius="20px" right="20" text="" onclick="btn_search_onclick"/>
+        <Edit id="edt_search" taborder="4" top="60" height="40" borderRadius="20px" displaynulltext="검색어를 입력하세요." right="70" width="310" font="normal 12pt/normal &quot;Arial&quot;" padding="0px 20px" onkeyup="edt_search_onkeyup"/>
+        <CheckBox id="ckb_showSold" taborder="5" text="판매 완료 / 등록 반려 게시글 포함" left="450" top="60" height="40" font="normal 500 11pt/normal &quot;Arial&quot;" onchanged="ckb_showSold_onchanged" right="cbo_sortType:25" color="#000000"/>
+        <Button id="btn_uploadMarket" taborder="6" text="등록" left="20" top="60" width="70" height="40" background="#000000" color="#ffffff" borderRadius="15px" font="normal 500 13pt/normal &quot;Arial&quot;" onclick="btn_uploadMarket_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.fvApp = nexacro.getApplication();
+this.fvCnt = 0; // 한 페이지 목록
+this.fvPage = 0; // 페이지 번호
+this.fvOffSet = 0; // 시작 row num
+this.fvTotalCnt = 0; // 전체 레코드 개수
+this.fvPageCnt = 0; // 표현 페이지 개수
+
+this.isSearching = false; // false : 검색어로 찾고 있지 않은 상태
+
+this.User_SearchingMarket_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	if (this.fvApp.gds_search.getColumn(0, "typeSearch") == null || this.fvApp.gds_search.getColumn(0, "typeSearch") == "") {
+		this.cbo_sortType.value = "RECENT";
+	}
+	else if (this.fvApp.gds_search.getColumn(0, "typeSearch") == "FAVORITES") {
+		this.cbo_sortType.value = "RECENT";
+	}
+	else this.cbo_sortType.value = this.fvApp.gds_search.getColumn(0, "typeSearch");
+	if (this.fvApp.gds_search.getColumn(0, "isShowSold") == "Y") {
+		this.ckb_showSold.value = true;
+	}
+	else this.ckb_showSold.value = false;
+	
+	if (this.fvApp.gds_search.getColumn(0, "searchTerm") == null || this.fvApp.gds_search.getColumn(0, "searchTerm") == "") {
+		this.edt_search.value = null;
+	}
+	else {
+		this.edt_search.value = this.fvApp.gds_search.getColumn(0, "searchTerm");
+	}
+	
+	this.fvApp.gds_search.addColumn("typeSearch", "string");
+	this.fvApp.gds_search.setColumn(0, "typeSearch", this.cbo_sortType.value);
+	this.fvApp.gds_search.addColumn("isShowSold", "string");
+	var nStr = "";
+	if (this.ckb_showSold.value == true) nStr = "Y";
+	else nStr = "N";
+	this.fvApp.gds_search.setColumn(0, "isShowSold", nStr);
+	
+	// 크기 설정
+	var nHeight = this.getLayoutInfo(this.getCurrentLayoutID(), "height");
+ 	this.parent.parent.fnMainPageOnLoad(nHeight);
+	this.fnPageInit();
+};
+
+this.ckb_showSold_onchanged = function(obj:nexacro.CheckBox,e:nexacro.CheckBoxChangedEventInfo)
+{
+	for (var i = this.ds_marketList.getCount() - 1; i >= 0; i--) {
+		this.div_marketList.removeChild("divMarketList"+i)
+	}
+	this.fvApp.gds_search.setColumn(0, "offset", 0);
+	var nValue = "";
+	if (e.postvalue == true) nValue = "Y";
+	else nValue = "N";
+	this.fvApp.gds_search.setColumn(0, "isShowSold", nValue);
+	this.fnSearch();
+};
+
+this.cbo_sortType_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	for (var i = this.ds_marketList.getCount() - 1; i >= 0; i--) {
+		this.div_marketList.removeChild("divMarketList"+i)
+	}
+	this.fvApp.gds_search.setColumn(0, "offset", 0);
+	this.fvApp.gds_search.setColumn(0, "typeSearch", e.postvalue);
+	this.fnSearch();
+};
+
+// 폼 변수 초기화
+this.fnPageInit = function() {
+	this.fvCnt = 10;
+	this.fvPage = 0;
+	this.fvOffSet = 0;
+	this.fvPageCnt = 10;
+	
+	this.fnSearch();
+}
+
+this.fnSearch = function ()
+{
+	this.ds_search.clearData();
+	this.ds_search.addRow();
+	this.ds_search.setColumn(0, "cnt", this.fvCnt);
+	this.ds_search.setColumn(0, "offset", this.fvApp.gds_search.getColumn(0, "offset"));
+	this.fvApp.gds_search.setColumn(0, "gotoMain", 0);	
+	
+	// 검색어
+	var nSearcheTerm = "";
+	// if (this.isSearching == true) var nSearcheTerm = this.fvApp.gds_search.getColumn(0, "searchTerm");
+	nSearcheTerm = this.fvApp.gds_search.getColumn(0, "searchTerm");
+	
+	this.ds_search.setColumn(0, "searchTerm", nSearcheTerm);
+	this.ds_search.setColumn(0, "ID", this.fvApp.gds_accountInfo.getColumn(0, "ID"));
+	this.ds_search.setColumn(0, "typeSearch", this.fvApp.gds_search.getColumn(0, "typeSearch"));
+	this.ds_search.setColumn(0, "isShowSold", this.fvApp.gds_search.getColumn(0, "isShowSold"));
+	
+	// 하나의 트랜잭션 내에서 최신순/가격순/마감일 + 판매완료 공개 여부 다 판단하기
+	var strSvcUrl = "p014/getMarketList.do";
+	var inData    = "ds_search=ds_search"; // isShowSold와 typeSearch으로 정보 기준 판단
+	var outData   = "ds_marketList=ds_marketList";
+	var strArg    = "";
+
+	this.gfnTransaction("getMarketList", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+};
+
+this.fnCallback = function(svcId, errCd, errMsg) {
+	if (errCd < 0) {
+		arrArg = [errMsg];
+		this.gfnAlert("msg.server.error.msg", arrArg, "msg.server.error.msg", "fnMsgCallback");	
+	}
+	if (svcId == "getMarketList") {
+		if (errCd == -1) {
+			arrArg = [errMsg];
+			this.gfnAlert("msg.server.error.msg", arrArg, "msg.server.error.msg", "fnMsgCallback");	
+			return;
+		}
+		this.ds_search.setColumn(0, "gotoMain", 1);
+ 		// div 크기 세팅
+		var nCnt = 0;
+		if (this.ds_marketList.getCount() % 2 == 1) {
+			nCnt = this.ds_marketList.getCount() + 1;
+		}
+		else nCnt = this.ds_marketList.getCount();
+ 		var nHeight = nCnt / 2 * 260 - 50;
+ 		this.div_marketList.height = nHeight;
+		this.resetScroll();
+		
+		// 불러온 헬스장 정보 동적 div 생성
+		
+		this.fnCreateLayout();
+		 
+		// 페이지 세팅
+		this.fnPagingSetting();
+		
+		// 스크롤 초기화
+		this.parent.parent.scrollTo(0,this.fvApp.gv_scrollPos);
+		this.fvApp.gv_scrollPos = 0;
+	}
+};
+
+this.fnCreateLayout = function ()
+{
+		var nLeft = 0;
+		 var nTop = 0;
+		 var nWidth = 600;
+		 var nHeight = 210;
+		 
+		 var objParam = {name : ""
+						,address : ""
+						,telNo : ""
+						,imgPath : ""
+						,favoritesCount : ""};
+		 
+		 var objDiv;
+		 var nCntRow = this.ds_marketList.getCount();
+		 for (var i = 0 ; i < nCntRow; i++) {
+			objParam.background			 = "#efefef";
+			objParam.marketNo			 = this.ds_marketList.getColumn(i, "MARKET_NO");
+			objParam.ID					 = this.ds_marketList.getColumn(i, "ID");
+			objParam.gymName			 = this.ds_marketList.getColumn(i, "GYM_NAME");
+			objParam.title				 = this.ds_marketList.getColumn(i, "TITLE");
+			objParam.price				 = this.ds_marketList.getColumn(i, "PRICE");
+			objParam.status				 = this.ds_marketList.getColumn(i, "STATUS_CODE");
+			objParam.expiry				 = this.ds_marketList.getColumn(i, "EXPIRY");
+			objParam.profilePath		 = this.ds_marketList.getColumn(i, "PROFILE_PATH");
+			
+			objDiv = new Div("divMarketList"+i, nLeft, nTop, nWidth, nHeight);
+			objDiv.url = "MarketForms::gybs4110fm.xfdl";
+			objDiv.param = JSON.parse(JSON.stringify(objParam)); // 깊은 복사
+			this.div_marketList.addChild(objDiv.id, objDiv);
+			
+			objDiv.show();
+		 }
+		 var nH = objDiv.getOffsetBottom();
+		 this.div_marketList.setOffsetHeight(nH + 2);
+		 this.div_marketList.form.resetScroll();
+		 
+};
+
+this.fnPagingSetting = function() {
+	this.divPage.form.fnCreatePage("fnPagingCallback"
+								  ,this.fvTotalCnt
+								  ,this.fvCnt
+								  ,this.fvPage
+								  ,this.fvPageCnt);
+}
+
+// 페이지 번호 누를 때 호출되는 함수
+this.fnPagingCallback = function(nPage, nOffSet)
+{
+	this.fvPage = nPage;
+	this.fvOffSet = nOffSet;
+	this.fvApp.gds_search.setColumn(0, "offset", nOffSet);
+	for (var i = 0; i < this.ds_marketList.rowcount; i++) {
+		this.div_marketList.removeChild("divMarketList"+i)
+	}
+	this.fnSearch();
+};
+
+// 검색 기능
+this.btn_search_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	this.fvApp.gds_search.setColumn(0, "searchTerm", this.edt_search.value);														//ddddddddddd
+	this.fvPage = 0;
+	this.fvApp.gds_search.setColumn(0, "offset", 0);
+	if (this.edt_search.value == "" || this.edt_search.value == null) {
+		this.isSearching = false;
+	}
+	else {
+		this.isSearching = true;
+	}
+	for (var i = 0; i < this.ds_marketList.rowcount; i++) {
+		this.div_marketList.removeChild("divMarketList"+i)
+	}
+	this.fnSearch();
+};
+
+this.edt_search_onkeyup = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if (e.keycode == 13) this.btn_search_onclick();
+};
+
+this.btn_uploadMarket_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objChildFrame = new ChildFrame("popupModal", 0, 0, 720, 800);
+	objChildFrame.formurl = "MarketForms::gybs4111pu.xfdl";
+ 	objChildFrame.openalign = "center middle";
+ 	objChildFrame.overlaycolor = "RGBA(196,196,196,0.5)";
+	objChildFrame.dragmovetype = "none";
+	objChildFrame.showtitlebar = false;
+ 	objChildFrame.border = "0px none";
+	
+	var objParam = "";
+	objChildFrame.showModal(this.getOwnerFrame(), objParam, this, "fn_popupCallback");
+};
+
+this.fnDeleteDiv = function ()
+{
+	for (var i = 0; i < this.ds_marketList.rowcount; i++) {
+		this.div_marketList.removeChild("divMarketList"+i)
+	}
+};
+
+this.gybs4010fm_onclose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	this.fvApp.gv_scrollPos = this.parent.parent.getVScrollPos();
+};
+]]></Script>
+    <Objects>
+      <Dataset id="ds_marketList">
+        <ColumnInfo>
+          <Column id="ID" type="STRING" size="256"/>
+          <Column id="PROFILE_PATH" type="STRING" size="256"/>
+          <Column id="GYM_NAME" type="STRING" size="256"/>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="PRICE" type="STRING" size="256"/>
+          <Column id="STATUS_CODE" type="STRING" size="256"/>
+          <Column id="EXPIRY_DATE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_search">
+        <ColumnInfo>
+          <Column id="cnt" type="INT" size="256"/>
+          <Column id="offset" type="INT" size="256"/>
+          <Column id="searchTerm" type="STRING" size="256"/>
+          <Column id="gotoMain" type="INT" size="256"/>
+          <Column id="ID" type="STRING" size="256"/>
+          <Column id="isShowSold" type="STRING" size="256"/>
+          <Column id="typeSearch" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="cnt">5</Col>
+            <Col id="offset">0</Col>
+            <Col id="gotoMain">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

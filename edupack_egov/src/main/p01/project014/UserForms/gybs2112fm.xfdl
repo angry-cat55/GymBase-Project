@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="gybs2112" width="290" height="360" titletext="최근 정기권 (동적 div)" onload="gybs2112_onload">
+    <Layouts>
+      <Layout height="360" mobileorientation="landscape" width="290">
+        <Div id="div_recentGym1" taborder="0" left="5" text="Div00" background="#efefef" borderRadius="20px" top="5" border="1px solid #d5d5d5" right="5" bottom="5" boxShadow="0px 0px 5px 0px RGBA(0,0,0,0.25)">
+          <Layouts>
+            <Layout>
+              <Static id="sta_gymRegion" taborder="0" text="지역" left="0" top="20" height="30" padding="0px 0px 0px 20px" right="0" color="#de1821" font="normal 600 10pt/normal &quot;Arial&quot;"/>
+              <Static id="sta_gymName" taborder="1" text="헬스장 이름" left="0" top="54" height="40" font="normal 600 14pt/normal &quot;Arial&quot;" right="0" padding="0px 20px" color="#000000" verticalAlign="middle"/>
+              <ImageViewer id="btn_gotoMarket" taborder="2" width="35" height="35" image="url('imagerc::form/btn.png')" stretch="fixaspectratio" border="0px none" borderRadius="25px" right="20" bottom="17" onclick="div_recentGym1_btn_gotoMarket_onclick"/>
+              <Static id="sta_date" taborder="3" text="00.00.00 ~ 99.99.9" left="20" top="280" width="205" height="20" font="normal 600 11pt/normal &quot;Arial&quot;" color="#000000"/>
+              <Static id="sta_marketTitle" taborder="4" left="10" top="107" wordWrap="english" verticalAlign="top" text="@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" color="#000000" font="normal 600 10pt/normal &quot;Arial&quot;" right="10" bottom="77" padding="0px 10px"/>
+              <Static id="sta_price" taborder="5" text="999999원" left="20" top="307" width="205" height="20" font="normal 600 11pt/normal &quot;Arial&quot;" color="#000000"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.fvApp = nexacro.getApplication();
+
+this.gybs2112_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var objParam = this.parent.param;
+	var addrArr = objParam.gymAddr.split(" ");
+	var fromDate1 = objParam.startDate.substring(2, 4);
+	var fromDate2 = objParam.startDate.substring(4, 6);
+	var fromDate3 = objParam.startDate.substring(6, 7);
+	var toDate1 = objParam.endDate.substring(2, 4);
+	var toDate2 = objParam.endDate.substring(4, 6);
+	var toDate3 = objParam.endDate.substring(6, 8);
+	var dateText = fromDate1 + "." + fromDate2 + "." + fromDate3 + " ~ " + toDate1 + "." + toDate2 + "." + toDate3;
+	
+	this.div_recentGym1.form.sta_gymRegion.text = addrArr[0];
+	this.div_recentGym1.form.sta_gymName.text = objParam.gymName;
+	this.div_recentGym1.form.sta_marketTitle.text = objParam.title;
+	this.div_recentGym1.form.sta_date.text = dateText;
+	this.div_recentGym1.form.sta_price.text = this.gfnAppendComma(objParam.price) + "원";
+};
+
+this.div_recentGym1_btn_gotoMarket_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	var objParam = this.parent.param;
+	this.fvApp.gv_marketNo = objParam.marketNo;
+	this.parent.parent.parent.parent.parent.url = "MarketForms::gybs4011fm.xfdl";
+};
+]]></Script>
+  </Form>
+</FDL>

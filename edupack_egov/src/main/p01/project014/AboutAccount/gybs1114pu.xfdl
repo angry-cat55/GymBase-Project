@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="gybs1111pu" width="250" height="300" titletext="비번 찾기 실패">
+    <Layouts>
+      <Layout height="300" mobileorientation="landscape" width="250">
+        <ImageViewer id="img_fail" taborder="0" left="100" top="30" width="50" height="47" image="url('imagerc::form/searchingFail.png')" stretch="fixaspectratio" background="transparent" border="0px none"/>
+        <Static id="sta_cantFindID" taborder="1" text="비밀번호를 찾지 못했습니다." left="0" top="87" height="28" font="normal 900 13pt/normal &quot;Arial&quot;" color="black" textAlign="center" right="0"/>
+        <Static id="sta_inform" taborder="2" left="0" top="140" height="30" font="normal bold 12pt/normal &quot;Arial&quot;" textAlign="center" text="아이디 또는 비밀번호가" color="black" right="0"/>
+        <Button id="btn_retry" taborder="3" text="다시 시도하기" left="54" top="230" width="142" height="50" cssclass="GB_Login" onclick="btn_retry_onclick"/>
+        <Static id="sta_informID" taborder="4" left="0" top="170" height="30" font="normal bold 12pt/normal &quot;Arial&quot;" textAlign="center" color="black" text="일치하지 않습니다." right="0"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.btn_retry_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close();
+};
+]]></Script>
+  </Form>
+</FDL>

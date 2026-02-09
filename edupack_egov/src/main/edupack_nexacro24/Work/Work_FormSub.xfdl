@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Work_FormSub" width="300" height="300" titletext="New Form">
+    <Layouts>
+      <Layout height="300" width="300">
+        <Button id="btn00" taborder="0" text="버른" left="30" top="53" width="216" height="54" onclick="btn00_onclick"/>
+        <Static id="sta00" taborder="1" text="div 링크 화면" left="34" top="10" width="153" height="30"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	trace(this);
+	trace(this.parent);
+	trace(this.parent.parent);
+	trace(this.parent.parent.edt00.value)
+};
+]]></Script>
+  </Form>
+</FDL>

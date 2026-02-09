@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="NEDU0709" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <WebView id="WebView00" taborder="1" left="80" top="120" width="690" height="410" url="https://www.naver.com/"/>
+      </Layout>
+    </Layouts>
+  </Form>
+</FDL>

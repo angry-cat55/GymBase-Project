@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="gybs1111pu" width="320" height="470" titletext="비번 찾기 성공" onload="gybs1111pu_onload">
+    <Layouts>
+      <Layout height="470" mobileorientation="landscape" width="320">
+        <Div id="div_upadtePW" taborder="1" left="0" top="0" bottom="0" right="0">
+          <Layouts>
+            <Layout>
+              <Button id="btn_updatePW" taborder="2" text="재설정" left="117" top="409" width="86" cssclass="GB_Login" bottom="18" onclick="div_upadtePW_btn_updatePW_onclick"/>
+              <Edit id="edt_PWCK" taborder="1" left="30" top="344" height="40" borderRadius="10px" border="1px solid #d4d4d4" enable="true" padding="0px 50px 0px 20px" textAlign="left" color="#000000" font="normal 13pt/normal &quot;Arial&quot;" password="true" letterSpacing="1px" right="30"/>
+              <Static id="sta_PWs00" taborder="3" text="새 비밀번호 확인" font="normal 600 12pt/normal &quot;Arial&quot;" padding="0px 0px 0px 10px" color="#000000" bottom="126" left="40" height="35" right="40"/>
+              <Edit id="edt_PW" taborder="0" left="30" top="260" height="40" borderRadius="10px" border="1px solid #d4d4d4" enable="true" padding="0px 50px 0px 20px" textAlign="left" color="#000000" font="normal 13pt/normal &quot;Arial&quot;" password="true" letterSpacing="1px" right="30"/>
+              <Static id="sta_PWs" taborder="4" text="새 비밀번호" font="normal 600 12pt/normal &quot;Arial&quot;" padding="0px 0px 0px 10px" color="#000000" bottom="210" left="40" height="35" right="40"/>
+              <Static id="sta_findPW00" taborder="5" text="보안을 위해 사용할&#13;&#10;&#13;&#10;새 비밀번호를 입력해 주세요." left="0" top="122" height="90" font="normal 500 11pt/normal &quot;Arial&quot;" color="black" textAlign="center" right="0"/>
+              <ImageViewer id="img_success" taborder="6" left="135" top="29" width="50" height="47" image="url('imagerc::form/searchingSuccess.png')" stretch="fixaspectratio" background="transparent" border="0px none"/>
+              <Static id="sta_findPW" taborder="7" text="비밀번호를 찾았습니다!" left="0" top="86" height="28" font="normal 900 15pt/normal &quot;Arial&quot;" color="black" textAlign="center" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div_successUpdatePW" taborder="1" left="0" top="0" width="320" height="470" text="" visible="false">
+          <Layouts>
+            <Layout>
+              <Static id="sta_findPW00" taborder="1" text="새 비밀번호로 로그인을 해주세요." left="0" top="182" height="43" font="normal 500 11pt/normal &quot;Arial&quot;" color="black" textAlign="center" right="0"/>
+              <ImageViewer id="img_success" taborder="2" left="135" top="9" width="70" height="70" image="url('imagerc::form/congrate.png')" stretch="fixaspectratio" background="transparent" border="0px none"/>
+              <Static id="sta_findPW" taborder="3" text="비밀번호를 재설정했습니다!" left="0" top="86" height="28" font="normal 900 15pt/normal &quot;Arial&quot;" color="black" textAlign="center" right="0"/>
+              <Button id="btn_gotoLogin" taborder="0" text="로그인 하러가기" left="89" width="142" cssclass="GB_Login" bottom="18" height="50" onclick="btn_gotoLogin_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.fvApp = nexacro.getApplication();
+
+this.gybs1111pu_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var objFrame = this.getOwnerFrame();
+};
+
+this.btn_gotoLogin_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close();
+	this.fvApp.mainframe.Main.formurl = "AboutAccount::gybs1010fm.xfdl";
+};
+this.div_upadtePW_btn_updatePW_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var objFrame = this.getOwnerFrame();
+	if (this.gfnIsNull(this.div_upadtePW.form.edt_PW.value) || this.gfnIsNull(this.div_upadtePW.form.edt_PWCK.value)) {
+		this.gfnAlert("msg.err.enter.alldata", "", "msg.err.enter.alldata", "fnMsgCallback");
+		return;
+	}
+	else if (this.div_upadtePW.form.edt_PW.value != this.div_upadtePW.form.edt_PWCK.value) {
+		this.gfnAlert("msg.err.wrong.password", "", "msg.err.wrong.password", "fnMsgCallback");
+		return;
+	}
+	else {
+		var paramID = objFrame.param_ID;
+	
+		var strSvcUrl = "p014/updatePW.do";
+		var inData    = "";
+		var outData   = "";
+		var strArg    = "paramPW=" + this.div_upadtePW.form.edt_PW.value + " paramID=" + paramID;
+
+		this.gfnTransaction("updatePW", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+	}
+};
+
+this.fnCallback = function(svcId, errCd, errMsg) {
+	if (svcId == "updatePW") {
+		this.div_upadtePW.visible = false;
+		this.div_successUpdatePW.visible = true;
+	}
+}]]></Script>
+  </Form>
+</FDL>

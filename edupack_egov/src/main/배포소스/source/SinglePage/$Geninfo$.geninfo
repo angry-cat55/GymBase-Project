@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <GenInfo version="1.1">
+    <Rule>
+      <ENV rule_version="1.05"/>
+      <ADL rule_version="1.14"/>
+      <FDL rule_version="1.04"/>
+      <XCSS rule_version="1.04"/>
+      <Script rule_version="1.02"/>
+      <GeneratorInfo rule_version="1.3"/>
+    </Rule>
+    <Info project="C:\EduPack24\workspace\edupack_egov\src\main\SinglePage\" generated="C:\EduPack24\workspace\edupack_egov\src\main\webapp\SinglePage\"><File url="environment.xml" checksum="20220811144030" errormsg=""/><File url="typedefinition.xml" checksum="20220811144030" errormsg=""/><File url="appvariables.xml" checksum="20220811144030" errormsg=""/><File url="_resource_\_theme_\default\theme.xcss" checksum="20220811144030" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\framework\Framework.json" checksum="20250604165340" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\resources\Resource.json" checksum="20250604165342" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\CompBase.json" checksum="20250604165336" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\ComComp.json" checksum="20250604165336" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\Grid.json" checksum="20250604165338" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\ListView.json" checksum="20250604165342" errormsg=""/><File url="C:\Program Files (x86)\TOBESOFT\Nexacro N\SDK\24.0.0\nexacrolib\component\DeviceAPI.json" checksum="20250604165338" errormsg=""/><File url="Application_Desktop.xadl" checksum="20250707125855" errormsg=""/><File url="Base\Sample.xfdl" checksum="20220811153516" errormsg=""/><File url="FrameBase\Form_Work.xfdl" checksum="20250707125843" errormsg=""/></Info>
+  </GenInfo>
+</root>

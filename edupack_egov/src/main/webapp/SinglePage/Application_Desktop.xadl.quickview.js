@@ -1,0 +1,89 @@
+(function()
+{
+    return function()
+    {
+        this.on_loadAppVariables = function()
+        {		
+            var obj = null;
+            
+			// global dataobject
+		
+            // global dataset
+            obj = new Dataset("Dataset0", this);
+            obj._setContents({"ColumnInfo" : {"Column" : [ {"id" : "Column0","type" : "STRING","size" : "256"},{"id" : "Column1","type" : "STRING","size" : "256"},{"id" : "Column2","type" : "STRING","size" : "256"}]},"Rows" : [{"Column0" : "1","Column1" : "2","Column2" : "3"}]});
+            this._addDataset(obj.name, obj);
+            
+            // global variable
+            this._addVariable("App_TargetForm","");
+            
+            obj = null;
+        };
+        
+        // property, event, createMainFrame
+        this.on_initApplication = function()
+        {
+            // properties
+            this.set_id("Application_Desktop");
+            this.set_screenid("Desktop_screen");
+
+            if (this._is_attach_childframe)
+            	return;
+            
+            // frame
+            var mainframe = this.createMainFrame("mainframe","0","0","1280","720",null,null,this);
+            mainframe.set_showtitlebar("true");
+            mainframe.set_showstatusbar("true");
+            mainframe.set_titletext("FullFrame");
+            mainframe.on_createBodyFrame = this.mainframe_createBodyFrame;
+            // tray
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        this.mainframe_createBodyFrame = function()
+        {
+            var obj = new ChildFrame("QuickViewFrame", null, null, null, null, null, null, "", this);
+            
+            obj.set_showtitlebar("false");
+            obj.set_showstatusbar("false");
+            obj.set_border("0px none");
+			
+            this.addChild(obj.name, obj);
+            obj.set_formurl(nexacro._quickview_formurl);
+            this.frame = obj;
+            
+            obj = null;
+        };
+        
+        this.on_initEvent = function()
+        {
+        };
+		// script Compiler
+        this.registerScript("Application_Desktop.xadl", function() {
+
+        this.Application_onload = function(obj,e)
+        {
+        	//var sTargetForm = nexacro.getEnvironmentVariable("Env_TargetForm");
+        	var sTargetForm = nexacro.getApplication().App_TargetForm;
+        	if((sTargetForm == null) || (sTargetForm.length == 0))
+        	{
+
+        		nexacro.getApplication().mainframe.WorkFrame.set_formurl("FrameBase::Form_Work.xfdl");
+        	} else {
+        		nexacro.getApplication().mainframe.WorkFrame.set_formurl(sTargetForm);
+        	}
+        };
+
+        });
+		this.checkLicense("");
+        
+        this.loadPreloadList();
+
+        this.loadIncludeScript("Application_Desktop.xadl");
+    };
+}
+)();

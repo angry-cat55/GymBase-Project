@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="gybs4310pu" width="400" height="500" titletext="정기권 반려 사유" background="transparent">
+    <Layouts>
+      <Layout height="500" mobileorientation="landscape" width="400">
+        <Div id="div_reject" taborder="0" left="0" top="0" width="400" height="500" background="#efefef" borderRadius="20px" border="1px solid #000000">
+          <Layouts>
+            <Layout>
+              <Button id="btn_buy" taborder="0" text="확인" width="100" height="40" cssclass="GB_Login" font="normal 13pt/normal &quot;Arial&quot;" right="20" bottom="20" onclick="div_reject_btn_buy_onclick"/>
+              <Div id="div_rejectReason" taborder="1" left="20" top="20" background="#ffffff" borderRadius="10px" border="1px solid #d4d4d4" bottom="70" text="" right="20">
+                <Layouts>
+                  <Layout>
+                    <Static id="sta_notice" taborder="1" text="[ 정기권 등록 반려 사유 ]" left="20" top="20" height="57" textAlign="center" font="normal 600 14pt/normal &quot;맑은 고딕&quot;" color="#000000" padding="0px" right="20" border="0px none,0px none,2px solid #efefef"/>
+                    <Static id="Static00" taborder="1" left="20" top="sta_notice:20" right="20" bottom="20" wordWrap="english" textAlign="left" verticalAlign="top" letterSpacing="1px" color="#000000" font="normal 500 12pt/normal &quot;맑은 고딕&quot;"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Bind>
+      <BindItem id="item0" compid="div_reject.form.div_rejectReason.form.Static00" propid="text" datasetid="gds_rejectNoti" columnid="MESSAGE"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[
+this.div_reject_btn_buy_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.close();
+};
+]]></Script>
+  </Form>
+</FDL>

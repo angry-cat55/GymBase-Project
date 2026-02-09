@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="gybs2411fm" width="498" height="528" titletext="구매한 정기권 상태" background="transparent" onload="gybs2411fm_onload">
+    <Layouts>
+      <Layout height="528" width="498">
+        <Div id="div_membership" taborder="0" top="0" background="#ffffff" borderRadius="10px" bottom="0" right="0" left="0">
+          <Layouts>
+            <Layout>
+              <Button id="btn_close" taborder="0" left="40" top="30" width="45" height="45" background="url('imagerc::form/backIcon3.png') no-repeat center center /contain" border="0px none" text="" onclick="div_membership_btn_close_onclick"/>
+              <Grid id="grd_membership" taborder="1" left="40" border="1px solid #d4d4d4" borderRadius="5px" binddataset="ds_membership" autofittype="col" right="40" bottom="40" top="100" oncellclick="div_membership_grd_membership_oncellclick">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="40"/>
+                      <Column size="285"/>
+                      <Column size="90"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="50" band="head"/>
+                      <Row size="40"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell colspan="3" text="구매한 정기권 상태" background="#efefef" color="#000000" font="normal 700 16px/normal &quot;Malgun Gothic&quot;"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:NO" font="normal 500 14px/normal &quot;Malgun Gothic&quot;" color="#000000" textAlign="center" border="1px solid #e0e0e0"/>
+                      <Cell col="1" text="bind:GYM_NAME" font="normal 500 14px/normal &quot;Malgun Gothic&quot;" color="#000000" border="1px solid #e0e0e0" padding="10px 15px"/>
+                      <Cell col="2" font="normal 500 14px/normal &quot;Malgun Gothic&quot;" color="#000000" textAlign="center" border="1px solid #e0e0e0" expr="comp.parent.parent.parent.fnSetStatus(STATUS_CODE)"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.fvApp = nexacro.getApplication();
+
+this.div_membership_btn_close_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.parent.url = "UserForms::gybs2412fm.xfdl";
+};
+
+this.gybs2411fm_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var strSvcUrl = "p014/getMyMembershipList.do";
+	var inData    = "";
+	var outData   = "ds_membership=ds_membership";
+	var strArg    = "paramID=" + this.fvApp.gds_accountInfo.getColumn(0, "ID");
+
+	this.gfnTransaction("getMyMembershipList", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+};
+
+this.div_membership_grd_membership_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var nMarketNo = this.ds_membership.getColumn(e.row, "MARKET_NO");
+	this.fvApp.gv_marketNo = nMarketNo;
+	this.fvApp.gds_search.setColumn(0, "gotoMain", 4);
+	if (this.ds_membership.getColumn(e.row, "STATUS_CODE") == "REJECTED") {
+		this.fvApp.gds_rejectNoti.setColumn(0, "IS_FROM_REJECT","Y");
+	}
+	this.parent.parent.parent.parent.parent.url = "MarketForms::gybs4011fm.xfdl";
+};
+
+this.fnSetStatus = function(param_status)
+{
+	var sStatus = "";
+	switch(param_status) {
+		case "REQUESTED":
+			sStatus = "등록 대기";
+			break;
+		case "APPROVED":
+			sStatus = "등록 완료";
+			break;
+		case "REJECTED":
+			sStatus = "등록 반려";
+			break;
+	}
+	return sStatus;
+};]]></Script>
+    <Objects>
+      <Dataset id="ds_membership">
+        <ColumnInfo>
+          <Column id="NO" type="STRING" size="256"/>
+          <Column id="GYM_NAME" type="STRING" size="256"/>
+          <Column id="STATUS_CODE" type="STRING" size="256"/>
+          <Column id="MARKET_NO" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

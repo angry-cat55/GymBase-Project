@@ -1,0 +1,336 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Admin_GymInfo" width="1128" height="698" titletext="헬스장 정보 관리" onload="Admin_GymInfo_onload" cssclass="r">
+    <Layouts>
+      <Layout height="698" mobileorientation="landscape" width="1128">
+        <Div id="div_info" taborder="0" left="114" top="20" width="900" background="#ffffff" border="1px solid #d4d4d4" borderRadius="10px" onkillfocus="div_info_onkillfocus" bottom="20">
+          <Layouts>
+            <Layout>
+              <ImageViewer id="img_gymPhoto" taborder="0" text="이미지" left="30" top="20" height="270" borderRadius="5px" stretch="fit" width="488"/>
+              <Edit id="edt_post" taborder="2" left="156" top="355" height="35" enable="false" cssclass="readonly" font="normal 10pt/normal &quot;맑은 고딕&quot;" color="#000000" tooltiptext="주소를 변경하려면&#13;&#10;주소 검색 버튼을 사용하세요." tooltiptype="hover" borderRadius="5px" width="296"/>
+              <Button id="btn_searchPost" taborder="1" text="주소 검색" left="edt_post:5" top="355" width="61" height="35" onclick="btn_searchPost_onclick" cssclass="GB_Button" font="normal 9pt/normal &quot;Arial&quot;" enable="false" border="1px solid #d4d4d4"/>
+              <Static id="sta_gymName" taborder="3" text="헬스장 이름" left="30" top="310" height="35" font="normal bold 11pt/normal &quot;맑은 고딕&quot;" border="0px none,2px solid #d4d4d4,0px none,0px none" width="105"/>
+              <Static id="sta_gymName00" taborder="4" text="주소" left="30" top="355" height="35" font="normal bold 11pt/normal &quot;맑은 고딕&quot;" border="0px none,2px solid #d4d4d4,0px none,0px none" width="105"/>
+              <Static id="sta_gymName00_00" taborder="5" text="전화번호" left="30" top="400" height="35" font="normal bold 11pt/normal &quot;맑은 고딕&quot;" border="0px none,2px solid #d4d4d4,0px none,0px none" width="105"/>
+              <Edit id="edt_gymName" taborder="6" top="310" height="35" text="" left="156" color="#000000" font="normal 10pt/normal &quot;맑은 고딕&quot;" borderRadius="5px" cssclass="readonly" enable="false" width="362"/>
+              <Static id="sta_gymName00_00_00" taborder="7" text="상세 설명" left="30" top="445" height="129" font="normal bold 11pt/normal &quot;맑은 고딕&quot;" border="0px none,2px solid #d4d4d4,0px none,0px none" width="105"/>
+              <TextArea id="txtArea_Desc" taborder="8" height="130" scrollbartype="none none" wordWrap="english" color="#000000" font="normal 10pt/normal &quot;맑은 고딕&quot;" left="156" bottom="83" borderRadius="5px" enable="false" cssclass="readonly" padding="10px" width="362"/>
+              <WebView id="webPost" taborder="9" left="30" top="606" width="30" height="28" onusernotify="WebPost_onusernotify" visible="false"/>
+              <Button id="btn_changeProfile" taborder="10" left="img_gymPhoto:-50" top="img_gymPhoto:-50" width="40" height="40" background="url('imagerc::form/editProfile.png') no-repeat right center /contain #ffffff" border="0px none" borderRadius="20px" enable="false" onclick="div_info_btn_changeProfile_onclick" text=""/>
+              <MaskEdit id="edt_gymTelNo" taborder="11" left="156" top="400" width="362" height="35" letterSpacing="2px" border="1px solid #d4d4d4" borderRadius="5px" color="#000000" font="normal 10pt/normal &quot;맑은 고딕&quot;" padding="0px 10px" textAlign="left" enable="false" format="###-####-####" type="string" trimtype="both" cssclass="readonly"/>
+              <Button id="btn_rewrite" taborder="12" text="수정" width="128" background="#ffffff" color="#000000" borderRadius="10px" height="45" edge="" font="normal 600 11pt/normal &quot;Arial&quot;" padding="0px 0px 0px 25px" bottom="10" onclick="Common_onclick" left="740"/>
+              <ImageViewer id="img_rewrite" taborder="13" top="btn_rewrite:-40" height="35" border="0px none" image="url('imagerc::form/rewrite.png')" stretch="fixaspectratio" right="btn_rewrite:-42" width="35" onclick="Common_onclick"/>
+              <Button id="btn_saveInfo" taborder="15" text="저장" width="80" background="#000000" color="#ffffff" borderRadius="10px" font="normal 600 11pt/normal &quot;Arial&quot;" height="45" visible="false" enable="true" bottom="10" onclick="btn_saveInfo_onclick" left="788"/>
+              <Button id="btn_cancel" taborder="14" text="취소" width="80" background="#ffffff" color="#000000" borderRadius="10px" font="normal 600 11pt/normal &quot;Arial&quot;" right="btn_saveInfo:10" visible="false" enable="true" onclick="btn_cancel_onclick" bottom="10" top="601"/>
+              <Grid id="grd_machineList" taborder="16" top="20" height="553" binddataset="ds_gymMachineInfo" autofittype="col" borderRadius="5px" border="1px solid #d5d5d5" right="30" width="330" fastvscrolltype="default" scrollbartype="autoindicator autoindicator" autosizingtype="none" extendsizetype="row" onexpandup="div_info_grd_machineList_onexpandup" enable="false">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="150"/>
+                      <Column size="50"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="30" band="head"/>
+                      <Row size="25"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="기구 이름" color="#000000"/>
+                      <Cell col="1" text="보유 여부" color="#000000"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:MACHINE_NAME" color="#000000" padding="0px 0px 0px 10px" border="1px solid #d4d4d4"/>
+                      <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox" border="1px solid #d4d4d4" checkboxtruevalue="Y" checkboxfalsevalue="N" text="bind:IS_OWNED"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.fvApp = nexacro.getApplication();
+this.sUploadUrl = this.gfnGetServerUrl() + "upload/p01/p014/";
+this.isImgSelected = false;
+
+this.Admin_GymInfo_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	var strSvcUrl = "p014/getMyGymInfo.do";
+	var inData    = "";
+	var outData   = "ds_gymInfo=ds_gymInfo ds_gymMachineInfo=ds_gymMachineInfo";
+	var strArg    = "paramID=" + this.fvApp.gds_accountInfo.getColumn(0, "ID");
+
+	this.gfnTransaction("getMyGymInfo", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+};
+
+this.fnCallback = function (svcId, errCd, errMsg)
+{
+	if (svcId == "getMyGymInfo") {
+		// 변경 전 데이터를 예비 데이터셋에 저장
+		this.ds_tempGymInfo.copyData(this.ds_gymInfo);
+		this.ds_tempMachineInfo.copyData(this.ds_gymMachineInfo);
+	}
+};
+
+this.btn_searchPost_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.gfnPostSearchDaum(this.div_info.form.webPost);
+};
+
+this.WebPost_onusernotify = function(obj:nexacro.WebView,e:nexacro.WebUserNotifyEventInfo)
+{
+	var strPost = e.userdata;
+	trace("strPost ==> " + strPost);
+	if (strPost.indexOf("OK!!!:::") == 0) {
+		var aAddr = strPost.split(":::");
+		/*
+		trace("onusernotify -------------------------------------------");
+		trace("array[1]=>구우편번호 앞 3자리          ==> " +	aAddr[1] );
+		trace("array[2]=>구우편번호 뒷 3자리          ==> " +	aAddr[2] );
+		trace("array[3]=>신규우편번호                  ==> " +  aAddr[3] );
+		trace("array[4]=>도로명주소                    ==> " +	aAddr[4] );
+		trace("array[5]=>지번주소                      ==> " +	aAddr[5] );
+		trace("array[6]=>조합형 주소여부에 따른 주소	==> " +	aAddr[6] );
+		trace("-------------------------------------------------------");
+		*/
+		this.div_info.form.edt_post.value = aAddr[6];	// 조합형 주소여부에 따른 주소
+	}		
+};
+
+
+this.Common_onclick = function(obj:nexacro.ImageViewer,e:nexacro.ClickEventInfo)
+{
+	this.fnRewrite();
+};
+
+this.btn_saveInfo_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// 빈 칸이 있는지 체크
+	// 빈 항목이 있을 시 반환
+	if (this.checkNull()) {
+		return;
+	}
+	else {
+		// 새로운 헬스장 정보로 데이터셋(ds_gymInfo), 서버에 저장
+		this.fnSetNewGymInfo();
+		// 수정모드 비활성화
+		this.fnUnRewrite();
+	}	
+};
+
+this.btn_cancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.resetGymInfo();
+	this.fnUnRewrite();
+};
+
+this.fnRewrite = function ()
+{
+	this.div_info.form.btn_rewrite.visible = false;
+	this.div_info.form.img_rewrite.visible = false;
+	this.div_info.form.btn_saveInfo.visible = true;
+	this.div_info.form.btn_cancel.visible = true;
+	this.div_info.form.btn_changeProfile.enable = true;
+	this.div_info.form.btn_searchPost.enable = true;
+	this.div_info.form.edt_gymName.enable = true;
+	this.div_info.form.edt_gymTelNo.enable = true;
+	this.div_info.form.txtArea_Desc.enable = true;
+	this.div_info.form.grd_machineList.enable = true;
+};
+
+this.fnUnRewrite = function ()
+{
+	this.div_info.form.btn_rewrite.visible = true;
+	this.div_info.form.img_rewrite.visible = true;
+	this.div_info.form.btn_saveInfo.visible = false;
+	this.div_info.form.btn_cancel.visible = false;
+	this.div_info.form.btn_changeProfile.enable = false;
+	this.div_info.form.btn_searchPost.enable = false;
+	this.div_info.form.edt_gymName.enable = false;
+	this.div_info.form.edt_gymTelNo.enable = false;
+	this.div_info.form.txtArea_Desc.enable = false;
+	this.div_info.form.grd_machineList.enable = false;
+};
+
+this.resetGymInfo = function ()
+{
+	// 변경 전 데이테를 담은 ds에서 데이터 가져오기
+	this.ds_gymInfo.copyData(this.ds_tempGymInfo);
+	this.ds_gymMachineInfo.copyData(this.ds_tempMachineInfo);
+};
+
+this.div_info_onkillfocus = function(obj:nexacro.Div,e:nexacro.KillFocusEventInfo)
+{
+	if (this.isImgSelected == true) {
+		return;
+	}
+	// 수정 모드가 활성화 되어있는 상태라면
+	if (this.div_info.form.btn_rewrite.visible == false) {
+		var bRtn;
+		this.gfnAlert("confirm.save.current", "", "confirm.save.current", "fnMsgCallback");
+	}
+};
+
+this.fnMsgCallback = function (strId, strVal)
+{
+	if (strId == "confirm.save.current") {
+		if (strVal == true) {
+			this.btn_saveInfo_onclick();
+		}
+		else {
+			this.btn_cancel_onclick();
+		}
+	}
+	else if (strId == "msg.err.no.img.select") {
+		this.isImgSelected = false;
+	}
+};
+
+this.checkNull = function()
+{
+	var sPhoneNo = this.div_info.form.edt_gymTelNo.value;
+	
+	if (this.gfnIsNull(this.div_info.form.edt_gymName.value) ||
+		this.gfnIsNull(this.div_info.form.edt_post.value) ||
+		this.gfnIsNull(this.div_info.form.edt_gymTelNo.value) ||
+		this.gfnIsNull(this.div_info.form.txtArea_Desc.value)) {
+		this.gfnAlert("msg.err.enter.alldata", "", "msg.err.enter.alldata", "fnMsgCallback");	
+		return true
+	}
+	else if (sPhoneNo.length < 11) {
+		this.gfnAlert("msg.err.wrong.phone", "", "msg.err.wrong.phone", "fnMsgCallback");	
+		return true;
+	}
+	else return false;
+};
+
+// 새로운 정보 데이터셋에 저장 후 트랜잭션으로 정보 업데이트
+this.fnSetNewGymInfo = function ()
+{
+	// 예비 데이터셋 변경
+	this.ds_tempGymInfo.copyData(this.ds_gymInfo);
+	this.ds_tempMachineInfo.copyData(this.ds_gymMachineInfo);
+	
+	var strSvcUrl = "p014/updateGymInfo.do";
+	var inData    = "ds_gymInfo=ds_gymInfo ds_gymMachineInfo=ds_gymMachineInfo";
+	var outData   = "";
+	var strArg    = "paramCode=" + this.fvApp.gds_accountInfo.getColumn(0, "GYM_CODE");
+
+	this.gfnTransaction("updateGymInfo", strSvcUrl, inData, outData, strArg, "fnCallback", true);
+};
+this.div_info_btn_changeProfile_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsUser.clearData();
+	this.FileDialog00.open("프로필 사진 선택", 1, "%DOCUMENT%");
+};
+
+this.FileDialog00_onclose = function(obj:nexacro.FileDialog,e:nexacro.FileDialogEventInfo)
+{
+	var objFile = e.virtualfiles[0];
+	var sFileName = objFile.filename;
+	
+	if (!/\.(jpe?g|png|gif)$/i.test(sFileName)) // 정규식으로 파일 유형 체크
+	{
+		this.isImgSelected = true;
+		this.gfnAlert("msg.err.no.img.select", "", "msg.err.no.img.select", "fnMsgCallback");	
+		return;
+	}
+	
+	this.FileUpTransfer00.clearFileList();
+	this.FileUpTransfer00.addFile(sFileName, objFile);
+	var nRow = this.dsUser.addRow();
+	this.dsUser.setColumn(nRow, "IMAGE_ID", sFileName);
+	this.dsUser.setColumn(nRow, "IMAGE_NAME", sFileName);
+	
+	if (nexacro._Browser == "Runtime") {
+		// NRE
+		this.div_info.form.img_gymPhoto.image = "URL('file://" + objFile.fullpath + "')";
+	}
+	else {
+		// NRE 아닐 때 (웹 브라우저)
+		var reader = new FileReader();
+		reader.targetForm = this;
+		reader.addEventListener("load"
+								,function() {
+									this.targetForm.div_info.form.img_gymPhoto.image = this.result;
+								}
+								,false);
+		reader.readAsDataURL(objFile._handle);
+		// 파일을 base64 형태로 읽기
+	}
+	var sUrl = "SvcUrl::edu/uploadFile.do";
+	this.FileUpTransfer00.setPostData("userDir", "");
+	this.FileUpTransfer00.upload(sUrl);
+	
+	this.isImgSelected = false;
+};
+
+this.FileUpTransfer00_onsuccess = function(obj:nexacro.FileUpTransfer,e:nexacro.FileUpTransferEventInfo)
+{
+	var objDs = e.datasets[0];
+	this.dsUser.setColumn(0,"IMAGE_ID", objDs.getColumn(0, "file_id"));
+	
+	var sImg = this.sUploadUrl + this.dsUser.getColumn(0, "IMAGE_ID");
+	this.div_info.form.img_gymPhoto.image = sImg;
+	this.ds_gymInfo.setColumn(0, "IMG_PATH", sImg);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="ds_gymInfo">
+        <ColumnInfo>
+          <Column id="GYM_CODE" type="STRING" size="256"/>
+          <Column id="GYM_NAME" type="STRING" size="256"/>
+          <Column id="ADDRESS" type="STRING" size="256"/>
+          <Column id="TEL_NO" type="STRING" size="256"/>
+          <Column id="DESCRIPTION" type="STRING" size="256"/>
+          <Column id="IMG_PATH" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <FileUpTransfer id="FileUpTransfer00" onsuccess="FileUpTransfer00_onsuccess"/>
+      <FileDialog id="FileDialog00" onclose="FileDialog00_onclose"/>
+      <Dataset id="dsUser" onrowposchanged="dsUser_onrowposchanged">
+        <ColumnInfo>
+          <Column id="IMAGE_ID" type="STRING" size="256"/>
+          <Column id="IMAGE_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_tempGymInfo">
+        <ColumnInfo>
+          <Column id="GYM_CODE" type="STRING" size="256"/>
+          <Column id="GYM_NAME" type="STRING" size="256"/>
+          <Column id="ADDRESS" type="STRING" size="256"/>
+          <Column id="TEL_NO" type="STRING" size="256"/>
+          <Column id="DESCRIPTION" type="STRING" size="256"/>
+          <Column id="IMG_PATH" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_gymMachineInfo">
+        <ColumnInfo>
+          <Column id="MACHINE_CODE" type="STRING" size="256"/>
+          <Column id="MACHINE_NAME" type="STRING" size="256"/>
+          <Column id="IS_OWNED" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_tempMachineInfo">
+        <ColumnInfo>
+          <Column id="MACHINE_CODE" type="STRING" size="256"/>
+          <Column id="MACHINE_NAME" type="STRING" size="256"/>
+          <Column id="IS_OWNED" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="div_info.form.img_gymPhoto" propid="image" datasetid="ds_gymInfo" columnid="IMG_PATH"/>
+      <BindItem id="item1" compid="div_info.form.edt_gymName" propid="value" datasetid="ds_gymInfo" columnid="GYM_NAME"/>
+      <BindItem id="item2" compid="div_info.form.edt_post" propid="value" datasetid="ds_gymInfo" columnid="ADDRESS"/>
+      <BindItem id="item4" compid="div_info.form.txtArea_Desc" propid="value" datasetid="ds_gymInfo" columnid="DESCRIPTION"/>
+      <BindItem id="item3" compid="div_info.form.edt_gymTelNo" propid="value" datasetid="ds_gymInfo" columnid="TEL_NO"/>
+    </Bind>
+  </Form>
+</FDL>

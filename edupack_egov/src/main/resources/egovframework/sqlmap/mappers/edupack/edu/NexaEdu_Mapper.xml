@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.edupack.edu.service.mapper.NexaEduMapper">
+	
+	<select id="getEmpList" resultType="map">
+		SELECT EMP_ID, EMP_NAME, DEPT_CODE, POSITION, HIRE_DATE, SALARY, GENDER, MARRIED, SKILL, HOBBY, MEMO
+			FROM tbl_employees
+	</select>
+	
+	<select id="getEmpListParam1" resultType="map" parameterType="String">
+		SELECT EMP_ID, EMP_NAME, DEPT_CODE, POSITION, HIRE_DATE, SALARY, GENDER, MARRIED, SKILL, HOBBY, MEMO
+			FROM tbl_employees
+		<if test = '_parameter != null and _parameter != "" and _parameter != "undefined"'>
+			WHERE DEPT_CODE = #{sDeptCode}
+		</if>
+	</select>
+	
+	<select id="getEmpListParam2" resultType="map" parameterType="com.edupack.edu.vo.NexaEduVo">
+		SELECT EMP_ID, EMP_NAME, DEPT_CODE, POSITION, HIRE_DATE, SALARY, GENDER, MARRIED, SKILL, HOBBY, MEMO
+			FROM tbl_employees
+		<where>
+			<if test = 'searchDeptCode != null and searchDeptCode != "" and searchDeptCode != "undefined"'>
+				AND DEPT_CODE = #{sDeptCode}
+			</if>
+			<if test = 'searchEmpName != null and searchEmpName != "" and searchEmpName != "undefined"'>
+				AND EMP_NAME LIKE CONCAT('%',#{searchEmpName}, '%')
+			</if>
+		</where>
+	</select>
+	
+	<select id="getEmpListParamDs" resultType="map" parameterType="map">
+		SELECT EMP_ID, EMP_NAME, DEPT_CODE, POSITION, HIRE_DATE, SALARY, GENDER, MARRIED, SKILL, HOBBY, MEMO
+			FROM tbl_employees
+		<where>
+			<if test = 'SRC_DEPT_CODE != null and SRC_DEPT_CODE != "" and SRC_DEPT_CODE != "undefined"'>
+				AND DEPT_CODE = #{SRC_DEPT_CODE}
+			</if>
+			<if test = 'SRC_EMP_NAME != null and SRC_EMP_NAME != "" and SRC_EMP_NAME != "undefined"'>
+				AND EMP_NAME LIKE CONCAT('%',#{SRC_EMP_NAME}, '%')
+			</if>
+		</where>
+	</select>
+	
+	<select id="getCodeDept" resultType="map">
+		SELECT DEPT_CODE, DEPT_NAME, DEPT_EMP FROM tbl_department
+	</select>
+	<select id="getCodePos" resultType="map">
+		SELECT DET_CODE AS CODE, DET_NAME AS NAME FROM tbl_common_code WHERE MST_CODE = 'POSITION'
+	</select>
+	<select id="getCodeSkill" resultType="map">`
+		SELECT DET_CODE AS CODE, DET_NAME AS NAME FROM tbl_common_code WHERE MST_CODE = 'SKILL'
+	</select>
+	<select id="getCodeHobby" resultType="map">
+		SELECT DET_CODE AS CODE, DET_NAME AS NAME FROM tbl_common_code WHERE MST_CODE = 'HOBBY'
+	</select>
+	
+	<select id="getCodeParam" resultType="map">
+		SELECT DET_CODE AS CODE, DET_NAME AS NAME
+			FROM tbl_common_code
+		WHERE MST_CODE = #{_parameter}
+	</select>
+	
+	<select id="getCodeIn" resultType="map" parameterType="map">
+		SELECT	  MST_CODE
+					, MST_NAME
+					, DET_CODE AS CODE
+					, DET_NAME AS NAME
+			FROM tbl_common_code
+		WHERE MST_CODE IN
+		<foreach collection="type" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>	
+	</select>
+	
+	<insert id="insertEmp" parameterType="map">
+		INSERT INTO tbl_employees
+							(EMP_ID, EMP_NAME, DEPT_CODE, POSITION, HIRE_DATE,
+							SALARY, GENDER, MARRIED, SKILL, HOBBY, MEMO)
+				VALUES (#{EMP_ID}, #{EMP_NAME}, #{DEPT_CODE}, #{POSITION}, #{HIRE_DATE},
+							#{SALARY}, #{GENDER}, #{MARRIED}, #{SKILL}, #{HOBBY}, #{MEMO})
+	</insert>
+	<update id="updateEmp" parameterType="map">
+		UPDATE tbl_employees
+			SET EMP_ID = #{EMP_ID}
+				 , EMP_NAME = #{EMP_NAME}
+				 , DEPT_CODE = #{DEPT_CODE}
+				 , POSITION = #{POSITION}
+				 , HIRE_DATE = #{HIRE_DATE}
+				 , SALARY = #{SALARY}
+				 , GENDER = #{GENDER}
+				 , MARRIED = #{MARRIED}
+				 , SKILL = #{SKILL}
+				 , HOBBY = #{HOBBY}
+				 , MEMO = #{MEMO}
+		WHERE EMP_ID = #{DataSetSavedData.EMP_ID}
+	</update>
+	
+	<delete id="deleteEmp" parameterType="map">
+		DELETE FROM tbl_employees
+			WHERE EMP_ID = #{EMP_ID}
+	</delete>
+	
+	<select id="checkId" resultType="int"  parameterType="String">
+		SELECT COUNT(*) FROM tbl_employees WHERE EMP_ID = #{strEmpId}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	<select id="getSampleList" resultType="map">
+		SELECT ID, NAME, DESCRIPTION, USE_YN, REG_USER
+			FROM tbl_sample
+	</select>
+	
+	<select id="getPagingSample" resultType="map"  parameterType="map">
+		SELECT ROWNUM, ID, NAME, DESCRIPTION, USE_YN
+			FROM (
+				SELECT ID
+				, NAME
+				, DESCRIPTION
+				, USE_YN
+				, REG_USER
+				, ROW_NUMBER() OVER (ORDER BY ID DESC) AS ROWNUM
+				FROM tbl_sample
+			) AS sub
+		ORDER BY ROWNUM
+		LIMIT #{cnt} OFFSET #{offset}
+	</select>
+	
+	<select id="getPagingSampleTotalCnt" resultType="int" parameterType="map">
+		SELECT count(*) as totalCnt
+		FROM TBL_SAMPLE
+	</select>
+	
+	<insert id="saveUserInfo" parameterType="map">
+		INSERT INTO tbl_user
+			(USER_NAME, EMAIL, TEL_NO, IMAGE_ID, IMAGE_NAME)
+			VALUES (#{USER_NAME}, #{EMAIL}, #{TEL_NO}, #{IMAGE_ID}, #{IMAGE_NAME})
+	</insert>
+	
+	<select id="searchUserInfo" resultType="map">
+		SELECT USER_NAME, EMAIL, TEL_NO, IMAGE_ID, IMAGE_NAME
+			FROM tbl_user
+	</select>
+	
+	
+</mapper>

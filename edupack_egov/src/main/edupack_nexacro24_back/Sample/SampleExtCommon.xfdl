@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="SampleExtCommon" width="1020" height="650" titletext="extCommon dll" onload="form_onload">
+    <Layouts>
+      <Layout height="650" mobileorientation="landscape" width="1020">
+        <Button id="btnLoad" taborder="0" text="extCommon dll load" left="20" top="160" width="150" height="26" onclick="btnLoad_onclick"/>
+        <Button id="btnUnLoad" taborder="1" text="UnLoad" left="20" top="438" width="150" height="26" onclick="btnUnLoad_onclick"/>
+        <Edit id="edtMsg" taborder="2" left="20" top="256" _ms_clear="true" value="안녕하세요~~ 반갑습니다." text="안녕하세요~~ 반갑습니다." width="164" height="26"/>
+        <Button id="btnSetRegi" taborder="3" text="레지스트리 등록" left="20" top="352" width="150" height="26" onclick="btnSetRegi_onclick"/>
+        <Button id="btnMessage" taborder="4" text="시스템 메시지 출력" left="189" top="256" width="150" height="26" onclick="btnMessage_onclick"/>
+        <WebBrowser id="web00" taborder="5" left="302" top="360" width="668" height="148"/>
+        <Static id="staTitle" taborder="6" text="extCommon dll" left="20" top="0" width="281" height="60" cssclass="sta_WF_Title1"/>
+        <TextArea id="txtDesc" taborder="7" left="20" top="60" height="40" cssclass="txt_WF_Desc" value="확장 컴포넌트 dll 을 사용하는 방법이다. (NRE에서만 사용 가능)" right="20" onchanged="txtDesc_onchanged"/>
+        <Static id="sta00" taborder="8" text="1) extCommon 파일 load" left="20" top="120" width="178" height="40" cssclass="sta_WF_Title2"/>
+        <Static id="sta02" taborder="9" text="2) 시스템 메시지 출력" left="20" top="216" width="178" height="40" cssclass="sta_WF_Title2"/>
+        <Static id="sta03" taborder="10" text="3) web Browser 문서모드를 11로 지정" left="20" top="312" width="248" height="40" cssclass="sta_WF_Title2"/>
+        <Static id="sta04" taborder="11" text="4) extCommon 파일 unLoad" left="20" top="398" width="208" height="40" cssclass="sta_WF_Title2"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  Nexacro Professional Training Couse
+*  @MenuPath    개발가이드 > 컴포넌트 및 연동 > extCommon dll
+*  @FileName 	SampleExtCommon.xfdl 
+*  @Creator 	TOBESOFT Education
+*  @CreateDate 	2025/01/03
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2025/01/03      		 TOBESOFT Education	 	  	최초 생성 
+*******************************************************************************
+*/
+
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.extComm;
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+    var sUrl = this.gfnGetServerUrl() + "external/documentType.html";
+	this.web00.url = sUrl;
+};
+
+this.btnLoad_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.extComm = this.gfnGetExtCommon();
+	alert("ExtCommon dll load가 완료되었습니다.");
+};
+
+this.btnMessage_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.gfnIsNull(this.extComm)) {
+		alert("ExtCommon dll load가 되지 않았습니다.");
+		return;
+	}	
+	this.extComm._ext_messagebox(this.edtMsg.value);
+};
+
+this.btnSetRegi_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.gfnIsNull(this.extComm)) {
+		alert("ExtCommon dll load가 되지 않았습니다.");
+		return;
+	}
+	
+	// 레지스트리 설정 위치
+	// 32 BIT
+	// "\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION\"	
+	// 64 BIT
+	// "\HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION\"
+
+	// HKEY_LOCAL_MACHINE로 만으로도 안되면 HKEY_CURRENT_USER 이것도 해주면 됨...
+	var strKey = "HKEY_LOCAL_MACHINE";
+	//var strKey = "HKEY_CURRENT_USER";
+	var strName = "nexacro.exe";
+	var strValue = 11001;	// ie 11 edge로 지정
+	/*
+	 * ie 7  : 7000
+	 * ie 9  : 9000
+	 * ie 10 : 10000 / 10001 
+	 * ie 11 : 11000 / 11001 edge
+	 * 참고 http://msdn.microsoft.com/en-us/library/ee330730%28VS.85%29.aspx#browser_emulation 
+	 */
+
+	// OS 체크
+	var rtn = this.extComm._ext_getSystemDir("PROGRAMS");
+	trace(rtn);
+	// 32 BIT 설정
+	if (rtn.indexOf("x86") == -1) {
+		var strPath32 = "SOFTWARE\\Microsoft\\Internet Explorer\\Main\\FeatureControl\\FEATURE_BROWSER_EMULATION";
+		this.extComm._ext_setRegValue(strKey,strPath32,strName,strValue);
+	}
+	// 64 BIT 설정	
+	else {
+		var strPath64 = "SOFTWARE\\WOW6432Node\\Microsoft\\Internet Explorer\\Main\\FeatureControl\\FEATURE_BROWSER_EMULATION";
+		this.extComm._ext_setRegValue(strKey,strPath64,strName,strValue);
+	}
+};
+
+// 
+// this.btnUnLoad_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+// {
+// 	if (this.gfnIsNull(this.extComm)) {
+// 		alert("ExtCommon dll load가 되지 않았습니다.");
+// 		return;
+// 	}
+// 	
+// 	this.gfnCloseExtCommon();
+// 	alert("ExtCommon dll load가 해제되었습니다.");
+// };
+
+///////////////2020.01.13 update//////////////////
+
+// ExtCommon 모듈 객체를 this.extComm에 받음
+this.btnLoad_onclick = function(obj,e)
+{
+    this.extComm = this.gfnGetExtCommon();
+    alert("ExtCommon dll load가 완료되었습니다.");
+};
+
+// ExtCommon 모듈 객체를 언로드 하면 this.extComm = null로 세팅해야 함
+this.btnUnLoad_onclick = function(obj,e)
+{
+    if (this.gfnIsNull(this.extComm)) {
+        alert("ExtCommon dll load가 되지 않았습니다.");
+        return;
+    }
+
+    this.gfnCloseExtCommon();
+	
+    // [RP-87707] extCommon dll  해제 후, extCommon dll 모듈 사용 시 죽는 현상 발생
+    this.extComm = null;
+
+    alert("ExtCommon dll load가 해제되었습니다.");
+}]]></Script>
+  </Form>
+</FDL>

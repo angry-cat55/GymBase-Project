@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="StepSlide_Steps" width="500" height="150" titletext="New Form" onload="form_onload" onstepchanged="SampleStep_ontimer" ontimer="SampleStep_ontimer">
+    <Layouts>
+      <Layout height="150" mobileorientation="landscape" width="500" stepcount="3">
+        <Static id="Static00" taborder="0" text="" left="0" top="0" width="500" height="150" background="blue"/>
+        <Static id="Static00_00" taborder="1" text="" left="0" top="0" width="500" height="150" positionstep="1" background="pink"/>
+        <Static id="Static00_00_00" taborder="2" text="" left="0" top="0" width="500" height="150" positionstep="2" background="gold"/>
+        <Static id="Static01" taborder="3" text="Static01" left="97" top="37" width="228" height="65" background="url('theme://images/btn_TF_Close.png') repeat right"/>
+        <Static id="Static01_00" taborder="4" text="Static01" left="76" top="37" width="228" height="65" background="url('theme://images/btn_TF_Min.png') repeat right" positionstep="2"/>
+        <Static id="Static01_00_00" taborder="5" text="Static01" left="136" top="43" width="228" height="65" background="url('theme://images/btn_TF_Max_O.png') repeat right" positionstep="1"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/**
+*  Nexacro Professional Training Couse
+*  @MenuPath    개발가이드 > 컴포넌트 및 연동 > step
+*  @FileName 	SampleStep_Sub.xfdl 
+*  @Creator 	TOBESOFT Education
+*  @CreateDate 	2025/01/03
+*  @Desction    
+************** 소스 수정 이력 ***********************************************
+*  date          		Modifier                Description
+*******************************************************************************
+*  2025/01/03     		 TOBESOFT Education	 	  	최초 생성 
+*******************************************************************************
+*/
+
+
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.fvStep = 0;
+this.elapseTime = 2000;
+
+/************************************************************************************************
+ * FORM EVENT 영역(onload, onbeforeclose)
+ ************************************************************************************************/
+/**
+ * @description 화면 onload시 처리내역(필수)
+*/
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.stepselector.visible = false;
+	this.stepshowtype = "action";
+	
+	this.setTimer(0, this.elapseTime);	
+};
+
+this.SampleStep_ontimer = function(obj:nexacro.Form,e:nexacro.TimerEventInfo)
+{
+	if (e.timerid == 0){
+		if (this.fvStep == 2) {
+			this.fvStep = 0;
+			this.stepselector.stepindex = 0;
+		}
+		else {
+			this.stepselector.stepindex = (++this.fvStep);
+		}
+	}
+};
+
+this.btnPre_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.killTimer(0);
+	this.stepselector.stepindex = (--this.fvStep);
+};
+
+this.btnNext_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.killTimer(0);
+	this.stepselector.stepindex = (++this.fvStep);
+};]]></Script>
+  </Form>
+</FDL>
